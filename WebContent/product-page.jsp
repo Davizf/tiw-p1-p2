@@ -622,11 +622,26 @@
 							</div>
 
 							<div class="product-btns">
+							
+							
+							
+							
+								<form action="/tiw-p1/ShoppingCart" name="order" method="post">
+								
 								<div class="qty-input">
 									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number">
+									<input class="input" type="number" name="numOrder">
 								</div>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
+								
+								
+								</form>
+								
+								
+								
+								
+								
+								
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -791,11 +806,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -821,11 +832,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -851,11 +858,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -882,11 +885,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
