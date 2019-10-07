@@ -570,32 +570,10 @@
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
-								<img src="/tiw-p1/images/main-product01.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="/tiw-p1/images/main-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="/tiw-p1/images/main-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="/tiw-p1/images/main-product04.jpg" alt="">
+								<img src=<%= request.getParameter("path") %> alt="">
 							</div>
 						</div>
-						<div id="product-view">
-							<div class="product-view">
-								<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="/tiw-p1/images/thumb-product02.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="/tiw-p1/images/thumb-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="/tiw-p1/images/thumb-product04.jpg" alt="">
-							</div>
-						</div>
+						
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
@@ -603,7 +581,15 @@
 								<span>New</span>
 								<span class="sale">-20%</span>
 							</div>
-							<h2 class="product-name">Product Name Goes Here</h2>
+							
+							
+							<h2 class="product-name">
+								<%= request.getParameter("name") %>
+							</h2>
+							
+							
+							
+							
 							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
 							<div>
 								<div class="product-rating">
@@ -1016,7 +1002,6 @@
 	<script src="/tiw-p1/animation/bootstrap.min.js"></script>
 	<script src="/tiw-p1/animation/slick.min.js"></script>
 	<script src="/tiw-p1/animation/nouislider.min.js"></script>
-	<script src="/tiw-p1/animation/jquery.zoom.min.js"></script>
 	<script src="/tiw-p1/animation/main.js"></script>
 
 </body>
