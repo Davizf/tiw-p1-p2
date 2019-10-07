@@ -19,6 +19,13 @@ public class ShoppingCart extends HttpServlet{
 		
 		if(req.getParameter("type").equalsIgnoreCase("addToCart")) {
 			String name = req.getParameter("name");
+			
+			
+			
+			PrintWriter out = res.getWriter();
+			out.println("name is : " + name);
+			
+			
 			int num = Integer.parseInt(req.getParameter("numOrder"));
 			
 			for(ProductInCart product : products) {
@@ -37,7 +44,22 @@ public class ShoppingCart extends HttpServlet{
 			req.setAttribute("cartList", products);
 			RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 			rd.forward(req, res);
+			
+			
 		} else if(req.getParameter("type").equalsIgnoreCase("deleteInCart")) {
+			
+			//PrintWriter out = res.getWriter();
+			
+			int index = Integer.parseInt(req.getParameter("indexToRemove"));
+			
+			//out.println("index is: " + index);
+			
+			products.remove(index);
+			req.setAttribute("cartList", products);
+			//out.print("length is: " + products.size());
+			
+			RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
+			rd.forward(req, res);
 			
 		}
 		

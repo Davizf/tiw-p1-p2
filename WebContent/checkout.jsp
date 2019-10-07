@@ -163,7 +163,7 @@
 										</div>
 									</div>
 									<div class="shopping-cart-btns">
-										<button class="main-btn">View Cart</button>
+										<button class="main-btn"><a href="/tiw-p1/checkout.jsp">View Cart</a></button>
 										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
 									</div>
 								</div>
@@ -705,12 +705,14 @@
 												<li><span>Size: M</span></li>
 											</ul>
 										</td>
-										
-										<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-										<td class="qty text-center"><input class="input" type="number" value=<%= product.getNum() %>></td>
-										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-										<input type="hidden" name="type" value= "deleteCart" >
-										<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
+										<form action="ShoppingCart" method="post">
+											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
+											<td class="qty text-center"><input class="input" type="number" value=<%= product.getNum() %>></td>
+											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
+											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
+											<input type="hidden" name="type" value= "deleteInCart" >
+											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
+										</form>
 										
 									</tr>
 									
