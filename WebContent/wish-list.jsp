@@ -1,5 +1,8 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="models.ProductInWishList" %>
+<%@page import="controllers.ShoppingCart" %>
+<%@page import="java.util.*" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +163,7 @@
 										</div>
 									</div>
 									<div class="shopping-cart-btns">
-										<button class="main-btn">View Cart</button>
+										<button class="main-btn"><a href="/tiw-p1/checkout.jsp">View Cart</a></button>
 										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
 									</div>
 								</div>
@@ -551,9 +554,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li><a href="#">Products</a></li>
-				<li><a href="#">Category</a></li>
-				<li class="active">Product Name Goes Here</li>
+				<li class="active">Wish list</li>
 			</ul>
 		</div>
 	</div>
@@ -563,352 +564,175 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
+		
+		
 			<!-- row -->
 			<div class="row">
-				<!--  Product Details -->
-				<div class="product product-details clearfix">
+			
+			
+			
+			<%--
+				<form id="checkout-form" class="clearfix">
 					<div class="col-md-6">
-						<div id="product-main-view">
-							<div class="product-view">
-								<img src=<%= request.getParameter("path") %> alt="">
+						<div class="billing-details">
+							<p>Already a customer ? <a href="#">Login</a></p>
+							<div class="section-title">
+								<h3 class="title">Billing Details</h3>
 							</div>
-						</div>
-						
-					</div>
-					<div class="col-md-6">
-						<div class="product-body">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
+							<div class="form-group">
+								<input class="input" type="text" name="first-name" placeholder="First Name">
 							</div>
-							
-							
-							<h2 class="product-name">
-								<%= request.getParameter("name") %>
-							</h2>
-							
-							
-							
-							
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
-								<a href="#">3 Review(s) / Add Review</a>
+							<div class="form-group">
+								<input class="input" type="text" name="last-name" placeholder="Last Name">
 							</div>
-							<p><strong>Availability:</strong> In Stock</p>
-							<p><strong>Brand:</strong> E-SHOP</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-								dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<div class="product-options">
-								<ul class="size-option">
-									<li><span class="text-uppercase">Size:</span></li>
-									<li class="active"><a href="#">S</a></li>
-									<li><a href="#">XL</a></li>
-									<li><a href="#">SL</a></li>
-								</ul>
-								<ul class="color-option">
-									<li><span class="text-uppercase">Color:</span></li>
-									<li class="active"><a href="#" style="background-color:#475984;"></a></li>
-									<li><a href="#" style="background-color:#8A2454;"></a></li>
-									<li><a href="#" style="background-color:#BF6989;"></a></li>
-									<li><a href="#" style="background-color:#9A54D8;"></a></li>
-								</ul>
+							<div class="form-group">
+								<input class="input" type="email" name="email" placeholder="Email">
 							</div>
-
-							<div class="product-btns">
-							
-							
-							
-							
-								<form action="ShoppingCart" method="post">
-								
-									<div class="qty-input">
-										<span class="text-uppercase">QTY: </span>
-										<input class="input" type="number" name="numOrder">
-										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
-										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
-										<input type="hidden" name="type" value= "addToCart" >
+							<div class="form-group">
+								<input class="input" type="text" name="address" placeholder="Address">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="city" placeholder="City">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="country" placeholder="Country">
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+							</div>
+							<div class="form-group">
+								<input class="input" type="tel" name="tel" placeholder="Telephone">
+							</div>
+							<div class="form-group">
+								<div class="input-checkbox">
+									<input type="checkbox" id="register">
+									<label class="font-weak" for="register">Create Account?</label>
+									<div class="caption">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+											<p>
+												<input class="input" type="password" name="password" placeholder="Enter Your Password">
 									</div>
-									<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
-								
-								
-								</form>
-								
-								
-								
-								
-								
-								
-								<div class="pull-right">
-								
-									<form action="WishList" method="post">	
-										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
-										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
-										<input type="hidden" name="type" value= "addToWishList" >
-										<input type="submit" class="primary-btn add-to-cart" value="ADD TO WISH LIST" />
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
-									</form>
-									
-									
-									
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<div class="col-md-6">
+						<div class="shiping-methods">
+							<div class="section-title">
+								<h4 class="title">Shiping Methods</h4>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="shipping" id="shipping-1" checked>
+								<label for="shipping-1">Free Shiping -  $0.00</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="shipping" id="shipping-2">
+								<label for="shipping-2">Standard - $4.00</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+						</div>
+
+						<div class="payments-methods">
+							<div class="section-title">
+								<h4 class="title">Payments Methods</h4>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="payments" id="payments-1" checked>
+								<label for="payments-1">Direct Bank Transfer</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="payments" id="payments-2">
+								<label for="payments-2">Cheque Payment</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+							<div class="input-checkbox">
+								<input type="radio" name="payments" id="payments-3">
+								<label for="payments-3">Paypal System</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										<p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+ --%>
+
+
 					<div class="col-md-12">
-						<div class="product-tab">
-							<ul class="tab-nav">
-								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab1">Details</a></li>
-								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
-							</ul>
-							<div class="tab-content">
-								<div id="tab1" class="tab-pane fade in active">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-										irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-								</div>
-								<div id="tab2" class="tab-pane fade in">
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="product-reviews">
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<ul class="reviews-pages">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-												</ul>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<h4 class="text-uppercase">Write Your Review</h4>
-											<p>Your email address will not be published.</p>
-											<form class="review-form">
-												<div class="form-group">
-													<input class="input" type="text" placeholder="Your Name" />
-												</div>
-												<div class="form-group">
-													<input class="input" type="email" placeholder="Email Address" />
-												</div>
-												<div class="form-group">
-													<textarea class="input" placeholder="Your review"></textarea>
-												</div>
-												<div class="form-group">
-													<div class="input-rating">
-														<strong class="text-uppercase">Your Rating: </strong>
-														<div class="stars">
-															<input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
-															<input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
-															<input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
-															<input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
-															<input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
-														</div>
-													</div>
-												</div>
-												<button class="primary-btn">Submit</button>
-											</form>
-										</div>
-									</div>
-
-
-
-								</div>
+						<div class="order-summary clearfix">
+							<div class="section-title">
+								<h3 class="title">My Wish List	</h3>
 							</div>
+							<table class="shopping-cart-table table">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th></th>
+										<th class="text-center">Price</th>
+										<th class="text-center">Quantity</th>
+										<th class="text-center">Total</th>
+										<th class="text-right"></th>
+									</tr>
+								</thead>
+								<tbody>
+								
+								
+								<%
+								ArrayList<ProductInWishList> list = (ArrayList<ProductInWishList>)request.getAttribute("wishList");
+								for(ProductInWishList product : list ){
+								%>
+									<tr>
+										<td class="thumb"><img src= <%= product.getPath() %> alt=""></td>
+										<td class="details">
+											<a href="#"><%= product.getName() %></a>
+											<ul>
+												<li><span>Size: M</span></li>
+											</ul>
+										</td>
+										<form action="WishList" method="post">
+											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
+											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
+											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
+											<input type="hidden" name="type" value= "deleteInWishList" >
+											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
+										</form>
+										
+									</tr>
+									
+								<% } %>	
+									
+									
+									
+								</tbody>
+							
+							</table>
+					
 						</div>
-					</div>
 
-				</div>
-				<!-- /Product Details -->
+					</div>
+				</form>
 			</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->
 	</div>
 	<!-- /section -->
-
-	<!-- section -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- section title -->
-				<div class="col-md-12">
-					<div class="section-title">
-						<h2 class="title">Picked For You</h2>
-					</div>
-				</div>
-				<!-- section title -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product04.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product03.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product02.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product01.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /section -->
-
 
 	<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">
@@ -1013,6 +837,7 @@
 	<script src="/tiw-p1/animation/bootstrap.min.js"></script>
 	<script src="/tiw-p1/animation/slick.min.js"></script>
 	<script src="/tiw-p1/animation/nouislider.min.js"></script>
+	<script src="/tiw-p1/animation/jquery.zoom.min.js"></script>
 	<script src="/tiw-p1/animation/main.js"></script>
 
 </body>
