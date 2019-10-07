@@ -1,5 +1,8 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="models.ProductInCart" %>
+<%@page import="controllers.ShoppingCart" %>
+<%@page import="java.util.*" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +85,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="/tiw-p1/index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -561,8 +564,14 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
+		
+		
 			<!-- row -->
 			<div class="row">
+			
+			
+			
+			<%--
 				<form id="checkout-form" class="clearfix">
 					<div class="col-md-6">
 						<div class="billing-details">
@@ -662,6 +671,9 @@
 						</div>
 					</div>
 
+ --%>
+
+
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
@@ -679,48 +691,33 @@
 									</tr>
 								</thead>
 								<tbody>
+								
+								
+								<%
+								ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("cartList");
+								for(ProductInCart product : list ){
+								%>
 									<tr>
-										<td class="thumb"><img src="/tiw-p1/images/thumb-product01.jpg" alt=""></td>
+										<td class="thumb"><img src= <%= product.getPath() %> alt=""></td>
 										<td class="details">
-											<a href="#">Product Name Goes Here</a>
+											<a href="#"><%= product.getName() %></a>
 											<ul>
-												<li><span>Size: XL</span></li>
-												<li><span>Color: Camelot</span></li>
+												<li><span>Size: M</span></li>
 											</ul>
 										</td>
+										
 										<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
+										<td class="qty text-center"><input class="input" type="number" value=<%= product.getNum() %>></td>
 										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
+										<input type="hidden" name="type" value= "deleteCart" >
+										<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
+										
 									</tr>
-									<tr>
-										<td class="thumb"><img src="/tiw-p1/images/thumb-product01.jpg" alt=""></td>
-										<td class="details">
-											<a href="#">Product Name Goes Here</a>
-											<ul>
-												<li><span>Size: XL</span></li>
-												<li><span>Color: Camelot</span></li>
-											</ul>
-										</td>
-										<td class="price text-center"><strong>$32.50</strong></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
-										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
-									</tr>
-									<tr>
-										<td class="thumb"><img src="/tiw-p1/images/thumb-product01.jpg" alt=""></td>
-										<td class="details">
-											<a href="#">Product Name Goes Here</a>
-											<ul>
-												<li><span>Size: XL</span></li>
-												<li><span>Color: Camelot</span></li>
-											</ul>
-										</td>
-										<td class="price text-center"><strong>$32.50</strong></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
-										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
-									</tr>
+									
+								<% } %>	
+									
+									
+									
 								</tbody>
 								<tfoot>
 									<tr>

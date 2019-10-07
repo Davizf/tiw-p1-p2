@@ -82,7 +82,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="/tiw-p1/index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -626,13 +626,16 @@
 							
 							
 							
-								<form action="/tiw-p1/ShoppingCart" name="order" method="post">
+								<form action="ShoppingCart" method="post">
 								
-								<div class="qty-input">
-									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number" name="numOrder">
-								</div>
-								<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
+									<div class="qty-input">
+										<span class="text-uppercase">QTY: </span>
+										<input class="input" type="number" name="numOrder">
+										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
+										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
+										<input type="hidden" name="type" value= "addToCart" >
+									</div>
+									<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
 								
 								
 								</form>
