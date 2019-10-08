@@ -13,9 +13,13 @@ import models.ProductInCart;
 
 public class ShoppingCart extends HttpServlet{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<ProductInCart> products = new ArrayList<ProductInCart>();
 	
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
 		if(req.getParameter("type").equalsIgnoreCase("addToCart")) {
 			String name = req.getParameter("name");
@@ -48,15 +52,12 @@ public class ShoppingCart extends HttpServlet{
 			
 		} else if(req.getParameter("type").equalsIgnoreCase("deleteInCart")) {
 			
-			//PrintWriter out = res.getWriter();
 			
 			int index = Integer.parseInt(req.getParameter("indexToRemove"));
 			
-			//out.println("index is: " + index);
-			
 			products.remove(index);
 			req.setAttribute("cartList", products);
-			//out.print("length is: " + products.size());
+
 			
 			RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 			rd.forward(req, res);

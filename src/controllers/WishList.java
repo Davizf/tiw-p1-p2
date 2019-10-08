@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -13,9 +12,13 @@ import models.ProductInWishList;
 
 public class WishList extends HttpServlet{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<ProductInWishList> products = new ArrayList<ProductInWishList>();
 	
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
 		if(req.getParameter("type").equalsIgnoreCase("addToWishList")) {
 			String name = req.getParameter("name");
