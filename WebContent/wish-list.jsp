@@ -1,6 +1,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.ProductInCart" %>
+<%@page import="models.ProductInWishList" %>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
 
@@ -554,7 +554,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li class="active">Checkout</li>
+				<li class="active">Wish list</li>
 			</ul>
 		</div>
 	</div>
@@ -677,7 +677,7 @@
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
-								<h3 class="title">Order Review</h3>
+								<h3 class="title">My Wish List	</h3>
 							</div>
 							<table class="shopping-cart-table table">
 								<thead>
@@ -694,8 +694,8 @@
 								
 								
 								<%
-								ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("cartList");
-								for(ProductInCart product : list ){
+								ArrayList<ProductInWishList> list = (ArrayList<ProductInWishList>)request.getAttribute("wishList");
+								for(ProductInWishList product : list ){
 								%>
 									<tr>
 										<td class="thumb"><img src= <%= product.getPath() %> alt=""></td>
@@ -705,12 +705,11 @@
 												<li><span>Size: M</span></li>
 											</ul>
 										</td>
-										<form action="ShoppingCart" method="post">
+										<form action="WishList" method="post">
 											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-											<td class="qty text-center"><input class="input" type="number" value=<%= product.getNum() %>></td>
 											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
 											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
-											<input type="hidden" name="type" value= "deleteInCart" >
+											<input type="hidden" name="type" value= "deleteInWishList" >
 											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
 										</form>
 										
@@ -721,27 +720,9 @@
 									
 									
 								</tbody>
-								<tfoot>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>SUBTOTAL</th>
-										<th colspan="2" class="sub-total">$97.50</th>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>SHIPING</th>
-										<td colspan="2">Free Shipping</td>
-									</tr>
-									<tr>
-										<th class="empty" colspan="3"></th>
-										<th>TOTAL</th>
-										<th colspan="2" class="total">$97.50</th>
-									</tr>
-								</tfoot>
+							
 							</table>
-							<div class="pull-right">
-								<button class="primary-btn">Place Order</button>
-							</div>
+					
 						</div>
 
 					</div>

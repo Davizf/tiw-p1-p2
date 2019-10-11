@@ -82,7 +82,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="/tiw-p1/index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -622,15 +622,42 @@
 							</div>
 
 							<div class="product-btns">
-								<div class="qty-input">
-									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number">
-								</div>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							
+							
+							
+							
+								<form action="ShoppingCart" method="post">
+								
+									<div class="qty-input">
+										<span class="text-uppercase">QTY: </span>
+										<input class="input" type="number" name="numOrder">
+										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
+										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
+										<input type="hidden" name="type" value= "addToCart" >
+									</div>
+									<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
+								
+								
+								</form>
+								
+								
+								
+								
+								
+								
 								<div class="pull-right">
-									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-									<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
+								
+									<form action="WishList" method="post">	
+										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
+										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
+										<input type="hidden" name="type" value= "addToWishList" >
+										<input type="submit" class="primary-btn add-to-cart" value="ADD TO WISH LIST" />
+										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+										<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
+									</form>
+									
+									
+									
 								</div>
 							</div>
 						</div>
@@ -791,11 +818,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -821,11 +844,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -851,11 +870,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -882,11 +897,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>

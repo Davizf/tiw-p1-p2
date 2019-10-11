@@ -82,7 +82,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="#">
+						<a class="logo" href="/tiw-p1/index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -160,7 +160,7 @@
 										</div>
 									</div>
 									<div class="shopping-cart-btns">
-										<button class="main-btn">View Cart</button>
+										<button class="main-btn"><a href="/tiw-p1/checkout.jsp">View Cart</a></button>
 										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
 									</div>
 								</div>
@@ -696,12 +696,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Blue bag&path=/tiw-p1/images/product01.jpg">Blue bag</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -729,12 +725,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Black bag&path=/tiw-p1/images/product07.jpg">Black bag</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Purse&path=/tiw-p1/images/product07.jpg">Purse</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -763,12 +755,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Orange bag&path=/tiw-p1/images/product06.jpg">Orange bag</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Handbag&path=/tiw-p1/images/product06.jpg">Handbag</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -798,11 +786,7 @@
 										<i class="fa fa-star-o empty"></i>
 									</div>
 									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Belt&path=/tiw-p1/images/product08.jpg">Belt</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -853,16 +837,12 @@
 							</div>
 							
 							
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Blue bag&path=/tiw-p1/images/product01.jpg">Blue bag</a></h2>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
 							
 							
 							
 							
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -887,12 +867,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Orange bag&path=/tiw-p1/images/product06.jpg">Orange bag</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Handbag&path=/tiw-p1/images/product06.jpg">Handbag</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -915,12 +891,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Black boots&path=/tiw-p1/images/product05.jpg">Black boots</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Boots&path=/tiw-p1/images/product05.jpg">Boots</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -940,12 +912,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Black boots&path=/tiw-p1/images/product05.jpg">Black boots</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Shoes&path=/tiw-p1/images/main-product01.jpg">Shoes</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -969,12 +937,8 @@
 										<i class="fa fa-star"></i>
 										<i class="fa fa-star-o empty"></i>
 									</div>
-									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Brown wallet&path=/tiw-p1/images/product03.jpg">Brown wallet</a></h2>
-									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-									</div>
+									<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Wallet&path=/tiw-p1/images/product03.jpg">Wallet</a></h2>
+									 
 								</div>
 							</div>
 							<!-- /Product Single -->
@@ -1066,12 +1030,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Blue bag&path=/tiw-p1/images/product01.jpg">Blue bag</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1098,11 +1058,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Watch&path=/tiw-p1/images/product02.jpg">Watch</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -1128,12 +1084,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Brown wallet&path=/tiw-p1/images/product03.jpg">Brown wallet</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Wallet&path=/tiw-p1/images/product03.jpg">Wallet</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1158,12 +1110,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Blue shoes&path=/tiw-p1/images/main-product01.jpg">Blue shoes</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Shoes&path=/tiw-p1/images/main-product01.jpg">Shoes</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1205,12 +1153,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Black bag&path=/tiw-p1/images/product07.jpg">Black bag</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Purse&path=/tiw-p1/images/product07.jpg">Purse</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1236,12 +1180,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Orange bag&path=/tiw-p1/images/product06.jpg">Orange bag</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Handbag&path=/tiw-p1/images/product06.jpg">Handbag</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1267,12 +1207,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Black boots&path=/tiw-p1/images/product05.jpg">Black boots</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Boots&path=/tiw-p1/images/product05.jpg">Boots</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1306,12 +1242,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Black boots&path=/tiw-p1/images/product05.jpg">Black boots</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Shoes&path=/tiw-p1/images/main-product01.jpg">Shoes</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1336,12 +1268,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Brown wallet&path=/tiw-p1/images/product03.jpg">Brown wallet</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Wallet&path=/tiw-p1/images/product03.jpg">Wallet</a></h2>
+							
 						</div>
 					</div>
 				</div>
@@ -1367,11 +1295,7 @@
 								<i class="fa fa-star-o empty"></i>
 							</div>
 							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Watch&path=/tiw-p1/images/product02.jpg">Watch</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -1397,12 +1321,8 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-o empty"></i>
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Blue bag&path=/tiw-p1/images/product01.jpg">Blue bag</a></h2>
-							<div class="product-btns">
-								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-							</div>
+							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
+							
 						</div>
 					</div>
 				</div>
