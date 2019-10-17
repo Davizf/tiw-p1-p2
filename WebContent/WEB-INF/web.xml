@@ -12,13 +12,13 @@
 	<servlet-class>controllers.WishList</servlet-class>
 </servlet>
 <servlet>
-	<servlet-name>USerRegister</servlet-name>
-	<servlet-class>controllers.USerRegister</servlet-class>
+	<servlet-name>UserRegister</servlet-name>
+	<servlet-class>controllers.UserRegister</servlet-class>
 </servlet>
 
 <servlet-mapping>
-	<servlet-name>USerRegister</servlet-name>
-	<url-pattern>/USerRegister</url-pattern>
+	<servlet-name>UserRegister</servlet-name>
+	<url-pattern>/UserRegister</url-pattern>
 </servlet-mapping>
 <servlet-mapping>
 	<servlet-name>WishList</servlet-name>

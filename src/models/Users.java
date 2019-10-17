@@ -9,6 +9,8 @@ public class Users {
 	String country;
 	int zipCode;
 	int telephone;
+	
+	
 	public String getFirstName() {
 		return firstName;
 	}

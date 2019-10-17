@@ -580,10 +580,10 @@
 								<h3 class="title">Register form</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
+								<input class="input" type="text" name="firstName" placeholder="First Name">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
+								<input class="input" type="text" name="lastName" placeholder="Last Name">
 							</div>
 							<div class="form-group">
 								<input class="input" type="email" name="email" placeholder="Email">
@@ -598,7 +598,7 @@
 								<input class="input" type="text" name="country" placeholder="Country">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+								<input class="input" type="text" name="zipCode" placeholder="ZIP Code">
 							</div>
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone">
