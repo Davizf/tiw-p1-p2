@@ -11,6 +11,10 @@
 	<servlet-name>WishList</servlet-name>
 	<servlet-class>controllers.WishList</servlet-class>
 </servlet>
+<servlet>
+	<servlet-name>UserController</servlet-name>
+	<servlet-class>controllers.UserController</servlet-class>
+</servlet>
 
 <servlet-mapping>
 	<servlet-name>ShoppingCart</servlet-name>
@@ -19,6 +23,10 @@
 <servlet-mapping>
 	<servlet-name>WishList</servlet-name>
 	<url-pattern>/WishList</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+	<servlet-name>UserController</servlet-name>
+	<url-pattern>/UserController</url-pattern>
 </servlet-mapping>
 
 
