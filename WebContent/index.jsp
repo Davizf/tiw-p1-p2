@@ -159,10 +159,13 @@
 											<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 										</div>
 									</div>
-									<div class="shopping-cart-btns">
-										<button class="main-btn"><a href="/tiw-p1/checkout.jsp">View Cart</a></button>
-										<button class="primary-btn">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-									</div>
+									
+									<form action="ShoppingCart" method="get">
+										<div class="shopping-cart-btns">
+											<input type="submit" class="primary-btn add-to-cart" value="View Cart" />
+										</div>
+									</form>
+									
 								</div>
 							</div>
 						</li>

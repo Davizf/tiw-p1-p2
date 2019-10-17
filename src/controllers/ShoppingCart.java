@@ -22,23 +22,18 @@ public class ShoppingCart extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
 		if(req.getParameter("type").equalsIgnoreCase("addToCart")) {
+			
 			String name = req.getParameter("name");
-			
-			
-			
-			PrintWriter out = res.getWriter();
-			out.println("name is : " + name);
-			
-			
 			int num = Integer.parseInt(req.getParameter("numOrder"));
 			
 			for(ProductInCart product : products) {
 				if(product.getName().equalsIgnoreCase(name)) {
-					product.setNum(product.getNum() + num );
 					
+					product.setNum(product.getNum() + num );
 					req.setAttribute("cartList", products);
 					RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 					rd.forward(req, res);
+					return ;
 				}
 			}
 			
@@ -66,6 +61,12 @@ public class ShoppingCart extends HttpServlet{
 		
 		
 	
+	}
+	
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		req.setAttribute("cartList", products);
+		RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
+		rd.forward(req, res);
 	}
 
 }
