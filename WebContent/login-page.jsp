@@ -554,7 +554,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li class="active">Register form</li>
+				<li class="active">Login form</li>
 			</ul>
 		</div>
 	</div>
@@ -575,40 +575,19 @@
 
 					<div class="col-md-6">
 						<div class="billing-details">
-							<p>Already a customer ? <a href="#">Login</a></p>
 							<div class="section-title">
-								<h3 class="title">Register form</h3>
+								<h3 class="title">Login form</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="firstName" placeholder="First Name" required>
+								<input class="input" type="email" name="email" placeholder="Email">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="lastName" placeholder="Last Name" required>
+								<input class="input" type="password" name="password" placeholder="Password">
 							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="password" name="password" placeholder="Password" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="number" name="zipCode" placeholder="ZIP Code" required>
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
-							</div>
+
 							<div class="form-group">
 								<div class="input-checkbox">
-									<input type="submit" name="button" class="primary-btn add-to-cart" value="Register" />
+									<input type="submit" name="button" class="primary-btn add-to-cart" value="Login" />
 								</div>
 						
 															
@@ -616,9 +595,10 @@
 						</div>
 					</div>
 
+			
+
+ 
 				</form>
-				
-				
 			</div>
 			<!-- /row -->
 		</div>

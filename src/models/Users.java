@@ -4,6 +4,7 @@ public class Users {
 	String firstName;
 	String lastName;
 	String email;
+	String password;
 	String adress;
 	String city;
 	String country;
@@ -11,6 +12,12 @@ public class Users {
 	int telephone;
 	
 	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}	
 	public String getFirstName() {
 		return firstName;
 	}
