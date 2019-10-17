@@ -571,8 +571,8 @@
 			
 			
 			
-			
-				<form id="checkout-form" class="clearfix">
+				<form action="UserRegister" method="post" class="clearfix">
+
 					<div class="col-md-6">
 						<div class="billing-details">
 							<p>Already a customer ? <a href="#">Login</a></p>
@@ -604,17 +604,12 @@
 								<input class="input" type="tel" name="tel" placeholder="Telephone">
 							</div>
 							<div class="form-group">
-							
-							
-							
-							<form action="UserRegister" method="post">
-							
-								<div class="input-checkbox">
-									<input type="submit" class="primary-btn add-to-cart" value="Register" />
-								</div>
-							</form>
-							
-								
+														
+							<div class="input-checkbox">
+								<input type="submit" class="primary-btn add-to-cart" value="Register" />
+							</div>
+						
+															
 							</div>
 						</div>
 					</div>
