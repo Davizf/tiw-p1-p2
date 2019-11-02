@@ -1,5 +1,4 @@
-# Read me Please :)
-
+# Read me...
 ## The way to import the project:
 - File -> Open Projects from File System -> Directory -> "Select the project directory"
 
