@@ -14,6 +14,6 @@
 ## When you want to merge your branch (when you finish) with the master branch
 - Create pull request on Github
 
-<hr>
-Any questions you can ask David, he is bored all day!
+
+
 
