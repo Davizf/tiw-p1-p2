@@ -554,7 +554,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li class="active">Login form</li>
+				<li class="active">My account</li>
 			</ul>
 		</div>
 	</div>
@@ -576,39 +576,27 @@
 					<div class="col-md-6">
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Login form</h3>
+								<h3 class="title">Confirmation</h3>
 							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="password" name="password" placeholder="Password">
-							</div>
-							
-							<!-- can not find the user on database case -->
-							<p id="redText">${param.message}</p>
-	
+							<h3 class="footer-header">Are you sure you want to delete your account?</h3>
 							<div class="form-group">
 								<div class="input-checkbox">
-									<input type="submit" name="button" class="primary-btn add-to-cart" value="Login" />
+									<input type="submit" name="button" class="btn btn-success" value="No" />
+									<input type="submit" name="button" class="btn btn-danger" value="Yes" />
 								</div>
-						
-															
 							</div>
 						</div>
 					</div>
 
-			
-
- 
 				</form>
+				
+				
 			</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->
 	</div>
 	<!-- /section -->
-	
 
 	<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">

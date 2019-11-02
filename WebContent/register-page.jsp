@@ -608,7 +608,7 @@
 							
 							</div>
 							<!-- A user with email has already registered -->
-							<p id="loginError">${param.message}</p>
+							<p id="redText">${param.message}</p>
 							
 							<div class="form-group">
 								<div class="input-checkbox">

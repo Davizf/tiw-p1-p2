@@ -1732,6 +1732,10 @@ textarea.input {
 /*=========================================================
 	TIW -> style sheet
 ===========================================================*/
-#loginError {
+#redText {
 	color: red;
+}
+
+#greenText {
+	color: green;
 }

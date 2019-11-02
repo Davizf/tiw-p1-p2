@@ -554,7 +554,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li class="active">Login form</li>
+				<li class="active">Edit my profile</li>
 			</ul>
 		</div>
 	</div>
@@ -576,21 +576,42 @@
 					<div class="col-md-6">
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Login form</h3>
+								<h3 class="title">My Profile</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
+								<input class="input" type="text" name="firstName" placeholder="First Name" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="password" name="password" placeholder="Password">
+								<input class="input" type="text" name="lastName" placeholder="Last Name" required>
 							</div>
+							<div class="form-group">
+								<input class="input" type="email" name="email" placeholder="Email" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="password" name="password" placeholder="Password" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="address" placeholder="Address" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="city" placeholder="City" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="country" placeholder="Country" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="number" name="zipCode" placeholder="ZIP Code" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
 							
-							<!-- can not find the user on database case -->
-							<p id="redText">${param.message}</p>
-	
+							</div>
+							<!-- Display that the changes have been made correctly -->
+							<p id="greenText">${param.message}</p>
+							
 							<div class="form-group">
 								<div class="input-checkbox">
-									<input type="submit" name="button" class="primary-btn add-to-cart" value="Login" />
+									<input type="submit" name="button" class="primary-btn add-to-cart" value="Save my profile" />
 								</div>
 						
 															
@@ -598,17 +619,15 @@
 						</div>
 					</div>
 
-			
-
- 
 				</form>
+				
+				
 			</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->
 	</div>
 	<!-- /section -->
-	
 
 	<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">

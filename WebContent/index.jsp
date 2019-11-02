@@ -114,12 +114,11 @@
 							</div>
 							<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<ul class="custom-menu">
-								<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
+								<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My Profile</a></li>
 								<li><a href="login-page.jsp"><i class="fa fa-unlock-alt"></i> Login</a></li>
 								<li><a href="register-page.jsp"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+								<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete account</a></li>
+								
 							</ul>
 						</li>
 						<!-- /Account -->
