@@ -584,7 +584,10 @@
 							<div class="form-group">
 								<input class="input" type="password" name="password" placeholder="Password">
 							</div>
-
+							
+							<!-- can not find the user on database case -->
+							<p id="loginError">${param.message}</p>
+	
 							<div class="form-group">
 								<div class="input-checkbox">
 									<input type="submit" name="button" class="primary-btn add-to-cart" value="Login" />
@@ -605,6 +608,7 @@
 		<!-- /container -->
 	</div>
 	<!-- /section -->
+	
 
 	<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">

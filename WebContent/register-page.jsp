@@ -605,7 +605,11 @@
 							</div>
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
+							
 							</div>
+							<!-- A user with email has already registered -->
+							<p id="loginError">${param.message}</p>
+							
 							<div class="form-group">
 								<div class="input-checkbox">
 									<input type="submit" name="button" class="primary-btn add-to-cart" value="Register" />
