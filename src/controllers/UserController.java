@@ -61,7 +61,7 @@ public class UserController extends HttpServlet{
 			
 			req.setAttribute("Users", users);
 			
-			RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
 			rd.forward(req, res);
 				
 		}else if(req.getParameter("button").equalsIgnoreCase("Login")) {
@@ -69,12 +69,14 @@ public class UserController extends HttpServlet{
 			for(Users user : users) {
 				if( user.getPassword().equalsIgnoreCase(req.getParameter("email")) &&
 						user.getPassword().equalsIgnoreCase(req.getParameter("password"))) {
+					session.setAttribute("user", email);
+					session.setAttribute("username", user.getFirstName());
 					RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 					rd.forward(req, res);
 				}
 			}
 			
-			session.setAttribute("user", email);
+			
 			
 			String message = "The email or password is wrong!";
 			res.sendRedirect("login-page.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
@@ -102,7 +104,7 @@ public class UserController extends HttpServlet{
 					user.setFirstName(firstName);
 					user.setLastName(lastName);
 					user.setPassword(password);
-					
+					session.setAttribute("username", user.getFirstName());
 				}
 			}
 			
@@ -121,8 +123,9 @@ public class UserController extends HttpServlet{
 					users.remove(user);
 				}
 			}
-			
 			session.invalidate();
+			RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+			rd.forward(req, res);
 			
 		}
 		
