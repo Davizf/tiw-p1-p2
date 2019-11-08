@@ -1,5 +1,4 @@
-# Read me Please :)
-
+# Read me...
 ## The way to import the project:
 - File -> Open Projects from File System -> Directory -> "Select the project directory"
 
@@ -14,6 +13,6 @@
 ## When you want to merge your branch (when you finish) with the master branch
 - Create pull request on Github
 
-<hr>
-Any questions you can ask David, he is bored all day!
+
+
 
