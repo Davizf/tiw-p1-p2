@@ -1,17 +1,43 @@
 package models;
 
 public class Users {
-	String firstName;
-	String lastName;
-	String email;
-	String password;
-	String adress;
-	String city;
-	String country;
-	int zipCode;
-	int telephone;
-	
-	
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String password;
+	private String adress;
+	private String city;
+	private String country;
+	private int zipCode;
+	private int telephone;
+	private int seller;
+
+	public Users() {
+		firstName = "";
+		lastName = "";
+		email = "";
+		password = "";
+		adress = "";
+		city = "";
+		country = "";
+		zipCode = 0;
+		telephone = 0;
+		seller = 0;
+	}
+	public Users(String firstName, String lastName, String email, String password, String adress, String city,
+			String country, int zipCode, int telephone, int seller) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.adress = adress;
+		this.city = city;
+		this.country = country;
+		this.zipCode = zipCode;
+		this.telephone = telephone;
+		this.seller = seller;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -66,6 +92,18 @@ public class Users {
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
 	}
-	
-	
+	public int getSeller() {
+		return seller;
+	}
+	public void setSeller(int seller) {
+		this.seller = seller;
+	}
+
+	@Override
+	public String toString() {
+		return "Users [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password="
+				+ password + ", adress=" + adress + ", city=" + city + ", country=" + country + ", zipCode=" + zipCode
+				+ ", telephone=" + telephone + ", seller=" + seller + "]";
+	}
+
 }

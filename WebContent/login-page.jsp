@@ -613,7 +613,7 @@
 							</div>
 							
 							<!-- can not find the user on database case -->
-							<p id="redText">${param.message}</p>
+							<p id="redText"><%=request.getAttribute("message") == null ? "":request.getAttribute("message") %></p>
 	
 							<div class="form-group">
 								<div class="input-checkbox">

@@ -634,7 +634,7 @@
 							
 							</div>
 							<!-- Display that the changes have been made correctly -->
-							<p id="greenText">${param.message}</p>
+							<p id="greenText"><%=request.getAttribute("message") == null ? "":request.getAttribute("message") %></p>
 							
 							<div class="form-group">
 								<div class="input-checkbox">
