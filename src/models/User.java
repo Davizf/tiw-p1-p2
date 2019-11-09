@@ -1,23 +1,9 @@
 package models;
 
-import java.io.Serializable;
+public class User {
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-/**
- * The persistent class for the users database table.
- * 
- */
-@Entity
-@Table(name="users")
-public class User implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
 	private String name;
 	private String surnames;
-	@Id
 	private String email;
 	private String password;
 	private String address;
@@ -44,9 +30,6 @@ public class User implements Serializable{
 	}
 	public void setPhone(int phone) {
 		this.phone = phone;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	private String city;
