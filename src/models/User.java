@@ -11,46 +11,73 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="usuarios")
+@Table(name="users")
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-
-	private String firstName;
-	private String lastName;
+	private String name;
+	private String surnames;
 	@Id
 	private String email;
 	private String password;
-	private String adress;
+	private String address;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSurnames() {
+		return surnames;
+	}
+	public void setSurnames(String surnames) {
+		this.surnames = surnames;
+	}
+	public int getPostal_code() {
+		return postal_code;
+	}
+	public void setPostal_code(int postal_code) {
+		this.postal_code = postal_code;
+	}
+	public int getPhone() {
+		return phone;
+	}
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	private String city;
 	private String country;
-	private int zipCode;
-	private int telephone;
+	private int postal_code;
+	private int phone;
 	private int seller;
 
 	public User() {
-		firstName = "";
-		lastName = "";
+		name = "";
+		surnames = "";
 		email = "";
 		password = "";
-		adress = "";
+		address = "";
 		city = "";
 		country = "";
-		zipCode = 0;
-		telephone = 0;
+		postal_code = 0;
+		phone = 0;
 		seller = 0;
 	}
-	public User(String firstName, String lastName, String email, String password, String adress, String city,
-			String country, int zipCode, int telephone, int seller) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(String name, String surnames, String email, String password, String address, String city,
+			String country, int postal_code, int phone, int seller) {
+		this.name = name;
+		this.surnames = surnames;
 		this.email = email;
 		this.password = password;
-		this.adress = adress;
+		this.address = address;
 		this.city = city;
 		this.country = country;
-		this.zipCode = zipCode;
-		this.telephone = telephone;
+		this.postal_code = postal_code;
+		this.phone = phone;
 		this.seller = seller;
 	}
 
@@ -60,29 +87,17 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}	
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getCity() {
 		return city;
@@ -96,18 +111,7 @@ public class User implements Serializable{
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public int getZipCode() {
-		return zipCode;
-	}
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
-	public int getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(int telephone) {
-		this.telephone = telephone;
-	}
+
 	public int getSeller() {
 		return seller;
 	}
@@ -117,9 +121,9 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Users [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password="
-				+ password + ", adress=" + adress + ", city=" + city + ", country=" + country + ", zipCode=" + zipCode
-				+ ", telephone=" + telephone + ", seller=" + seller + "]";
+		return "Users [firstName=" + name + ", lastName=" + surnames + ", email=" + email + ", password="
+				+ password + ", adress=" + address + ", city=" + city + ", country=" + country + ", zipCode=" + postal_code
+				+ ", telephone=" + phone + ", seller=" + seller + "]";
 	}
 
 }

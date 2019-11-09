@@ -97,7 +97,7 @@ public class UserManager {
 		return "";
 	}
 
-	public User findUseByEmail(String email) {
+	public boolean checkUserEmail(String email) {
 		User user = null;
 		EntityManager em = getEntityManager();
 		try {
@@ -105,13 +105,30 @@ public class UserManager {
 		} finally {
 			em.close();
 		}
-		return user;
+		
+		return user != null;
+	}
+	
+	public Boolean verifyUser(String email, String password) {
+		User user = null;
+		EntityManager em = getEntityManager();
+		try {
+			user = (User) em.find(User.class, email);
+		} finally {
+			em.close();
+		}
+	
+		return user != null ? user.getPassword().equals(password) : false;
 	}
 
-	public User getNewPersona() {
-
-		User user = new User();
-
+	public User getUser(String email) {
+		User user = null;
+		EntityManager em = getEntityManager();
+		try {
+			user = (User) em.find(User.class, email);
+		} finally {
+			em.close();
+		}
 		return user;
 	}
 
