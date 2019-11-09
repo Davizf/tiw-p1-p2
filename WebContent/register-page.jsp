@@ -632,7 +632,12 @@
 							</div>
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
-							
+							</div>
+							<div class="form-group">
+								<div class="input-checkbox">
+									<input type="checkbox" name="seller" id="seller">
+									<label class="font-weak" for="seller">Are you a seller?</label>
+								</div>
 							</div>
 							<!-- A user with email has already registered -->
 							<p id="redText"><%=request.getAttribute("message") == null ? "":request.getAttribute("message") %></p>

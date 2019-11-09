@@ -45,6 +45,8 @@ public class UserController extends HttpServlet{
 			user.setFirstName(req.getParameter("firstName"));
 			user.setLastName(req.getParameter("lastName"));
 			user.setPassword(req.getParameter("password"));
+			String seller = req.getParameter("seller");
+			user.setSeller( (seller != null && seller.equals("on"))?1:0 );
 			users.add(user);
 
 			req.setAttribute("Users", users);
