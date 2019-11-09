@@ -3,39 +3,39 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import models.Users;
+import models.User;
 
 public class UserController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
-	ArrayList<Users> users = new ArrayList<Users>();
+	ArrayList<User> users = new ArrayList<User>();
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("CreateBuyer");
+		UserManager manager = new UserManager();
+		manager.setEntityManagerFactory(factory);
 		HttpSession session = req.getSession();
 		String email = req.getParameter("email");	
-
+		
 		if(req.getParameter("button").equalsIgnoreCase("Register")) {
-
-			for(Users user : users) {
-				if(user.getEmail().equalsIgnoreCase(email)) {
-
-					req.setAttribute("message", "This email has already been taken!");
-					RequestDispatcher rd = req.getRequestDispatcher("register-page.jsp");
-					rd.forward(req, res);
-					return ;
-				}
+	
+			if(manager.findUseByEmail(email) != null) {
+				req.setAttribute("message", "This email has already been taken!");
+				RequestDispatcher rd = req.getRequestDispatcher("register-page.jsp");
+				rd.forward(req, res);
+				return ;
 			}
-
-			Users user = new Users();
+			
+			User user = new User();
 			user.setTelephone(Integer.parseInt(req.getParameter("tel")));
 			user.setZipCode(Integer.parseInt(req.getParameter("zipCode")));
 			user.setAdress(req.getParameter("adress"));
@@ -47,16 +47,25 @@ public class UserController extends HttpServlet{
 			user.setPassword(req.getParameter("password"));
 			String seller = req.getParameter("seller");
 			user.setSeller( (seller != null && seller.equals("on"))?1:0 );
-			users.add(user);
+	
+			//users.add(user);
 
-			req.setAttribute("Users", users);
+			//req.setAttribute("Users", users);
+			
+			try {
 
+				manager.createUser(user);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 			RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
 			rd.forward(req, res);
 
 		}else if(req.getParameter("button").equalsIgnoreCase("Login")) {
 
-			for(Users user : users) {
+			for(User user : users) {
 				if( user.getEmail().equalsIgnoreCase(req.getParameter("email")) &&
 						user.getPassword().equalsIgnoreCase(req.getParameter("password"))) {
 					session.setAttribute("user", email);
@@ -72,7 +81,7 @@ public class UserController extends HttpServlet{
 
 		} else if(req.getParameter("button").equalsIgnoreCase("Save my profile")) {
 
-			for(Users user : users) {
+			for(User user : users) {
 				if( user.getEmail().equalsIgnoreCase(req.getParameter("email"))) {
 
 					int zipCode =   Integer.parseInt(req.getParameter("zipCode")) ;
@@ -105,7 +114,7 @@ public class UserController extends HttpServlet{
 
 		} else if(req.getParameter("button").equalsIgnoreCase("Yes")) {
 
-			for(Users user : users) {
+			for(User user : users) {
 				if( user.getEmail().equalsIgnoreCase(  (String) session.getAttribute("user")  )) {
 					users.remove(user);
 				}

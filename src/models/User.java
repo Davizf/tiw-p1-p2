@@ -1,8 +1,24 @@
 package models;
 
-public class Users {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * The persistent class for the users database table.
+ * 
+ */
+@Entity
+@Table(name="usuarios")
+public class User implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+
 	private String firstName;
 	private String lastName;
+	@Id
 	private String email;
 	private String password;
 	private String adress;
@@ -12,7 +28,7 @@ public class Users {
 	private int telephone;
 	private int seller;
 
-	public Users() {
+	public User() {
 		firstName = "";
 		lastName = "";
 		email = "";
@@ -24,7 +40,7 @@ public class Users {
 		telephone = 0;
 		seller = 0;
 	}
-	public Users(String firstName, String lastName, String email, String password, String adress, String city,
+	public User(String firstName, String lastName, String email, String password, String adress, String city,
 			String country, int zipCode, int telephone, int seller) {
 		this.firstName = firstName;
 		this.lastName = lastName;
