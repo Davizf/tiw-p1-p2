@@ -126,7 +126,11 @@
 							
 							
 							<%if(session.getAttribute("user") != null) { %>
-								<a href="profile.jsp" class="text-camelcase">My profile</a> 
+								<form action="UserController" method="post" class="clearfix">
+									<div class="form-group">
+										<input type="submit" name="button" class="text-camelcase" value="My profile"/>				
+									</div>
+								</form>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
@@ -607,42 +611,41 @@
 								<h3 class="title">My Profile</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="firstName" placeholder="<%=user.getName()%>" required>
+								<input class="input" type="text" name="firstName" value="<%=user.getName()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="lastName" placeholder="Last Name" required>
+								<input class="input" type="text" name="lastName" value="<%=user.getSurnames()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email" required readonly>
+								<input class="input" type="email" name="email" value="<%=user.getEmail()%>" required readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="password" name="password" placeholder="Password" required>
+								<input class="input" type="password" name="password" value="<%=user.getPassword()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address" required>
+								<input class="input" type="text" name="address" value="<%=user.getAddress()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City" required>
+								<input class="input" type="text" name="city" value="<%=user.getCity()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country" required>
+								<input class="input" type="text" name="country" value="<%=user.getCountry()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="number" name="zipCode" placeholder="ZIP Code" required>
+								<input class="input" type="number" name="zipCode" value="<%=user.getPostalCode()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
+								<input class="input" type="tel" name="tel" value="<%=user.getPhone()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="number" name="card" placeholder="Credit Card" required>
+								<input class="input" type="number" name="card" value="<%=user.getCreditCard()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="date" name="cardExpire" placeholder="Credit Card Experiation" required>
+								<input class="input" type="text" name="cardExpire" value="<%=user.getCreditCardExpiration()%>" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="cvv" placeholder="Credit Card CVV" maxlength="3" pattern="\d{3}" required>
+								<input class="input" type="text" name="cvv" value="<%=user.getCredit_card_CVV()%>" maxlength="3" pattern="\d{3}" required>
 							</div>
-							
 							
 							<!-- Display that the changes have been made correctly -->
 							<p id="greenText"><%=request.getAttribute("message") == null ? "":request.getAttribute("message") %></p>

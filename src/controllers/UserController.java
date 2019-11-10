@@ -86,32 +86,28 @@ public class UserController extends HttpServlet{
 
 		} else if(req.getParameter("button").equalsIgnoreCase("Save my profile")) {
 
-			User user = manager.getUser(email);
-
-			int zipCode =   Integer.parseInt(req.getParameter("zipCode")) ;
-			int telephone = Integer.parseInt(req.getParameter("tel")); 
-			user.setPhone(telephone);
-			user.setPostalCode(zipCode);
-			String firstName = req.getParameter("firstName");
-			String lastName = req.getParameter("lastName");
-			String adress = req.getParameter("adress");
-			String city = req.getParameter("city");
-			String country = req.getParameter("country");
-			String password = req.getParameter("password");			
-			user.setAddress(adress);
-			user.setCity(city);
-			user.setCountry(country);
-			user.setName(firstName);
-			user.setName(lastName);
-			user.setPassword(password);
+			User user = new User();
+			user.setPhone(Integer.parseInt(req.getParameter("tel")));
+			user.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
+			user.setAddress(req.getParameter("address"));
+			user.setCity(req.getParameter("city"));
+			user.setCountry(req.getParameter("country"));
+			user.setEmail(email);
+			user.setName(req.getParameter("firstName"));
+			user.setSurnames(req.getParameter("lastName"));
+			user.setPassword(req.getParameter("password"));
+			user.setCreditCard(req.getParameter("card"));
+			user.setCreditCardExpiration(req.getParameter("cardExpire"));
+			user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
 			session.setAttribute("username", user.getName());
 		
 			try {
-				manager.createUser(user);
+				manager.updateUser(user);
 			} catch (Exception e) {
 				System.out.println("Descripci�n: " + e.getMessage());
 			} 
 			req.setAttribute("message", "Changes have been made correctly!");
+			req.setAttribute("user_information", (User) user);
 			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
 			rd.forward(req, res);
 
@@ -121,10 +117,12 @@ public class UserController extends HttpServlet{
 
 		} else if(req.getParameter("button").equalsIgnoreCase("Yes")) {
 
-			for(User user : users) {
-				if( user.getEmail().equalsIgnoreCase(  (String) session.getAttribute("user")  )) {
-					users.remove(user);
-				}
+			User user = manager.getUser((String) session.getAttribute("user"));
+			
+			try {
+				manager.deleteUser(user);
+			} catch (Exception e) {
+				System.out.println("Descripci�n: " + e.getMessage());
 			}
 			session.invalidate();
 			RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
