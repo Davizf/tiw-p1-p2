@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.User;
+import model.User;
 
 public class UserController extends HttpServlet{
 
@@ -22,7 +22,7 @@ public class UserController extends HttpServlet{
 		HttpSession session = req.getSession();
 		String email = req.getParameter("email");	
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("InsertBuyer");		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
 		manager.setEntityManagerFactory(factory);
 	
@@ -38,7 +38,7 @@ public class UserController extends HttpServlet{
 
 			User user = new User();
 			user.setPhone(Integer.parseInt(req.getParameter("tel")));
-			user.setPostal_code(Integer.parseInt(req.getParameter("zipCode")));
+			user.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
 			user.setAddress(req.getParameter("address"));
 			user.setCity(req.getParameter("city"));
 			user.setCountry(req.getParameter("country"));
@@ -46,8 +46,11 @@ public class UserController extends HttpServlet{
 			user.setName(req.getParameter("firstName"));
 			user.setSurnames(req.getParameter("lastName"));
 			user.setPassword(req.getParameter("password"));
+			user.setCreditCard(req.getParameter("card"));
+			user.setCreditCardExpiration(req.getParameter("cardExpire"));
+			user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
 			String seller = req.getParameter("seller");
-			user.setSeller( (seller != null && seller.equals("on"))?1:0 );
+			user.setSeller( (int) ((seller != null && seller.equals("on"))?1:0) );
 			
 			try {
 				manager.createUser(user);
@@ -81,7 +84,7 @@ public class UserController extends HttpServlet{
 					int zipCode =   Integer.parseInt(req.getParameter("zipCode")) ;
 					int telephone = Integer.parseInt(req.getParameter("tel")); 
 					user.setPhone(telephone);
-					user.setPostal_code(zipCode);
+					user.setPostalCode(zipCode);
 					String firstName = req.getParameter("firstName");
 					String lastName = req.getParameter("lastName");
 					String adress = req.getParameter("adress");

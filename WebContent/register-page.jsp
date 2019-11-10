@@ -634,6 +634,15 @@
 								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
 							</div>
 							<div class="form-group">
+								<input class="input" type="number" name="card" placeholder="Credit Card" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="date" name="cardExpire" placeholder="Credit Card Experiation" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="cvv" placeholder="Credit Card CVV" maxlength="3" pattern="\d{3}" required>
+							</div>
+							<div class="form-group">
 								<div class="input-checkbox">
 									<input type="checkbox" name="seller" id="seller">
 									<label class="font-weak" for="seller">Are you a seller?</label>

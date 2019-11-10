@@ -2,7 +2,9 @@ package controllers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import models.User;
+
+import model.User;
+
 
 //@SuppressWarnings("unchecked")
 
