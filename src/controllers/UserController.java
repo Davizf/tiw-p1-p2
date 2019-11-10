@@ -18,50 +18,58 @@ public class UserController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	ArrayList<User> users = new ArrayList<User>();
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String op = req.getParameter("operation");
+		if (op != null && op.equalsIgnoreCase("log_out"))
+			req.getSession().setAttribute("user", null);
+		RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+		rd.forward(req, res);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		HttpSession session = req.getSession();
 		String email = req.getParameter("email");	
-		
+
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
 		manager.setEntityManagerFactory(factory);
-	
-		
-		if(req.getParameter("button").equalsIgnoreCase("Register")) {
+
+
+		if(req.getParameter("operation").equalsIgnoreCase("Register")) {
 
 			if(manager.checkUserEmail(email)) {
 				req.setAttribute("message", "This email has already been taken!");
 				RequestDispatcher rd = req.getRequestDispatcher("register-page.jsp");
 				rd.forward(req, res);
-				return ;
+			} else {
+				User user = new User();
+				user.setPhone(Integer.parseInt(req.getParameter("tel")));
+				user.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
+				user.setAddress(req.getParameter("address"));
+				user.setCity(req.getParameter("city"));
+				user.setCountry(req.getParameter("country"));
+				user.setEmail(email);
+				user.setName(req.getParameter("firstName"));
+				user.setSurnames(req.getParameter("lastName"));
+				user.setPassword(req.getParameter("password"));
+				user.setCreditCard(req.getParameter("card"));
+				user.setCreditCardExpiration(req.getParameter("cardExpire"));
+				user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
+				String seller = req.getParameter("seller");
+				user.setSeller( (int) ((seller != null && seller.equals("on"))?1:0) );
+
+				try {
+					manager.createUser(user);
+				} catch (Exception e) {
+					System.out.println("Descripci�n: " + e.getMessage());
+				} 
+
+				RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
+				rd.forward(req, res);
 			}
-
-			User user = new User();
-			user.setPhone(Integer.parseInt(req.getParameter("tel")));
-			user.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
-			user.setAddress(req.getParameter("address"));
-			user.setCity(req.getParameter("city"));
-			user.setCountry(req.getParameter("country"));
-			user.setEmail(email);
-			user.setName(req.getParameter("firstName"));
-			user.setSurnames(req.getParameter("lastName"));
-			user.setPassword(req.getParameter("password"));
-			user.setCreditCard(req.getParameter("card"));
-			user.setCreditCardExpiration(req.getParameter("cardExpire"));
-			user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
-			String seller = req.getParameter("seller");
-			user.setSeller( (int) ((seller != null && seller.equals("on"))?1:0) );
-			
-			try {
-				manager.createUser(user);
-			} catch (Exception e) {
-				System.out.println("Descripci�n: " + e.getMessage());
-			} 
-			
-			RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
-			rd.forward(req, res);
-
-		}else if(req.getParameter("button").equalsIgnoreCase("Login")) {
+		}else if(req.getParameter("operation").equalsIgnoreCase("Login")) {
 			String password = req.getParameter("password");
 
 			if(manager.verifyUser(email, password)) {
@@ -70,21 +78,21 @@ public class UserController extends HttpServlet{
 				session.setAttribute("username", user.getName());
 				RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 				rd.forward(req, res);
+			} else {
+				req.setAttribute("message", "The email or password is wrong!");
+				RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
+				rd.forward(req, res);
 			}
-		
-			req.setAttribute("message", "The email or password is wrong!");
-			RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
-			rd.forward(req, res);
 
-		} else if(req.getParameter("button").equalsIgnoreCase("My Profile")) {
-			
+		} else if(req.getParameter("operation").equalsIgnoreCase("My Profile")) {
+
 			User user = manager.getUser((String) session.getAttribute("user"));
-			
+
 			req.setAttribute("user_information", (User) user);
 			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
 			rd.forward(req, res);
 
-		} else if(req.getParameter("button").equalsIgnoreCase("Save my profile")) {
+		} else if(req.getParameter("operation").equalsIgnoreCase("Save my profile")) {
 
 			User user = new User();
 			user.setPhone(Integer.parseInt(req.getParameter("tel")));
@@ -100,7 +108,7 @@ public class UserController extends HttpServlet{
 			user.setCreditCardExpiration(req.getParameter("cardExpire"));
 			user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
 			session.setAttribute("username", user.getName());
-		
+
 			try {
 				manager.updateUser(user);
 			} catch (Exception e) {
@@ -111,14 +119,14 @@ public class UserController extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
 			rd.forward(req, res);
 
-		} else if(req.getParameter("button").equalsIgnoreCase("No")) {
+		} else if(req.getParameter("operation").equalsIgnoreCase("No")) {
 			RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 			rd.forward(req, res);
 
-		} else if(req.getParameter("button").equalsIgnoreCase("Yes")) {
+		} else if(req.getParameter("operation").equalsIgnoreCase("Yes")) {
 
 			User user = manager.getUser((String) session.getAttribute("user"));
-			
+
 			try {
 				manager.deleteUser(user);
 			} catch (Exception e) {

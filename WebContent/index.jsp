@@ -1,5 +1,7 @@
+<%@page import="controllers.ControllerIndex"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +43,10 @@
 </head>
 
 <body>
+<%
+String user=(String)session.getAttribute("user");
+ArrayList<String> categories=ControllerIndex.getCategories();
+%>
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -82,7 +88,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="/tiw-p1/index.jsp">
+						<a class="logo" href="index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -90,54 +96,49 @@
 
 					<!-- Search -->
 					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Enter your keyword">
-							<select class="input search-categories">
-								<option value="0">All Categories</option>
-								<option value="1">Category 01</option>
-								<option value="1">Category 02</option>
+						<form action="products.jsp" method="get">
+							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
+							<select class="input search-categories" name="category">
+								<option value="">All Categories</option>
+								<% for (int i=0; i<categories.size(); i++) { %>
+								<option value="<%=categories.get(i) %>"><%=categories.get(i) %></option>
+								<%} %>
 							</select>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
+							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
 					<!-- /Search -->
 				</div>
 				<div class="pull-right">
 					<ul class="header-btns">
-					
-					
 						<!-- Account -->
 						<li class="header-account dropdown default-dropdown">
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
 									<i class="fa fa-user-o"></i>
 								</div>
-								
-								<%if(session.getAttribute("user") != null) { %>
-									<strong class="text-uppercase">Hi, <%out.print(session.getAttribute("username"));%>! <i class="fa fa-caret-down"></i></strong>
+								<%if(user != null) { %>
+									<strong class="text-uppercase">Hi, <%=((String)session.getAttribute("username")) %>! <i class="fa fa-caret-down"></i></strong>
 								<%}else{ %>
 									<strong class="text-uppercase">My Account <i class="fa fa-caret-down"></i></strong>
 								<%}%>
-								
-								
 							</div>
 							
-							
-							<%if(session.getAttribute("user") != null) { %>
+							<%if(user != null) { %>
 								<form action="UserController" method="post" class="clearfix">
-									<div class="form-group">
-										<input type="submit" name="button" class="text-camelcase" value="My profile"/>				
-									</div>
+									<input type="hidden" name="operation" value="My profile"/>
+									<a class="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
 								</form>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
 							
 							<ul class="custom-menu">
-								<%if(session.getAttribute("user") != null) { %>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>	
+								<%if(user != null) { %>
+									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
+									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
+									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
+									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
 									<li><a href="register-page.jsp"><i class="fa fa-unlock-alt"></i> Create an account</a></li>
@@ -147,13 +148,9 @@
 								
 							</ul>
 						</li>
-						
-						
 						<!-- /Account -->
-
-						<%if(session.getAttribute("user") != null) { %>
-							
-								<!-- Cart -->
+						<%if(user != null) { %>
+							<!-- Cart --><!-- TODO -->
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
@@ -230,200 +227,15 @@
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women’s Clothing <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="/tiw-p1/images/banner05.jpg" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Men’s Clothing</a></li>
-						<li class="dropdown side-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Phones & Accessories <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-4 hidden-sm hidden-xs">
-										<a class="banner banner-2" href="#">
-											<img src="/tiw-p1/images/banner04.jpg" alt="">
-											<div class="banner-caption">
-												<h3 class="white-color">NEW<br>COLLECTION</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Computer & Office</a></li>
-						<li><a href="#">Consumer Electronics</a></li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Jewelry & Watches <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Bags & Shoes</a></li>
-						<li><a href="#">View All</a></li>
+						<% for (int i=0; i<categories.size(); i++) { %>
+						<li><a href="products.jsp?category=<%=categories.get(i) %>"><%=categories.get(i) %></a></li>
+						<%} %>
 					</ul>
 				</div>
 				<!-- /category nav -->
 
 				<!-- menu nav -->
-				<div class="menu-nav">
+				<div class="menu-nav" hidden>
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
 						<li><a href="#">Home</a></li>
@@ -633,7 +445,7 @@
 	<!-- /HOME -->
 
 	<!-- section -->
-	<div class="section">
+	<div class="section" hidden>
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
@@ -679,7 +491,7 @@
 	<!-- /section -->
 
 	<!-- section -->
-	<div class="section">
+	<div class="section" hidden>
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
@@ -994,7 +806,7 @@
 	<!-- /section -->
 
 	<!-- section -->
-	<div class="section section-grey">
+	<div class="section section-grey" hidden>
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
@@ -1048,118 +860,41 @@
 				<!-- section title -->
 				<div class="col-md-12">
 					<div class="section-title">
-						<h2 class="title">Latest Products</h2>
+						<h2 class="title"><a href="products.jsp">Latest Products</a></h2>
 					</div>
 				</div>
 				<!-- section title -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product01.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
+				
+				<%-- TODO ultimos productos --%>
+				<% for (int i=0; i<3; i++){ %>
+					<!-- Product Single -->
+					<div class="col-md-3 col-sm-6 col-xs-6">
+						<div class="product product-single">
+							<div class="product-thumb">
+								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+								<img src="/tiw-p1/images/product01.jpg" alt="">
 							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
-							
+							<div class="product-body">
+								<h3 class="product-price">32.50€</h3>
+								<div class="product-rating" hidden>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o empty"></i>
+								</div>
+								<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
+								
+							</div>
 						</div>
 					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product02.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Watch&path=/tiw-p1/images/product02.jpg">Watch</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-								<span class="sale">-20%</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product03.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Wallet&path=/tiw-p1/images/product03.jpg">Wallet</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
-
-				<!-- Product Single -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="product product-single">
-						<div class="product-thumb">
-							<div class="product-label">
-								<span>New</span>
-							</div>
-							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-							<img src="/tiw-p1/images/product04.jpg" alt="">
-						</div>
-						<div class="product-body">
-							<h3 class="product-price">$32.50</h3>
-							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o empty"></i>
-							</div>
-							<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Shoes&path=/tiw-p1/images/main-product01.jpg">Shoes</a></h2>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Product Single -->
+					<!-- /Product Single -->
+				<%} %>
 			</div>
 			<!-- /row -->
 
 			<!-- row -->
-			<div class="row">
+			<div class="row" hidden>
 				<!-- banner -->
 				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div class="banner banner-2">
@@ -1256,7 +991,7 @@
 			<!-- /row -->
 
 			<!-- row -->
-			<div class="row">
+			<div class="row" hidden>
 				<!-- section title -->
 				<div class="col-md-12">
 					<div class="section-title">
@@ -1380,7 +1115,7 @@
 			<!-- row -->
 			<div class="row">
 				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
@@ -1406,7 +1141,7 @@
 				<!-- /footer widget -->
 
 				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
+				<div class="col-md-3 col-sm-6 col-xs-6" hidden>
 					<div class="footer">
 						<h3 class="footer-header">My Account</h3>
 						<ul class="list-links">

@@ -33,6 +33,7 @@ public class WishList extends HttpServlet{
 					if(product.getName().equalsIgnoreCase(name)) {
 						RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 						rd.forward(req, res);
+						return;
 					}
 				}
 				

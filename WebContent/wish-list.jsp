@@ -1,3 +1,4 @@
+<%@page import="controllers.ControllerIndex"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="models.ProductInWishList" %>
@@ -44,6 +45,10 @@
 </head>
 
 <body>
+<%
+String user=(String)session.getAttribute("user");
+ArrayList<String> categories=ControllerIndex.getCategories();
+%>
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -70,7 +75,7 @@
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
 								<li><a href="#">USD ($)</a></li>
-								<li><a href="#">EUR (â¬)</a></li>
+								<li><a href="#">EUR (€)</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -85,7 +90,7 @@
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="/tiw-p1/index.jsp">
+						<a class="logo" href="index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -93,14 +98,15 @@
 
 					<!-- Search -->
 					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Enter your keyword">
-							<select class="input search-categories">
-								<option value="0">All Categories</option>
-								<option value="1">Category 01</option>
-								<option value="1">Category 02</option>
+						<form action="products.jsp" method="get">
+							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
+							<select class="input search-categories" name="category">
+								<option value="">All Categories</option>
+								<% for (int i=0; i<categories.size(); i++) { %>
+								<option value="<%=categories.get(i) %>"><%=categories.get(i) %></option>
+								<%} %>
 							</select>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
+							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
 					<!-- /Search -->
@@ -113,28 +119,28 @@
 								<div class="header-btns-icon">
 									<i class="fa fa-user-o"></i>
 								</div>
-								
-								<%if(session.getAttribute("user") != null) { %>
-									<strong class="text-uppercase">Hi, <%out.print(session.getAttribute("username"));%>! <i class="fa fa-caret-down"></i></strong>
+								<%if(user != null) { %>
+									<strong class="text-uppercase">Hi, <%=((String)session.getAttribute("username")) %>! <i class="fa fa-caret-down"></i></strong>
 								<%}else{ %>
 									<strong class="text-uppercase">My Account <i class="fa fa-caret-down"></i></strong>
 								<%}%>
-								
-								
 							</div>
 							
-							
-							<%if(session.getAttribute("user") != null) { %>
-								<a href="profile.jsp" class="text-camelcase">My profile</a> 
+							<%if(user != null) { %>
+								<form action="UserController" method="post" class="clearfix">
+									<input type="hidden" name="operation" value="My profile"/>
+									<a class="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
+								</form>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
 							
 							<ul class="custom-menu">
-								<%if(session.getAttribute("user") != null) { %>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>	
+								<%if(user != null) { %>
+									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
+									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
+									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
+									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
 									<li><a href="register-page.jsp"><i class="fa fa-unlock-alt"></i> Create an account</a></li>
@@ -144,13 +150,9 @@
 								
 							</ul>
 						</li>
-						
-						
 						<!-- /Account -->
-
-						<%if(session.getAttribute("user") != null) { %>
-							
-								<!-- Cart -->
+						<%if(user != null) { %>
+							<!-- Cart --><!-- TODO -->
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
@@ -199,6 +201,11 @@
 						<!-- /Cart -->
 						
 						
+						
+						
+						
+						
+
 						<!-- Mobile nav toggle-->
 						<li class="nav-toggle">
 							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
@@ -769,7 +776,7 @@
 			<!-- row -->
 			<div class="row">
 				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
@@ -795,7 +802,7 @@
 				<!-- /footer widget -->
 
 				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
+				<div class="col-md-3 col-sm-6 col-xs-6" hidden>
 					<div class="footer">
 						<h3 class="footer-header">My Account</h3>
 						<ul class="list-links">
