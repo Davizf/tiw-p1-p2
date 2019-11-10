@@ -124,7 +124,11 @@
 							
 							
 							<%if(session.getAttribute("user") != null) { %>
-								<a href="profile.jsp" class="text-camelcase">My profile</a> 
+								<form action="UserController" method="post" class="clearfix">
+									<div class="form-group">
+										<input type="submit" name="button" class="text-camelcase" value="My profile"/>				
+									</div>
+								</form>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>

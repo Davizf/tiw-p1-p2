@@ -3,6 +3,7 @@
 <%@page import="models.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
+<%@page import="model.User"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -599,20 +600,20 @@
 			
 			
 				<form action="UserController" method="post" class="clearfix">
-
+					<%User user = (User)request.getAttribute("user_information"); {%>
 					<div class="col-md-6">
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">My Profile</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="firstName" placeholder="First Name" required>
+								<input class="input" type="text" name="firstName" placeholder="<%=user.getName()%>" required>
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="lastName" placeholder="Last Name" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email" required>
+								<input class="input" type="email" name="email" placeholder="Email" required readonly>
 							</div>
 							<div class="form-group">
 								<input class="input" type="password" name="password" placeholder="Password" required>
@@ -631,8 +632,18 @@
 							</div>
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone" required>
-							
 							</div>
+							<div class="form-group">
+								<input class="input" type="number" name="card" placeholder="Credit Card" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="date" name="cardExpire" placeholder="Credit Card Experiation" required>
+							</div>
+							<div class="form-group">
+								<input class="input" type="text" name="cvv" placeholder="Credit Card CVV" maxlength="3" pattern="\d{3}" required>
+							</div>
+							
+							
 							<!-- Display that the changes have been made correctly -->
 							<p id="greenText"><%=request.getAttribute("message") == null ? "":request.getAttribute("message") %></p>
 							
@@ -644,6 +655,7 @@
 															
 							</div>
 						</div>
+						<% } %>
 					</div>
 
 				</form>

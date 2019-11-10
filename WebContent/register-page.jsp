@@ -654,10 +654,9 @@
 							<div class="form-group">
 								<div class="input-checkbox">
 									<input type="submit" name="button" class="primary-btn add-to-cart" value="Register" />
-								</div>
-						
-															
+								</div>									
 							</div>
+							
 						</div>
 					</div>
 

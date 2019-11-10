@@ -76,31 +76,41 @@ public class UserController extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
 			rd.forward(req, res);
 
+		} else if(req.getParameter("button").equalsIgnoreCase("My Profile")) {
+			
+			User user = manager.getUser((String) session.getAttribute("user"));
+			
+			req.setAttribute("user_information", (User) user);
+			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
+			rd.forward(req, res);
+
 		} else if(req.getParameter("button").equalsIgnoreCase("Save my profile")) {
 
-			for(User user : users) {
-				if( user.getEmail().equalsIgnoreCase(req.getParameter("email"))) {
+			User user = manager.getUser(email);
 
-					int zipCode =   Integer.parseInt(req.getParameter("zipCode")) ;
-					int telephone = Integer.parseInt(req.getParameter("tel")); 
-					user.setPhone(telephone);
-					user.setPostalCode(zipCode);
-					String firstName = req.getParameter("firstName");
-					String lastName = req.getParameter("lastName");
-					String adress = req.getParameter("adress");
-					String city = req.getParameter("city");
-					String country = req.getParameter("country");
-					String password = req.getParameter("password");			
-					user.setAddress(adress);
-					user.setCity(city);
-					user.setCountry(country);
-					user.setName(firstName);
-					user.setName(lastName);
-					user.setPassword(password);
-					session.setAttribute("username", user.getName());
-				}
-			}
-
+			int zipCode =   Integer.parseInt(req.getParameter("zipCode")) ;
+			int telephone = Integer.parseInt(req.getParameter("tel")); 
+			user.setPhone(telephone);
+			user.setPostalCode(zipCode);
+			String firstName = req.getParameter("firstName");
+			String lastName = req.getParameter("lastName");
+			String adress = req.getParameter("adress");
+			String city = req.getParameter("city");
+			String country = req.getParameter("country");
+			String password = req.getParameter("password");			
+			user.setAddress(adress);
+			user.setCity(city);
+			user.setCountry(country);
+			user.setName(firstName);
+			user.setName(lastName);
+			user.setPassword(password);
+			session.setAttribute("username", user.getName());
+		
+			try {
+				manager.createUser(user);
+			} catch (Exception e) {
+				System.out.println("Descripci�n: " + e.getMessage());
+			} 
 			req.setAttribute("message", "Changes have been made correctly!");
 			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
 			rd.forward(req, res);
