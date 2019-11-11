@@ -1,7 +1,8 @@
-<%@page import="controllers.ControllerIndex"%>
+<%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.*"%>
+<%@page import="models.Category"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +46,7 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<String> categories=ControllerIndex.getCategories();
+ArrayList<Category> categories=IndexController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>
@@ -100,8 +101,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
-								<% for (int i=0; i<categories.size(); i++) { %>
-								<option value="<%=categories.get(i) %>"><%=categories.get(i) %></option>
+								<% for(Category category : categories) { %>
+								<option value="<%=category.getName() %>"><%=category.getName() %></option>
 								<%} %>
 							</select>
 							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>

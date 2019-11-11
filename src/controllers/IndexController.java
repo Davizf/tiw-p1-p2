@@ -6,20 +6,19 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import jdbc.info.InformationProperties;
-import model.Category;
+import models.Category;
 
 public class IndexController {
 
-	public List<Category> getCategories(){
-		List<Category> categories = new ArrayList<Category>();
+	public static ArrayList<Category> getCategories(){
+		ArrayList<Category> categories = new ArrayList<Category>();
 		String query = "SELECT * FROM Categories";
 		String userName = InformationProperties.getStrUser();
 		String password = InformationProperties.getStrPassword();
 		String url = "jdbc:mysql://localhost/" + InformationProperties.getStrDatabaseName() + "?user=" + userName
-				+ "&password=" + password;
+				+ "&password=" + password + "&useSSL=false&serverTimezone=UTC";
 		
 		try {
 			Class.forName(InformationProperties.getStrClassDriver());
