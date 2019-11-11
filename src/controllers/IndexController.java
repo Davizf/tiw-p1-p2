@@ -2,6 +2,7 @@ package controllers;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
@@ -14,11 +15,13 @@ public class IndexController {
 
 	public static ArrayList<Category> getCategories(){
 		ArrayList<Category> categories = new ArrayList<Category>();
+		Category category = null;
 		String query = "SELECT * FROM Categories";
 		String userName = InformationProperties.getStrUser();
 		String password = InformationProperties.getStrPassword();
 		String url = "jdbc:mysql://localhost/" + InformationProperties.getStrDatabaseName() + "?user=" + userName
 				+ "&password=" + password + "&useSSL=false&serverTimezone=UTC";
+		ResultSet res = null;
 		
 		try {
 			Class.forName(InformationProperties.getStrClassDriver());
@@ -27,7 +30,13 @@ public class IndexController {
 
 			Statement myStatement = connection.createStatement();
 
-			
+			res = myStatement.executeQuery(query);
+			while(res.next()) {
+				category = new Category();
+				category.setName(res.getString("name"));
+				categories.add(category);
+			}
+			res.close();
 			myStatement.close();
 			connection.close();
 

@@ -228,8 +228,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
-						<% for (int i=0; i<categories.size(); i++) { %>
-						<li><a href="products.jsp?category=<%=categories.get(i) %>"><%=categories.get(i) %></a></li>
+						<% for(Category category : categories) { %>
+						<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
 						<%} %>
 					</ul>
 				</div>
