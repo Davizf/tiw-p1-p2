@@ -1,7 +1,8 @@
-<%@page import="controllers.ControllerIndex"%>
+<%@page import="models.Category"%>
+<%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.ProductInWishList" %>
+<%@page import="model.Product" %>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
 
@@ -47,7 +48,7 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<String> categories=ControllerIndex.getCategories();
+ArrayList<Category> categories=IndexController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>
@@ -729,11 +730,11 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 								
 								
 								<%
-								ArrayList<ProductInWishList> list = (ArrayList<ProductInWishList>)request.getAttribute("wishList");
-								for(ProductInWishList product : list ){
+								ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("wishList");
+								for(Product product : list ){
 								%>
 									<tr>
-										<td class="thumb"><img src= <%= product.getPath() %> alt=""></td>
+										<td class="thumb"><img src= <%= product.getImagePath() %> alt=""></td>
 										<td class="details">
 											<a href="#"><%= product.getName() %></a>
 											<ul>

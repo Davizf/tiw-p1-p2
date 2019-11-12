@@ -1,7 +1,8 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="controllers.ControllerIndex"%>
+<%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="models.Category"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +46,7 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<String> categories=ControllerIndex.getCategories();
+ArrayList<Category> categories=IndexController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>
