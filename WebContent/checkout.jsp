@@ -1,7 +1,8 @@
-<%@page import="controllers.ControllerIndex"%>
+<%@page import="models.Category"%>
+<%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.ProductInCart" %>
+<%@page import="model.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
 
@@ -47,7 +48,7 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<String> categories=ControllerIndex.getCategories();
+ArrayList<Category> categories=IndexController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>
@@ -733,16 +734,16 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 								for(ProductInCart product : list ){
 								%>
 									<tr>
-										<td class="thumb"><img src= <%= product.getPath() %> alt=""></td>
+										<td class="thumb"><img src= <%= product.getProduct().getImagePath() %> alt=""></td>
 										<td class="details">
-											<a href="#"><%= product.getName() %></a>
+											<a href="#"><%= product.getProduct().getName() %></a>
 											<ul>
 												<li><span>Size: M</span></li>
 											</ul>
 										</td>
 										<form action="ShoppingCart" method="post">
 											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-											<td class="qty text-center"><input class="input" type="number" value=<%= product.getNum() %>></td>
+											<td class="qty text-center"><input class="input" type="number" value=<%= product.getQuantity() %>></td>
 											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
 											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
 											<input type="hidden" name="type" value= "deleteInCart" >
