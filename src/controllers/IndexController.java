@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import jdbc.info.InformationProperties;
 import models.Category;
 
+
 public class IndexController {
 
 	public static ArrayList<Category> getCategories(){

@@ -605,12 +605,14 @@ ArrayList<Category> categories=IndexController.getCategories();
 									</div>
 									<div class="product-body">
 										<h3 class="product-price">$32.50 <del class="product-old-price" hidden>$45.00</del></h3>
+										<div hidden>
 										<div class="product-rating" hidden >
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star-o empty"></i>
+										</div>
 										</div>
 										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
 										
