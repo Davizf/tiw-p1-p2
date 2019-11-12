@@ -1,3 +1,5 @@
+<%@page import="controllers.ProductController"%>
+<%@page import="model.Product"%>
 <%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
@@ -866,25 +868,26 @@ ArrayList<Category> categories=IndexController.getCategories();
 				</div>
 				<!-- section title -->
 				
-				<%-- TODO ultimos productos --%>
-				<% for (int i=0; i<3; i++){ %>
+				<%
+				ArrayList<Product> lastProducts=ProductController.getLastsProducts();
+				for (int i=0; i<lastProducts.size(); i++) { %>
 					<!-- Product Single -->
 					<div class="col-md-3 col-sm-6 col-xs-6">
 						<div class="product product-single">
 							<div class="product-thumb">
 								<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-								<img src="/tiw-p1/images/product01.jpg" alt="">
+								<img src="<%=lastProducts.get(i).getImagePath() %>" alt="">
 							</div>
 							<div class="product-body">
-								<h3 class="product-price">32.50€</h3>
-								<div class="product-rating" hidden>
+								<h3 class="product-price">$<%=lastProducts.get(i).getPrice().doubleValue() %></h3>
+								<!-- <div class="product-rating">
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star-o empty"></i>
-								</div>
-								<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?name=Bag&path=/tiw-p1/images/product01.jpg">Bag</a></h2>
+								</div> -->
+								<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=lastProducts.get(i).getId() %>"><%=lastProducts.get(i).getName() %></a></h2>
 								
 							</div>
 						</div>
