@@ -1,6 +1,9 @@
+<%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="java.util.*" %>
+<%@page import="java.util.*"%>
+<%@page import="models.Category"%>
+<%@page import="model.Messages"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +45,13 @@
 </head>
 
 <body>
+
+<%
+String user=(String)session.getAttribute("user");
+ArrayList<Category> categories=IndexController.getCategories();
+%>
+
+
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -133,6 +143,7 @@
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li>
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>	
+									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
 									<li><a href="register-page.jsp"><i class="fa fa-unlock-alt"></i> Create an account</a></li>
@@ -594,63 +605,66 @@
 			<!-- row -->
 			<div class="row">
 			
-			
-			
-				
-				
-				
-				
-
 				<div class="col-md-6">
-					
-					<div class="billing-details">
-						<div class="section-title">
-							<h3 class="title">My messages</h3>
-						</div>
-							
-					
-						<div class="row">
-							<div class="col-md-6">
-								<div class="product-reviews">
-									<div class="single-review">
-										<div class="review-heading">
-											<div><a href="#"><i class="fa fa-user-o"></i> Seller id</a></div>
-										</div>
-										<div class="review-body">
-											<p><%=request.getAttribute("mensajes")%></p>
-										</div>
+				
+			
+					<div class="section-title">
+						<h3 class="title">My messages</h3>
+					</div>
+				
+				
+				
+					<%if(request.getAttribute("messages") != null){%>
+						
+						<%
+							ArrayList<Messages> messages = (ArrayList<Messages>)request.getAttribute("messages");
+						
+							for(Messages msg : messages ){
+						%>
+						
+						
+							<div class="row">
+								<div class="col-md-6">
+											
+									<div><a href="#"><i class="fa fa-user-o"></i><b><%=msg.getSender() %></b></a></div>
+										
+									<div class="review-body">
+										<p><%=msg.getMsg()%></p>
 									</div>
-									
+										
+										
 								</div>
 							</div>
-						</div>
-								
-					</div>
-						
-					<form action="UserController" method="post" class="clearfix">
-						<div class="form-group">
-							<div class="input-checkbox">
-								<input type="submit" name="button" class="btn btn-success" value="Answer" />
+									
+				
+							
+						<form action="/tiw-p1/jms-controller" method="post" class="clearfix">
+							<div class="form-group">
+								<div class="input-checkbox">
+									<INPUT type="hidden" name="op" value="3"> 
+									<input type="text" name="message" >
+									<INPUT type="hidden" name="sender" value="<%=user%>"> 
+									<input type="hidden" name="correlationId" value="123@gmail.com">
+									<input type="submit" name="button" class="btn btn-success" value="Answer" />
+								</div>
 							</div>
-						</div>
-					
-					</form>
-					
-					<hr>
-					
-					
-					
+						
+						</form>
+						
+						<hr>
+						
+						<%} %>
+						
+						
+						
+
+					<%} else{ %>
+						<h4>You have no unread messages...</h4>
+						<br><br>
+					<%} %>
+
 				</div>
-				
-					
-				
-				
-				
-				
-				
-				
-				
-				
+
 			</div>
 			<!-- /row -->
 		</div>

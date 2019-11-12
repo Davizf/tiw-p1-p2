@@ -609,57 +609,36 @@
 					
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Send a message to a seller:</h3>
+								<h3 class="title">Send a message to a user:</h3>
 							</div>
+
+							<form name="nombre" method="post" action="/tiw-p1/jms-controller">
+		
+								<!--  							sellers and buyers 						-->
+								<B>Select a user:</B> 
+								<SELECT name="correlationId">
+									<OPTION value="123@gmail.com" selected>Fulanito</OPTION>
+									<OPTION value="receiver@gmail.com_2">Melanie</OPTION>
+								</SELECT> 	
+								
+								
+								<br><br> 
+								<B>Message content</B>: <INPUT type="text" name="message" size="94"> 
+								<br><br>
+
+								<INPUT type="hidden" name="op" value="1"> 
+								<INPUT type="hidden" name="sender" value="123@gmail.com"> 
+								<INPUT type="submit" name="ejecutar" value="Send">
+								
+							</form>
 							
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-					<FORM name="nombre" method="post" action="/tiw-p1/controller">
-
-
-						<br> 
-						<B>Mensaje</B>: <INPUT type="text" name="mensaje" size="94"> 
-						<br> <BR> 
-						
-						
-						<!--  							VENDEDOR 						-->
-						<B>Selector (JMSCorrelationID):</B> 
-						<SELECT name="selector">
-							<OPTION value="1" selected>AAAAAAAA</OPTION>
-							<OPTION value="2">BBBBBBBB</OPTION>
-						</SELECT> 
-								 
-				
-						<br> <BR>
-						<INPUT type="hidden" name="op" value="1"> 
-						<INPUT type="submit" name="ejecutar" value="Enviar">
-						
-					</FORM>
-					
-					
-					<hr>
-					
-					<FORM name="xd" method="post" action="/tiw-p1/controller">
-						<INPUT type="hidden" name="selector" value="1">
-						<INPUT type="hidden" name="op" value="2">
-						<INPUT type="submit" name="ejecutar" value="Ver mis mensajes">
-					</FORM>
-					
-	
-	
-	
-	
-						
+							<hr>
+							
+							<form name="xd" method="post" action="/tiw-p1/jms-controller">
+								<INPUT type="hidden" name="op" value="2">
+								<INPUT type="hidden" name="correlationId" value="123@gmail.com">
+								<INPUT type="submit" name="ejecutar" value="View my messages">
+							</form>
 						
 						
 					</div>
@@ -679,7 +658,7 @@
 				
 				
 				
-				
+				</div>
 				
 			</div>
 			<!-- /row -->

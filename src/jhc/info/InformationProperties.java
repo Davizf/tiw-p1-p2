@@ -2,7 +2,7 @@ package jhc.info;
 
 import java.util.*;
 
-public class InformacionProperties {
+public class InformationProperties {
 
 	private static String strQCF;
 
@@ -10,10 +10,10 @@ public class InformacionProperties {
 
 	private static String strQueueAsincrona;
 
-	private static final String nombreProperties = "InfoAplicacion";
+	private static final String nombreProperties = "AppInformation";
 
 	// **************************************************
-	public InformacionProperties() {
+	public InformationProperties() {
 		super();
 	}
 
