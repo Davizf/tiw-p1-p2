@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,36 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Category;
-import model.Product;
 import model.ProductInCart;
-import model.User;
 
 public class ShoppingCart extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<ProductInCart> products;
-
-	public ShoppingCart() {
-		products = new ArrayList<ProductInCart>();
-		ProductInCart p=new ProductInCart(new Product());// TODO
-		p.getProduct().setId(1);
-		p.getProduct().setName("bag");
-		p.getProduct().setPrice(new BigDecimal(44.99));
-		p.getProduct().setDescription("Bag premium quality Bag premium quality Bag premium quality");
-		p.getProduct().setShortDescription("Bag premium quality");
-		p.getProduct().setImagePath("/tiw-p1/images/product01.jpg");
-		p.getProduct().setStock(1);
-		Category c = new Category();
-		c.setName("bags & shoes");
-		p.getProduct().setCategoryBean(c);
-		User u = new User();
-		u.setEmail("pepe@gmail.com");
-		p.getProduct().setUserBean(u);
-		p.setQuantity(2);
-		products.add(p);
-	}
+	private ArrayList<ProductInCart> products = new ArrayList<ProductInCart>();
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 

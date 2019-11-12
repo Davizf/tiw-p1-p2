@@ -140,7 +140,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 								<%if(user != null) { %>
 									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
+									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
 									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
@@ -153,40 +153,44 @@ ArrayList<Category> categories=IndexController.getCategories();
 						</li>
 						<!-- /Account -->
 						<%if(user != null) { %>
-							<!-- Cart --><!-- TODO -->
+							<!-- Cart -->
+							<%
+							ArrayList<ProductInCart> products=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							double cartTotal=0;
+							int cartNumber=0;
+							if (products!=null) {
+								cartNumber=products.size();
+								for (int i=0; i<products.size(); i++)
+									cartTotal+=products.get(i).getCost();
+							}
+							%>
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
 										<i class="fa fa-shopping-cart"></i>
-										<span class="qty">3</span>
+										<span class="qty"><%=cartNumber %></span>
 									</div>
 									<strong class="text-uppercase">My Cart:</strong>
 									<br>
-									<span>35.20$</span>
+									<span>$<%=cartTotal %></span>
 								</a>
 								<div class="custom-menu">
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
+											<%
+											for (int i=0; i<products.size(); i++) {
+											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
+													<img src="<%=products.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
+													<h3 class="product-price">$<%=products.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=products.get(i).getQuantity() %></span></h3>
+													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=products.get(i).getProduct().getId() %>"><%=products.get(i).getProduct().getName() %></a></h2>
 												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-											</div>
+											<%} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">
@@ -227,7 +231,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<div class="container">
 			<div id="responsive-nav">
 				<!-- category nav -->
-				<div class="category-nav">
+				<div class="category-nav show-on-click">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
 						<% for(Category category : categories) { %>
@@ -551,16 +555,16 @@ ArrayList<Category> categories=IndexController.getCategories();
 									total+=product.getCost();
 								%>
 									<tr>
-										<td class="thumb"><img src= <%= product.getProduct().getImagePath() %> alt=""></td>
+										<td class="thumb"><img src= "<%= product.getProduct().getImagePath() %>" alt=""></td>
 										<td class="details">
-											<a href="#"><%= product.getProduct().getName() %></a>
+											<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
 											<ul hidden>
 												<li><span>Size: M</span></li>
 											</ul>
 										</td>
 										<form action="ShoppingCart" method="post">
 											<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
-											<!-- <td class="qty text-center"><input class="input" type="number" value=<%= product.getQuantity() %>></td> -->
+											<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
 											<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
 											<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
 											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
@@ -571,9 +575,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 									</tr>
 									
 								<% } %>	
-									
-									
-									
 								</tbody>
 								<tfoot>
 									<tr hidden>
