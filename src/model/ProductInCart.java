@@ -1,6 +1,9 @@
 package model;
 
-public class ProductInCart {
+import java.io.Serializable;
+
+public class ProductInCart implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Product product;
 	private int quantity;
@@ -23,6 +26,10 @@ public class ProductInCart {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public double getCost() {
+		return quantity * product.getPrice().doubleValue();
 	}
 
 }
