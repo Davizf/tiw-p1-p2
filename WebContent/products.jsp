@@ -158,13 +158,13 @@ List<Product> products = ProductController.getAllProducts();
 						<%if(user != null) { %>
 							<!-- Cart -->
 							<%
-							ArrayList<ProductInCart> products=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							ArrayList<ProductInCart> productsInCart=(ArrayList<ProductInCart>)session.getAttribute("cartList");
 							double cartTotal=0;
 							int cartNumber=0;
-							if (products!=null) {
-								cartNumber=products.size();
-								for (int i=0; i<products.size(); i++)
-									cartTotal+=products.get(i).getCost();
+							if (productsInCart!=null) {
+								cartNumber=productsInCart.size();
+								for (int i=0; i<productsInCart.size(); i++)
+									cartTotal+=productsInCart.get(i).getCost();
 							}
 							%>
 							<li class="header-cart dropdown default-dropdown">
@@ -181,15 +181,15 @@ List<Product> products = ProductController.getAllProducts();
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
 											<%
-											for (int i=0; i<products.size(); i++) {
+											for (int i=0; i<productsInCart.size(); i++) {
 											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
-													<img src="<%=products.get(i).getProduct().getImagePath() %>" alt="">
+													<img src="<%=productsInCart.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$<%=products.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=products.get(i).getQuantity() %></span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=products.get(i).getProduct().getId() %>"><%=products.get(i).getProduct().getName() %></a></h2>
+													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
+													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
 												</div>
 												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
