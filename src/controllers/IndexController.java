@@ -7,8 +7,13 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import jdbc.info.InformationProperties;
+import model.Product;
 import models.Category;
 
 
@@ -57,6 +62,15 @@ public class IndexController {
 				System.out.println("SQLstate: " + sqlException.getSQLState());
 				sqlException = sqlException.getNextException();
 			}
+		}
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+
+		List<Product> products = manager.getProducts();
+		
+		for (Product product : products) {
+			System.out.println(product.getName());
 		}
 		
 		return categories;

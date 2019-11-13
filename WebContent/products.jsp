@@ -1,9 +1,11 @@
 <%@page import="controllers.IndexController"%>
+<%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*" %>
 <%@page import="models.Category"%>
 <%@page import="model.User"%>
+<%@page import="model.Product"%>
 
 
 <!DOCTYPE html>
@@ -48,7 +50,8 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<Category> categories=IndexController.getCategories();
+ArrayList<Category> categories = IndexController.getCategories();
+List<Product> products = ProductController.getAllProducts();
 %>
 	<!-- HEADER -->
 	<header>
@@ -398,12 +401,21 @@ ArrayList<Category> categories=IndexController.getCategories();
 	</div>
 	<!-- /NAVIGATION -->
 
+	<%
+	String category = request.getParameter("category");
+	%>
+	
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
+				<%if(category != null) { %>
+				<li>Products</li>
+				<li class="active"><%=category %></li>
+				<%} else { %>
 				<li class="active">Products</li>
+				<% } %>
 			</ul>
 		</div>
 	</div>
@@ -592,6 +604,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<div id="store">
 						<!-- row -->
 						<div class="row">
+						<% for(Product product : products) { %>
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
@@ -601,10 +614,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 											<span class="sale">-20%</span>
 										</div>
 										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product01.jpg" alt="">
+										<img src="<%=product.getImagePath() %>" alt="">
 									</div>
 									<div class="product-body">
-										<h3 class="product-price">$32.50 <del class="product-old-price" hidden>$45.00</del></h3>
+										<h3 class="product-price"><%=product.getPrice() %><del class="product-old-price" hidden>$45.00</del></h3>
 										<div hidden>
 										<div class="product-rating" hidden >
 											<i class="fa fa-star"></i>
@@ -614,11 +627,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 											<i class="fa fa-star-o empty"></i>
 										</div>
 										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+										<h2 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
 										
 									</div>
 								</div>
 							</div>
+							<%} %>
 							<!-- /Product Single -->
 
 							<div class="clearfix visible-sm visible-xs"></div>
