@@ -63,15 +63,7 @@ public class IndexController {
 				sqlException = sqlException.getNextException();
 			}
 		}
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
-		ProductManager manager = new ProductManager();
-		manager.setEntityManagerFactory(factory);
 
-		List<Product> products = manager.getProducts();
-		
-		for (Product product : products) {
-			System.out.println(product.getName());
-		}
 		
 		return categories;
 	}
