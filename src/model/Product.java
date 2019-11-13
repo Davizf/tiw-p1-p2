@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name="Products")
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
+@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
+@NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 

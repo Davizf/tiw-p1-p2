@@ -179,7 +179,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
 											<%
-											for (int i=0; i<productsInCart.size(); i++) {
+											if (productsInCart!=null) {
+												for (int i=0; i<productsInCart.size(); i++) {
 											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
@@ -191,7 +192,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 												</div>
 												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<%} %>
+											<%} 
+												} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">

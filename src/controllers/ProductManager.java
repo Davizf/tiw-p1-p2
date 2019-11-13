@@ -98,16 +98,15 @@ public class ProductManager {
 		return "";
 	}
 
-	public boolean getProduct(int id) {
-		Product Product = null;
+	public Product getProduct(int id) {
+		Product product = null;
 		EntityManager em = getEntityManager();
 		try {
-			Product = (Product) em.find(Product.class, id);
+			product = (Product) em.find(Product.class, id);
 		} finally {
 			em.close();
 		}
-
-		return Product != null;
+		return product;
 	}
 
 	public Boolean verifyProduct(String email, String password) {
@@ -133,5 +132,31 @@ public class ProductManager {
 		}
 		return products;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByCategory(String category) {
+		List<Product> products = null;
+		EntityManager em = getEntityManager();
+		try {
+			products = (List<Product>) em.createNamedQuery("Product.findAllByCategory").setParameter("category", category).getResultList();
+		} finally {
+			em.close();
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getLastProducts() {
+		List<Product> products = null;
+		EntityManager em = getEntityManager();
+		try {
+			products = (List<Product>) em.createNamedQuery("Product.OrderById").setMaxResults(3).getResultList();
+		} finally {
+			em.close();
+		}
+
+		return products;
+	}
+
 
 }

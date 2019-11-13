@@ -104,8 +104,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
+								<%if(categories != null) { %>
 								<% for(Category category : categories) { %>
 								<option value="<%=category.getName() %>"><%=category.getName() %></option>
+								<%} %>
 								<%} %>
 							</select>
 							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
@@ -156,7 +158,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 						<%if(user != null) { %>
 							<!-- Cart -->
 							<%
-							ArrayList<ProductInCart> productsInCart=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							ArrayList<ProductInCart> productsInCart = (ArrayList<ProductInCart>)session.getAttribute("cartList");
 							double cartTotal=0;
 							int cartNumber=0;
 							if (productsInCart!=null) {
@@ -179,7 +181,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
 											<%
-											for (int i=0; i<productsInCart.size(); i++) {
+											if (productsInCart!=null) {
+												for (int i=0; i<productsInCart.size(); i++) {
 											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
@@ -191,7 +194,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 												</div>
 												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<%} %>
+											<%} 
+												} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">
@@ -235,8 +239,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
+						<%if(categories != null) { %>
 						<% for(Category category : categories) { %>
 						<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
+						<%} %>
 						<%} %>
 					</ul>
 				</div>
@@ -874,7 +880,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<!-- section title -->
 				
 				<%
-				ArrayList<Product> lastProducts=ProductController.getLastsProducts();
+				List<Product> lastProducts=ProductController.getLastProducts();
 				for (int i=0; i<lastProducts.size(); i++) { %>
 					<!-- Product Single -->
 					<div class="col-md-3 col-sm-6 col-xs-6">

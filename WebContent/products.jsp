@@ -180,7 +180,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
 											<%
-											for (int i=0; i<productsInCart.size(); i++) {
+											if (productsInCart!=null) {
+												for (int i=0; i<productsInCart.size(); i++) {
 											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
@@ -192,7 +193,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 												</div>
 												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<%} %>
+											<%} 
+												} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">
@@ -405,7 +407,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<!-- /NAVIGATION -->
 
 	<%
-	String category = request.getParameter("category");
+	String category = String.valueOf(request.getParameter("category"));
 	%>
 	
 	<!-- BREADCRUMB -->
@@ -413,19 +415,25 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<%if(category != null) { %>
-				<li>Products</li>
-				<li class="active"><%=category %></li>
+				<%if(category == null) { %>
+					<li class="active">Products</li>
 				<%} else { %>
-				<li class="active">Products</li>
-				<% } %>
+					<li>Products</li>
+					<li class="active"><%=category %></li>
+				<%} %>
 			</ul>
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
 
 	<%
-	ArrayList<Product> products = ProductController.getAllProducts();
+	List<Product> products = null;
+	if(!category.isEmpty() || category != null) {
+		products = ProductController.getProductsByCategory(category);
+	}else {
+		products = ProductController.getAllProducts();
+	}
+	
 	%>
 	<!-- section -->
 	<div class="section">
@@ -605,7 +613,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 						</div>
 					</div>
 					<!-- /store top filter -->
-
+					<% if(products != null) { %>
 					<!-- STORE -->
 					<div id="store">
 						<!-- row -->
@@ -639,6 +647,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 								</div>
 							</div>
 							<%} %>
+						<%} %>
 							<!-- /Product Single -->
 
 							<div class="clearfix visible-sm visible-xs"></div>

@@ -1,7 +1,7 @@
 package controllers;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,63 +11,41 @@ import model.Product;
 
 public class ProductController {
 
-	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
-	static ProductManager manager = new ProductManager();
-
-	// TODO
 	public static Product getProduct(int id){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		Product p=new Product();
-		p.setId(1);
-		p.setName("bag");
-		p.setPrice(new BigDecimal(44.99));
-		p.setDescription("Bag premium quality Bag premium quality Bag premium quality");
-		p.setShortDescription("Bag premium quality");
-		p.setImagePath("/tiw-p1/images/product01.jpg");
-		p.setStock(1);
-		Category c = new Category();
-		c.setName("bags & shoes");
-		p.setCategoryBean(c);
+		Product p= manager.getProduct(id);
+		factory.close();
 		return p;
 	}
-
-	// TODO
-	public static ArrayList<Product> getLastsProducts(){
-		ArrayList<Product> l=new ArrayList<Product>();
-		Product p=new Product();
-		p.setId(1);
-		p.setName("bag");
-		p.setPrice(new BigDecimal(44.99));
-		p.setDescription("Bag premium quality Bag premium quality Bag premium quality");
-		p.setShortDescription("Bag premium quality");
-		p.setImagePath("/tiw-p1/images/product01.jpg");
-		p.setStock(1);
-		Category c = new Category();
-		c.setName("bags & shoes");
-		p.setCategoryBean(c);
-		l.add(p);
-
-		Product p2=new Product();
-		p2.setId(2);
-		p2.setName("watch");
-		p2.setPrice(new BigDecimal(49.99));
-		p2.setDescription("Watch premium quality Watch premium quality Watch premium quality");
-		p2.setShortDescription("Watch premium quality");
-		p2.setImagePath("/tiw-p1/images/product02.jpg");
-		p2.setStock(10);
-		Category c2 = new Category();
-		c2.setName("jewelry & watches");
-		p2.setCategoryBean(c2);
-		l.add(p2);
-
-		return l;
+	
+	public static List<Product> getProductsByCategory(String category){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List<Product> products= manager.getProductsByCategory(category);
+		factory.close();
+		return products;
 	}
 
 	// TODO
-	public static ArrayList<Product> getAllProducts(){
-		return getLastsProducts();
-		/*manager.setEntityManagerFactory(factory);
-		return manager.getProducts();*/
+	public static List<Product> getLastProducts(){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List<Product> products= manager.getLastProducts();
+		factory.close();
+		return products;
+	}
+
+	public static List<Product> getAllProducts(){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List<Product> products = manager.getLastProducts();
+		factory.close();
+		return products;
 	}
 
 }

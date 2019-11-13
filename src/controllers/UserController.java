@@ -76,6 +76,7 @@ public class UserController extends HttpServlet{
 				User user = manager.getUser(email);
 				session.setAttribute("user", email);
 				session.setAttribute("username", user.getName());
+				session.setAttribute("cartList", null);
 				RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 				rd.forward(req, res);
 			} else {
@@ -137,7 +138,8 @@ public class UserController extends HttpServlet{
 			rd.forward(req, res);
 
 		}
-
+		
+		factory.close();
 	}
 
 }
