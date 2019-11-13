@@ -21,7 +21,9 @@ public class ShoppingCart extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 		HttpSession session = req.getSession();
+
 		if(session.getAttribute("user") != null) {
+			req.getSession().setAttribute("cartList", products);
 			if(req.getParameter("type").equalsIgnoreCase("addToCart")) {
 
 				int id = Integer.parseInt(req.getParameter("id"));
@@ -30,7 +32,6 @@ public class ShoppingCart extends HttpServlet{
 				for(ProductInCart product : products) {
 					if(product.getProduct().getId() == id) {
 						product.setQuantity(product.getQuantity() + num );
-						req.setAttribute("cartList", products);
 						RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 						rd.forward(req, res);
 						return ;
@@ -41,7 +42,6 @@ public class ShoppingCart extends HttpServlet{
 				newP.setQuantity(num);
 				products.add(newP);
 
-				req.setAttribute("cartList", products);
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
 
@@ -50,7 +50,12 @@ public class ShoppingCart extends HttpServlet{
 				int index = Integer.parseInt(req.getParameter("indexToRemove"));
 
 				products.remove(index);
-				req.setAttribute("cartList", products);
+
+				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
+				rd.forward(req, res);
+			} else if(req.getParameter("type").equalsIgnoreCase("placeOrder")) {
+
+				// TODO
 
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
@@ -62,7 +67,7 @@ public class ShoppingCart extends HttpServlet{
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		req.setAttribute("cartList", products);
+		req.getSession().setAttribute("cartList", products);
 		RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 		rd.forward(req, res);
 	}
