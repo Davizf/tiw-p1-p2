@@ -1,7 +1,12 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="controllers.ControllerIndex"%>
+<%@page import="controllers.IndexController"%>
+<%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="java.util.*" %>
+<%@page import="models.Category"%>
+<%@page import="model.User"%>
+<%@page import="model.Product"%>
+<%@page import="model.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +50,8 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<String> categories=ControllerIndex.getCategories();
+ArrayList<Category> categories = IndexController.getCategories();
+List<Product> products = ProductController.getAllProducts();
 %>
 	<!-- HEADER -->
 	<header>
@@ -100,8 +106,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
-								<% for (int i=0; i<categories.size(); i++) { %>
-								<option value="<%=categories.get(i) %>"><%=categories.get(i) %></option>
+								<% for(Category category : categories) { %>
+								<option value="<%=category.getName() %>"><%=category.getName() %></option>
 								<%} %>
 							</select>
 							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
@@ -137,8 +143,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 								<%if(user != null) { %>
 									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
-									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
+                  <li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
@@ -151,40 +157,44 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 						</li>
 						<!-- /Account -->
 						<%if(user != null) { %>
-							<!-- Cart --><!-- TODO -->
+							<!-- Cart -->
+							<%
+							ArrayList<ProductInCart> productsInCart=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							double cartTotal=0;
+							int cartNumber=0;
+							if (productsInCart!=null) {
+								cartNumber=productsInCart.size();
+								for (int i=0; i<productsInCart.size(); i++)
+									cartTotal+=productsInCart.get(i).getCost();
+							}
+							%>
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
 										<i class="fa fa-shopping-cart"></i>
-										<span class="qty">3</span>
+										<span class="qty"><%=cartNumber %></span>
 									</div>
 									<strong class="text-uppercase">My Cart:</strong>
 									<br>
-									<span>35.20$</span>
+									<span>$<%=cartTotal %></span>
 								</a>
 								<div class="custom-menu">
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
+											<%
+											for (int i=0; i<productsInCart.size(); i++) {
+											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
+													<img src="<%=productsInCart.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
+													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
+													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
 												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-											</div>
+											<%} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">
@@ -198,8 +208,6 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 							</li>
 						<%} %>
 						<!-- /Cart -->
-						
-						
 						
 						
 						
@@ -228,200 +236,15 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 				<div class="category-nav show-on-click">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women’s Clothing <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="/tiw-p1/images/banner05.jpg" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Men’s Clothing</a></li>
-						<li class="dropdown side-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Phones & Accessories <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-4 hidden-sm hidden-xs">
-										<a class="banner banner-2" href="#">
-											<img src="/tiw-p1/images/banner04.jpg" alt="">
-											<div class="banner-caption">
-												<h3 class="white-color">NEW<br>COLLECTION</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Computer & Office</a></li>
-						<li><a href="#">Consumer Electronics</a></li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Jewelry & Watches <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Bags & Shoes</a></li>
-						<li><a href="#">View All</a></li>
+						<% for(Category category : categories) { %>
+						<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
+						<%} %>
 					</ul>
 				</div>
 				<!-- /category nav -->
 
 				<!-- menu nav -->
-				<div class="menu-nav">
+				<div class="menu-nav" hidden>
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
 						<li><a href="#">Home</a></li>
@@ -583,12 +406,21 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 	</div>
 	<!-- /NAVIGATION -->
 
+	<%
+	String category = request.getParameter("category");
+	%>
+	
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
+				<%if(category != null) { %>
+				<li>Products</li>
+				<li class="active"><%=category %></li>
+				<%} else { %>
 				<li class="active">Products</li>
+				<% } %>
 			</ul>
 		</div>
 	</div>
@@ -601,7 +433,7 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 			<!-- row -->
 			<div class="row">
 				<!-- ASIDE -->
-				<div id="aside" class="col-md-3">
+				<div id="aside" class="col-md-3" hidden>
 					<!-- aside widget -->
 					<div class="aside">
 						<h3 class="aside-title">Shop by:</h3>
@@ -735,9 +567,9 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 				<!-- /ASIDE -->
 
 				<!-- MAIN -->
-				<div id="main" class="col-md-9">
+				<div id="main" class="col-md-9" >
 					<!-- store top filter -->
-					<div class="store-filter clearfix">
+					<div class="store-filter clearfix" hidden>
 						<div class="pull-left">
 							<div class="row-filter">
 								<a href="#"><i class="fa fa-th-large"></i></a>
@@ -777,254 +609,45 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 					<div id="store">
 						<!-- row -->
 						<div class="row">
+						<% for(Product product : products) { %>
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
 									<div class="product-thumb">
-										<div class="product-label">
+										<div class="product-label" hidden>
 											<span>New</span>
 											<span class="sale">-20%</span>
 										</div>
 										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product01.jpg" alt="">
+										<img src="<%=product.getImagePath() %>" alt="">
 									</div>
 									<div class="product-body">
-										<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-										<div class="product-rating">
+										<h3 class="product-price"><%=product.getPrice() %><del class="product-old-price" hidden>$45.00</del></h3>
+										<div hidden>
+										<div class="product-rating" hidden >
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star-o empty"></i>
 										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+										</div>
+										<h2 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
 										
 									</div>
 								</div>
 							</div>
-							<!-- /Product Single -->
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product02.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									
-									</div>
-								</div>
-							</div>
+							<%} %>
 							<!-- /Product Single -->
 
 							<div class="clearfix visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product03.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-md visible-lg"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product04.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-										
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product05.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product06.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-md visible-lg visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product07.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product08.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50</h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-									
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
-
-							<div class="clearfix visible-sm visible-xs"></div>
-
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<div class="product-thumb">
-										<div class="product-label">
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="/tiw-p1/images/product01.jpg" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o empty"></i>
-										</div>
-										<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-		
-									</div>
-								</div>
-							</div>
-							<!-- /Product Single -->
 						</div>
 						<!-- /row -->
 					</div>
 					<!-- /STORE -->
 
 					<!-- store bottom filter -->
-					<div class="store-filter clearfix">
+					<div class="store-filter clearfix" hidden>
 						<div class="pull-left">
 							<div class="row-filter">
 								<a href="#"><i class="fa fa-th-large"></i></a>

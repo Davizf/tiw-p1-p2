@@ -1,11 +1,11 @@
 <%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
 <%@page import="models.Category"%>
 <%@page import="model.User"%>
+<%@page import="model.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -141,8 +141,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 								<%if(user != null) { %>
 									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
-									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
+                	<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
@@ -155,40 +155,44 @@ ArrayList<Category> categories=IndexController.getCategories();
 						</li>
 						<!-- /Account -->
 						<%if(user != null) { %>
-							<!-- Cart --><!-- TODO -->
+							<!-- Cart -->
+							<%
+							ArrayList<ProductInCart> products=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							double cartTotal=0;
+							int cartNumber=0;
+							if (products!=null) {
+								cartNumber=products.size();
+								for (int i=0; i<products.size(); i++)
+									cartTotal+=products.get(i).getCost();
+							}
+							%>
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
 										<i class="fa fa-shopping-cart"></i>
-										<span class="qty">3</span>
+										<span class="qty"><%=cartNumber %></span>
 									</div>
 									<strong class="text-uppercase">My Cart:</strong>
 									<br>
-									<span>35.20$</span>
+									<span>$<%=cartTotal %></span>
 								</a>
 								<div class="custom-menu">
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
+											<%
+											for (int i=0; i<products.size(); i++) {
+											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
+													<img src="<%=products.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
+													<h3 class="product-price">$<%=products.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=products.get(i).getQuantity() %></span></h3>
+													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=products.get(i).getProduct().getId() %>"><%=products.get(i).getProduct().getName() %></a></h2>
 												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-											</div>
+											<%} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">

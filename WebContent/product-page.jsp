@@ -1,7 +1,11 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="controllers.ControllerIndex"%>
+<%@page import="controllers.IndexController"%>
+<%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
+<%@page import="models.Category"%>
+<%@page import="model.Product"%>
+<%@page import="model.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +49,7 @@
 <body>
 <%
 String user=(String)session.getAttribute("user");
-ArrayList<String> categories=ControllerIndex.getCategories();
+ArrayList<Category> categories=IndexController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>
@@ -137,8 +141,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 								<%if(user != null) { %>
 									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
-									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
+                  <li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
@@ -151,40 +155,44 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 						</li>
 						<!-- /Account -->
 						<%if(user != null) { %>
-							<!-- Cart --><!-- TODO -->
+							<!-- Cart -->
+							<%
+							ArrayList<ProductInCart> products=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							double cartTotal=0;
+							int cartNumber=0;
+							if (products!=null) {
+								cartNumber=products.size();
+								for (int i=0; i<products.size(); i++)
+									cartTotal+=products.get(i).getCost();
+							}
+							%>
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
 										<i class="fa fa-shopping-cart"></i>
-										<span class="qty">3</span>
+										<span class="qty"><%=cartNumber %></span>
 									</div>
 									<strong class="text-uppercase">My Cart:</strong>
 									<br>
-									<span>35.20$</span>
+									<span>$<%=cartTotal %></span>
 								</a>
 								<div class="custom-menu">
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
+											<%
+											for (int i=0; i<products.size(); i++) {
+											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
+													<img src="<%=products.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
+													<h3 class="product-price">$<%=products.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=products.get(i).getQuantity() %></span></h3>
+													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=products.get(i).getProduct().getId() %>"><%=products.get(i).getProduct().getName() %></a></h2>
 												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-											</div>
+											<%} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">
@@ -228,200 +236,15 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 				<div class="category-nav show-on-click">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Womenâs Clothing <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="/tiw-p1/images/banner05.jpg" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Menâs Clothing</a></li>
-						<li class="dropdown side-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Phones & Accessories <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-4 hidden-sm hidden-xs">
-										<a class="banner banner-2" href="#">
-											<img src="/tiw-p1/images/banner04.jpg" alt="">
-											<div class="banner-caption">
-												<h3 class="white-color">NEW<br>COLLECTION</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Computer & Office</a></li>
-						<li><a href="#">Consumer Electronics</a></li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Jewelry & Watches <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Bags & Shoes</a></li>
-						<li><a href="#">View All</a></li>
+						<% for(Category category : categories) { %>
+						<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
+						<%} %>
 					</ul>
 				</div>
 				<!-- /category nav -->
 
 				<!-- menu nav -->
-				<div class="menu-nav">
+				<div class="menu-nav" hidden>
 					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
 					<ul class="menu-list">
 						<li><a href="#">Home</a></li>
@@ -433,8 +256,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -445,8 +268,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -457,8 +280,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -487,7 +310,7 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 											<a class="banner banner-1" href="#">
 												<img src="/tiw-p1/images/banner06.jpg" alt="">
 												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Womenâs</h3>
+													<h3 class="white-color text-uppercase">Women’s</h3>
 												</div>
 											</a>
 											<hr>
@@ -495,8 +318,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -507,7 +330,7 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 											<a class="banner banner-1" href="#">
 												<img src="/tiw-p1/images/banner07.jpg" alt="">
 												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Menâs</h3>
+													<h3 class="white-color text-uppercase">Men’s</h3>
 												</div>
 											</a>
 										</div>
@@ -515,8 +338,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -535,8 +358,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -555,8 +378,8 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 										<ul class="list-links">
 											<li>
 												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
 											<li><a href="#">Phones & Accessories</a></li>
 											<li><a href="#">Jewelry & Watches</a></li>
 											<li><a href="#">Bags & Shoes</a></li>
@@ -582,15 +405,19 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 		<!-- /container -->
 	</div>
 	<!-- /NAVIGATION -->
+	
+	<%
+	int id=Integer.parseInt(request.getParameter("id"));
+	Product p=ProductController.getProduct(id);
+	%>
 
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="#">Home</a></li>
-				<li><a href="#">Products</a></li>
-				<li><a href="#">Category</a></li>
-				<li class="active">Product Name Goes Here</li>
+				<li><a href="#"><%=p.getCategoryBean().getName() %></a></li>
+				<li class="active"><%=p.getName() %></li>
 			</ul>
 		</div>
 	</div>
@@ -607,28 +434,25 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
-								<img src=<%= request.getParameter("path") %> alt="">
+								<img src="<%=p.getImagePath() %>" alt="">
 							</div>
 						</div>
 						
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
-							<div class="product-label">
+							<div class="product-label" hidden>
 								<span>New</span>
 								<span class="sale">-20%</span>
 							</div>
 							
 							
 							<h2 class="product-name">
-								<%= request.getParameter("name") %>
+								<%=p.getName() %>
 							</h2>
 							
-							
-							
-							
-							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-							<div>
+							<h3 class="product-price">$<%=p.getPrice().doubleValue() %> <del class="product-old-price" hidden>$45.00</del></h3>
+							<div hidden>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
 									<i class="fa fa-star"></i>
@@ -638,11 +462,10 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 								</div>
 								<a href="#">3 Review(s) / Add Review</a>
 							</div>
-							<p><strong>Availability:</strong> In Stock</p>
-							<p><strong>Brand:</strong> E-SHOP</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-								dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<div class="product-options">
+							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
+							<p hidden><strong>Brand:</strong> E-SHOP</p>
+							<p><%=p.getShortDescription() %></p>
+							<div class="product-options" hidden>
 								<ul class="size-option">
 									<li><span class="text-uppercase">Size:</span></li>
 									<li class="active"><a href="#">S</a></li>
@@ -660,16 +483,12 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 
 							<div class="product-btns">
 							
-							
-							
-							
 								<form action="ShoppingCart" method="post">
 								
 									<div class="qty-input">
 										<span class="text-uppercase">QTY: </span>
-										<input class="input" type="number" name="numOrder" required>
-										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
-										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
+										<input class="input" type="number" name="numOrder" required value="1" min="1">
+										<input type="hidden" name="id" value= "<%= id %>" >
 										<input type="hidden" name="type" value= "addToCart" >
 									</div>
 									<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
@@ -677,20 +496,14 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 								
 								</form>
 								
-								
-								
-								
-								
-								
 								<div class="pull-right">
 								
 									<form action="WishList" method="post">	
-										<input type="hidden" name="path" value= <%= request.getParameter("path") %> >
-										<input type="hidden" name="name" value= <%= request.getParameter("name") %> >
+										<input type="hidden" name="id" value= <%= id %> ><!-- TODO rehacer el WishList.java -->
 										<input type="hidden" name="type" value= "addToWishList" >
 										<input type="submit" class="primary-btn add-to-cart" value="ADD TO WISH LIST" />
 									</form>
-															
+
 								</div>
 		
 							</div>
@@ -732,13 +545,12 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 						<div class="product-tab">
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab1">Details</a></li>
-								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
+								<!-- <li><a data-toggle="tab" href="#tab1">Details</a></li>
+								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li> -->
 							</ul>
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-										irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+									<p><%=p.getDescription() %></p>
 								</div>
 								<div id="tab2" class="tab-pane fade in">
 
@@ -854,7 +666,7 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 	<!-- /section -->
 
 	<!-- section -->
-	<div class="section">
+	<div class="section" hidden>
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
@@ -946,7 +758,7 @@ ArrayList<String> categories=ControllerIndex.getCategories();
 				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div class="product product-single">
 						<div class="product-thumb">
-							<div class="product-label">
+							<div class="product-label" hidden>
 								<span>New</span>
 								<span class="sale">-20%</span>
 							</div>
