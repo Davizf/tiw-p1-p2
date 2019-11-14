@@ -45,4 +45,47 @@
 		<error-code>404</error-code>
 		<location>/sorryNotFound.jsp</location>
 	</error-page>
+	
+	
+	
+		<servlet>
+		<description>
+		</description>
+		<display-name>ServletController</display-name>
+		<servlet-name>ServletController</servlet-name>
+		<servlet-class>jhc.jms.ServletController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletController</servlet-name>
+		<url-pattern>/jms-controller</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<resource-ref>
+		<description />
+
+		<res-ref-name>jms/cf1.1Ref</res-ref-name>
+		<res-type>javax.jms.ConnectionFactory</res-type>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+		<mapped-name>jms/cf1.1</mapped-name>
+
+	</resource-ref>
+	<resource-ref>
+		<description />
+
+		<res-ref-name>jms/queue1.1Ref</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+		<mapped-name>jms/queue1.1</mapped-name>
+
+	</resource-ref>
+	
+	
+	
 </web-app>

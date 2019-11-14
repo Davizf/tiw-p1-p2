@@ -143,6 +143,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li><!-- TODO -->
+									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
@@ -601,8 +602,9 @@ ArrayList<Category> categories=IndexController.getCategories();
 								</tfoot>
 							</table>
 							<div class="pull-right">
-								<form action="ShoppingCart" method="post">
-									<button class="primary-btn" type="submit" value="placeOrder" name="type">Place Order</button>
+								<form action="ShoppingCart" method="post" class="clearfix">
+									<input type="hidden" name="type" value= "checkout" >
+									<input type="submit" class="primary-btn" name="button" value="Place Order"/>
 								</form>
 							</div>
 						</div>
