@@ -100,7 +100,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 
 					<!-- Search -->
 					<div class="header-search">
-						<form action="products.jsp" method="get">
+						<form action="products.jsp" method="post">
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
@@ -239,12 +239,16 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<!-- category nav -->
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
+					<form action="products.jsp" method="post" id="form_category" style="display:hidden;">
+						<input type="hidden" name="category" value="" id="form_category_input">
+					</form>
 					<ul class="category-list">
 						<%if(categories != null) { %>
 							<% for(Category category : categories) { %>
-								<li><a href="products.jsp?category="<%=category.getName() %>><%=category.getName() %></a></li>
+								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getName() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
 							<%} %>
 						<%} %>
+						<li><a href="products.jsp">View all</a></li>
 					</ul>
 				</div>
 				<!-- /category nav -->
@@ -875,7 +879,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<!-- section title -->
 				<div class="col-md-12">
 					<div class="section-title">
-						<h2 class="title"><a href="products.jsp">Latest Products</a></h2>
+						<h2 class="title">Latest Products</h2>
 					</div>
 				</div>
 				<!-- section title -->

@@ -419,8 +419,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<%if(category != "") { %>
+				<li><a href="index.jsp">Home</a></li>
+				<%if(category == null || category.equals("null") || category.equals("")) { %>
 					<li class="active">Products</li>
 				<%} else { %>
 					<li>Products</li>
@@ -433,10 +433,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 
 	<%
 	List<Product> products = null;
-	if(category != "") {
-		products = ProductController.getProductsByCategory(category);
-	} else {
+	if(category == null || category.equals("null") || category.equals("")) {
 		products = ProductController.getAllProducts();
+	} else {
+		products = ProductController.getProductsByCategory(category);
 	}
 	
 	%>
