@@ -157,6 +157,20 @@ public class ProductManager {
 
 		return products;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsBySeller(String email) {
+		List<Product> products = null;
+		EntityManager em = getEntityManager();
+		try {
+			products = (List<Product>) em.createNamedQuery("Product.findAllBySeller").setParameter("email", email).getResultList();
+		} finally {
+			em.close();
+		}
+
+		return products;
+	}
+
 
 
 }
