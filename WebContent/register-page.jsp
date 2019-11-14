@@ -103,8 +103,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
-								<% for(Category category : categories) { %>
-								<option value="<%=category.getName() %>"><%=category.getName() %></option>
+								<%if(categories != null) { %>
+									<% for(Category category : categories) { %>
+										<option value="<%=category.getName() %>"><%=category.getName() %></option>
+									<%} %>
 								<%} %>
 							</select>
 							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
@@ -236,8 +238,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<div class="category-nav show-on-click">
 				<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<ul class="category-list">
-						<% for(Category category : categories) { %>
-						<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
+						<%if(categories != null) { %>
+							<% for(Category category : categories) { %>
+								<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
+							<%} %>
 						<%} %>
 					</ul>
 				</div>

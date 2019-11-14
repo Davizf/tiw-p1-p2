@@ -1,12 +1,10 @@
 package controllers;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import model.Category;
 import model.Product;
 
 public class ProductController {
@@ -29,7 +27,6 @@ public class ProductController {
 		return products;
 	}
 
-	// TODO
 	public static List<Product> getLastProducts(){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
@@ -43,7 +40,7 @@ public class ProductController {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		List<Product> products = manager.getLastProducts();
+		List<Product> products = manager.getProducts();
 		factory.close();
 		return products;
 	}
