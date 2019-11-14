@@ -434,7 +434,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 	if(category != "") {
 		products = ProductController.getProductsByCategory(category);
 	} else {
-		products = ProductController.getAllProducts();
+		products = ProductController.getProducts();
 	}
 	
 	%>
