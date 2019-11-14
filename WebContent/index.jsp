@@ -241,7 +241,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<ul class="category-list">
 						<%if(categories != null) { %>
 							<% for(Category category : categories) { %>
-								<li><a href="products.jsp?query=&category<%=category.getName() %>"><%=category.getName() %></a></li>
+								<li><a href="products.jsp?category="<%=category.getName() %>><%=category.getName() %></a></li>
 							<%} %>
 						<%} %>
 					</ul>
