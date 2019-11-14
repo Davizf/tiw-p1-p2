@@ -51,6 +51,71 @@ public class InteractionJMS {
 		}
 
 	}
+	
+	
+	
+	public void writeJMSToAllBuyers(String message, String receiver, String sender) {
+
+		// Bucle para meter email de todos los compradores
+		writeJMS(message, receiver, sender);
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	public void confirmPurchase(String creditCard, String totalPrice) {
+
+		try {
+
+			initialContext = new javax.naming.InitialContext();
+
+		
+			factory = (javax.jms.ConnectionFactory) initialContext.lookup(InformationProperties.getQCF());
+			queue = (javax.jms.Destination) initialContext.lookup(InformationProperties.getQueueAsincrona());
+				
+			Qcon = factory.createConnection();
+			QSes = Qcon
+					.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+			Mpro = QSes.createProducer(queue);
+
+			javax.jms.TextMessage msg = QSes.createTextMessage();
+
+			
+			msg.setJMSCorrelationID("confirm-purchase");
+			msg.setStringProperty("creditCard",creditCard);
+			msg.setStringProperty("totalPrice",totalPrice);
+			Qcon.start();
+			Mpro.send(msg);
+
+			this.Mpro.close();
+			this.QSes.close();
+			this.Qcon.close();
+
+		} catch (javax.jms.JMSException e) {
+			System.out
+					.println(".....JHC *************************************** JMS Error: "
+							+ e.getLinkedException().getMessage());
+			System.out
+					.println(".....JHC *************************************** JMS Error: "
+							+ e.getLinkedException().toString());
+		} catch (Exception e) {
+			System.out
+					.println("JHC *************************************** Error Exception: "
+							+ e.getMessage());
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 
 	public ArrayList<Messages> readJMS(String receiver) {
 

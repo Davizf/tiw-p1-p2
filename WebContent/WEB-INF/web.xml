@@ -27,6 +27,19 @@
 		<servlet-name>UserController</servlet-name>
 		<url-pattern>/UserController</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>PurchaseController</servlet-name>
+		<servlet-class>controllers.PurchaseController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PurchaseController</servlet-name>
+		<url-pattern>/PurchaseController</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

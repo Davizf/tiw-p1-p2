@@ -722,7 +722,8 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 					
 
 				<div class="pull-right">
-					<form action="OrderController" method="post" class="clearfix">
+					<form action="PurchaseController" method="post" class="clearfix">
+						<input type="hidden" name="total-price" value= <%=total%> >
 						<input type="hidden" name="type" value= "confirm-checkout" >
 						<input type="submit" name="button" class="btn btn-success" value="Confirm my order" />
 					</form>
