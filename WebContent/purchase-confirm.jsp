@@ -1,11 +1,11 @@
-<%@page import="models.Category"%>
 <%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="model.Product" %>
+<%@page import="java.util.*"%>
+<%@page import="models.Category"%>
+<%@page import="model.Messages"%>
+<%@page import="model.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
-<%@page import="java.util.*" %>
-<%@page import="model.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,10 +47,14 @@
 </head>
 
 <body>
+
 <%
 String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=IndexController.getCategories();
+ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("cartList");
 %>
+
+
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -254,7 +258,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li class="active">Wish list</li>
+				<li><a href="#">Checkout</a></li>
+				<li class="active">Order confirmation</li>
 			</ul>
 		</div>
 	</div>
@@ -269,166 +274,124 @@ ArrayList<Category> categories=IndexController.getCategories();
 			<!-- row -->
 			<div class="row">
 			
+				<div class="col-md-6">
+				
 			
-			
-			<%--
-				<form id="checkout-form" class="clearfix">
-					<div class="col-md-6">
-						<div class="billing-details">
-							<p>Already a customer ? <a href="#">Login</a></p>
-							<div class="section-title">
-								<h3 class="title">Billing Details</h3>
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
-							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
-							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="register">
-									<label class="font-weak" for="register">Create Account?</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-											<p>
-												<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="section-title">
+						<h4 class="title">Order confirmation</h4>
 					</div>
-
-					<div class="col-md-6">
-						<div class="shiping-methods">
-							<div class="section-title">
-								<h4 class="title">Shiping Methods</h4>
-							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="shipping" id="shipping-1" checked>
-								<label for="shipping-1">Free Shiping -  $0.00</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										<p>
-								</div>
-							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="shipping" id="shipping-2">
-								<label for="shipping-2">Standard - $4.00</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										<p>
-								</div>
-							</div>
-						</div>
-
-						<div class="payments-methods">
-							<div class="section-title">
-								<h4 class="title">Payments Methods</h4>
-							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="payments" id="payments-1" checked>
-								<label for="payments-1">Direct Bank Transfer</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										<p>
-								</div>
-							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="payments" id="payments-2">
-								<label for="payments-2">Cheque Payment</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										<p>
-								</div>
-							</div>
-							<div class="input-checkbox">
-								<input type="radio" name="payments" id="payments-3">
-								<label for="payments-3">Paypal System</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										<p>
-								</div>
-							</div>
-						</div>
-					</div>
-
- --%>
-
-
-					<div class="col-md-12">
-						<div class="order-summary clearfix">
-							<div class="section-title">
-								<h3 class="title">My Wish List	</h3>
-							</div>
-							<table class="shopping-cart-table table">
-								<thead>
-									<tr>
-										<th>Product</th>
-										<th></th>
-										<th class="text-center">Price</th>
-										<th class="text-center">Quantity</th>
-										<th class="text-center">Total</th>
-										<th class="text-right"></th>
-									</tr>
-								</thead>
-								<tbody>
-								
-								
-								<%
-								ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("wishList");
-								for(Product product : list ){
-								%>
-									<tr>
-										<td class="thumb"><img src= <%= product.getImagePath() %> alt=""></td>
-										<td class="details">
-											<a href="#"><%= product.getName() %></a>
-											<ul>
-												<li><span>Size: M</span></li>
-											</ul>
-										</td>
-										<form action="WishList" method="post">
-											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
-											<input type="hidden" name="type" value= "deleteInWishList" >
-											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
-										</form>
-										
-									</tr>
-									
-								<% } %>	
-									
-									
-									
-								</tbody>
-							
-							</table>
 					
-						</div>
+					
+					<br>
+					<h4>1. Shipping adress:</h4>
+					<hr>
+					<p>First name: </p>
+					<p>Last name: </p>
+					<p>Adress: </p>
+					<p>City: </p>
+					<p>Country: </p>
+					<p>Zip code:</p>
+					<p>Email </p>
+					<p>Telephone: </p>
+					<br>
+					
+					<h4>2. Payment method:</h4>
+					<hr>
+					<p>Credit card: </p>
+					<p>Expiration date: </p>
+					<p>CVV: </p>
+					<br>
+					
+					
+					
+					
+				</div>
 
-					</div>
-				</form>
 			</div>
 			<!-- /row -->
+			
+			
+			<h4>3. Check the products and shipping:</h4>
+			<hr>
+				
+					
+				<div class="col-md-12">
+					<div class="order-summary clearfix">
+						
+						<table class="shopping-cart-table table">
+							<thead>
+								<tr>
+									<th>Product</th>
+									<th></th>
+									<th class="text-center">Price</th>
+									<th class="text-center">Quantity</th>
+									<th class="text-center">Total</th>
+									<th class="text-right"></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								
+							<%
+							double total=0;
+							for(ProductInCart product : list ){
+								total+=product.getCost();
+							%>
+								<tr>
+									<td class="thumb"><img src= "<%= product.getProduct().getImagePath() %>" alt=""></td>
+									<td class="details">
+										<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
+										<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
+										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
+										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
+										<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
+									</td>
+				
+										
+								
+				
+								</tr>
+								
+							<% } %>	
+								
+									
+									
+							</tbody>
+							<tfoot>
+							<tr>
+									<th class="empty" colspan="3"></th>
+									<th>SUBTOTAL</th>
+									<th colspan="2" class="sub-total">$<%=total%></th>
+								</tr>
+								<tr>
+									<th class="empty" colspan="3"></th>
+									<th>SHIPING</th>
+									<td colspan="2">Free Shipping Delivery in 24 - 48 h</td>
+								</tr>
+								<tr>
+									<th class="empty" colspan="3"></th>
+									<th>TOTAL</th>
+									<th colspan="2" class="total">$<%=total%></th>
+								</tr>
+							</tfoot>
+						</table>
+						
+					</div>
+					
+				</div>	
+				<hr>
+					
+
+				<div class="pull-right">
+					<form action="PurchaseController" method="post" class="clearfix">
+						<input type="hidden" name="total-price" value= <%=total%> >
+						<input type="hidden" name="type" value= "confirm-checkout" >
+						<input type="submit" name="button" class="btn btn-success" value="Confirm my order" />
+					</form>
+				</div>
+							
+
+		
 		</div>
 		<!-- /container -->
 	</div>
@@ -441,7 +404,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 			<!-- row -->
 			<div class="row">
 				<!-- footer widget -->
-				<div class="col-md-6 col-sm-6 col-xs-6">
+				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
@@ -462,6 +425,21 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
 						</ul>
 						<!-- /footer social -->
+					</div>
+				</div>
+				<!-- /footer widget -->
+
+				<!-- footer widget -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-header">My Account</h3>
+						<ul class="list-links">
+							<li><a href="#">My Account</a></li>
+							<li><a href="#">My Wishlist</a></li>
+							<li><a href="#">Compare</a></li>
+							<li><a href="#">Checkout</a></li>
+							<li><a href="#">Login</a></li>
+						</ul>
 					</div>
 				</div>
 				<!-- /footer widget -->

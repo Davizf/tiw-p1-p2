@@ -100,7 +100,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 
 					<!-- Search -->
 					<div class="header-search">
-						<form action="products.jsp" method="get">
+						<form action="products.jsp" method="post">
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
@@ -158,7 +158,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 						<%if(user != null) { %>
 							<!-- Cart -->
 							<%
-							ArrayList<ProductInCart> productsInCart=(ArrayList<ProductInCart>)session.getAttribute("cartList");
+							ArrayList<ProductInCart> productsInCart = (ArrayList<ProductInCart>)session.getAttribute("cartList");
 							double cartTotal=0;
 							int cartNumber=0;
 							if (productsInCart!=null) {
@@ -208,13 +208,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</li>
 						<%} %>
 						<!-- /Cart -->
-						
-						
-						
-						
-						
-						
-
 						<!-- Mobile nav toggle-->
 						<li class="nav-toggle">
 							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
@@ -237,12 +230,16 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<!-- category nav -->
 				<div class="category-nav show-on-click">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
+					<form action="products.jsp" method="post" id="form_category" style="display:hidden;">
+						<input type="hidden" name="category" value="" id="form_category_input">
+					</form>
 					<ul class="category-list">
 						<%if(categories != null) { %>
 							<% for(Category category : categories) { %>
-								<li><a href="products.jsp?category=<%=category.getName() %>"><%=category.getName() %></a></li>
+								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getName() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
 							<%} %>
 						<%} %>
+						<li><a href="products.jsp">View all</a></li>
 					</ul>
 				</div>
 				<!-- /category nav -->
@@ -256,7 +253,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
+				<li><a href="index.jsp">Home</a></li>
 				<li class="active">Edit my profile</li>
 			</ul>
 		</div>
