@@ -53,8 +53,6 @@ String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=IndexController.getCategories();
 ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("cartList");
 %>
-
-
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -81,7 +79,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
 								<li><a href="#">USD ($)</a></li>
-								<li><a href="#">EUR (â¬)</a></li>
+								<li><a href="#">EUR (€)</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -96,7 +94,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 				<div class="pull-left">
 					<!-- Logo -->
 					<div class="header-logo">
-						<a class="logo" href="/tiw-p1/index.jsp">
+						<a class="logo" href="index.jsp">
 							<img src="/tiw-p1/images/logo.png" alt="">
 						</a>
 					</div>
@@ -104,14 +102,17 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 
 					<!-- Search -->
 					<div class="header-search">
-						<form>
-							<input class="input search-input" type="text" placeholder="Enter your keyword">
-							<select class="input search-categories">
-								<option value="0">All Categories</option>
-								<option value="1">Category 01</option>
-								<option value="1">Category 02</option>
+						<form action="products.jsp" method="post">
+							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
+							<select class="input search-categories" name="category">
+								<option value="">All Categories</option>
+								<%if(categories != null) { %>
+									<% for(Category category : categories) { %>
+										<option value="<%=category.getName() %>"><%=category.getName() %></option>
+									<%} %>
+								<%} %>
 							</select>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
+							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
 					<!-- /Search -->
@@ -124,30 +125,28 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 								<div class="header-btns-icon">
 									<i class="fa fa-user-o"></i>
 								</div>
-								
-								<%if(session.getAttribute("user") != null) { %>
-									<strong class="text-uppercase">Hi, <%out.print(session.getAttribute("username"));%>! <i class="fa fa-caret-down"></i></strong>
+								<%if(user != null) { %>
+									<strong class="text-uppercase">Hi, <%=((String)session.getAttribute("username")) %>! <i class="fa fa-caret-down"></i></strong>
 								<%}else{ %>
 									<strong class="text-uppercase">My Account <i class="fa fa-caret-down"></i></strong>
 								<%}%>
-								
-								
 							</div>
 							
-							
-							<%if(session.getAttribute("user") != null) { %>
-								<a href="profile.jsp" class="text-camelcase">My profile</a> 
+							<%if(user != null) { %>
+								<form action="UserController" method="post" class="clearfix">
+									<input type="hidden" name="operation" value="My profile"/>
+									<a class="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
+								</form>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
 							
 							<ul class="custom-menu">
-								<%if(session.getAttribute("user") != null) { %>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
-									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>	
+								<%if(user != null) { %>
+									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
+									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
 									<li><a href="register-page.jsp"><i class="fa fa-unlock-alt"></i> Create an account</a></li>
@@ -157,46 +156,47 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 								
 							</ul>
 						</li>
-						
-						
 						<!-- /Account -->
-
-						<%if(session.getAttribute("user") != null) { %>
-							
-								<!-- Cart -->
+						<%if(user != null) { %>
+							<!-- Cart -->
+							<%
+							ArrayList<ProductInCart> productsInCart = (ArrayList<ProductInCart>)session.getAttribute("cartList");
+							double cartTotal=0;
+							int cartNumber=0;
+							if (productsInCart!=null) {
+								cartNumber=productsInCart.size();
+								for (int i=0; i<productsInCart.size(); i++)
+									cartTotal+=productsInCart.get(i).getCost();
+							}
+							%>
 							<li class="header-cart dropdown default-dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 									<div class="header-btns-icon">
 										<i class="fa fa-shopping-cart"></i>
-										<span class="qty">3</span>
+										<span class="qty"><%=cartNumber %></span>
 									</div>
 									<strong class="text-uppercase">My Cart:</strong>
 									<br>
-									<span>35.20$</span>
+									<span>$<%=cartTotal %></span>
 								</a>
 								<div class="custom-menu">
 									<div id="shopping-cart">
 										<div class="shopping-cart-list">
+											<%
+											if (productsInCart!=null) {
+												for (int i=0; i<productsInCart.size(); i++) {
+											%>
 											<div class="product product-widget">
 												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
+													<img src="<%=productsInCart.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
+													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
+													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
 												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
 											</div>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-price">$32.50 <span class="qty">x3</span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp">Product Name Goes Here</a></h2>
-												</div>
-												<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-											</div>
+											<%} 
+												} %>
 										</div>
 										
 										<form action="ShoppingCart" method="get">
@@ -210,7 +210,6 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 							</li>
 						<%} %>
 						<!-- /Cart -->
-
 						<!-- Mobile nav toggle-->
 						<li class="nav-toggle">
 							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
@@ -233,356 +232,19 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 				<!-- category nav -->
 				<div class="category-nav show-on-click">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
+					<form action="products.jsp" method="post" id="form_category" style="display:hidden;">
+						<input type="hidden" name="category" value="" id="form_category_input">
+					</form>
 					<ul class="category-list">
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Womenâs Clothing <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="/tiw-p1/images/banner05.jpg" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Menâs Clothing</a></li>
-						<li class="dropdown side-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Phones & Accessories <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-4 hidden-sm hidden-xs">
-										<a class="banner banner-2" href="#">
-											<img src="/tiw-p1/images/banner04.jpg" alt="">
-											<div class="banner-caption">
-												<h3 class="white-color">NEW<br>COLLECTION</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Computer & Office</a></li>
-						<li><a href="#">Consumer Electronics</a></li>
-						<li class="dropdown side-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Jewelry & Watches <i class="fa fa-angle-right"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Bags & Shoes</a></li>
-						<li><a href="#">View All</a></li>
+						<%if(categories != null) { %>
+							<% for(Category category : categories) { %>
+								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getName() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
+							<%} %>
+						<%} %>
+						<li><a href="products.jsp">View all</a></li>
 					</ul>
 				</div>
 				<!-- /category nav -->
-
-				<!-- menu nav -->
-				<div class="menu-nav">
-					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
-					<ul class="menu-list">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Shop</a></li>
-						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="/tiw-p1/images/banner05.jpg" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown mega-dropdown full-width"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Men <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="/tiw-p1/images/banner06.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Womenâs</h3>
-												</div>
-											</a>
-											<hr>
-										</div>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="/tiw-p1/images/banner07.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Menâs</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="/tiw-p1/images/banner08.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Accessories</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="/tiw-p1/images/banner09.jpg" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Bags</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Womenâs Clothing</a></li>
-											<li><a href="#">Menâs Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Sales</a></li>
-						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
-							<ul class="custom-menu">
-								<li><a href="index.html">Home</a></li>
-								<li><a href="products.html">Products</a></li>
-								<li><a href="product-page.html">Product Details</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<!-- menu nav -->
 			</div>
 		</div>
 		<!-- /container -->
