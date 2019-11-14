@@ -520,22 +520,27 @@ ArrayList<Category> categories=IndexController.getCategories();
 								</div>
 							</div>
 						</div>
-					</div>
+						
+						
+						<br><br><hr>
+						<div class="pull-right">
+							<form action="/tiw-p1/jms-controller" method="post">	
+								<input type="hidden" name="op" value="1">
+								
+								<!--  Aqui tiene que ir el email del vendedor -->
+								<input type="hidden" name="correlationId" value="123@gmail.com">
+								<INPUT type="hidden" name="sender" value="<%=user%>"> 
+								<input type="text" name="message" value= "Hello there! Im interested in this item!" >
+								<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
+							</form>
+						</div>
 					
 					
-					<div>
-						<form action="/tiw-p1/jms-controller" method="post">	
-							<input type="hidden" name="op" value="1">
-							
-							<!--  Aqui tiene que ir el email del vendedor -->
-							<input type="hidden" name="correlationId" value="123@gmail.com">
-							<INPUT type="hidden" name="sender" value="<%=user%>"> 
-							
-							
-							<input type="text" name="message" value= "Hello there! Im interested in this item!" >
-							<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
-						</form>
 					</div>
+					
+				
+					
+					
 							
 							
 							
