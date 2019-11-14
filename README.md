@@ -1,18 +1,6 @@
-# Read me...
-## The way to import the project:
-- File -> Open Projects from File System -> Directory -> "Select the project directory"
-
-## When you want to program some functionality for a trello task, it is better to do it in another branch!
-- Create and switch to another branch: git checkout -b "task-userlogin"
-
-## When you want to upload the changes on Github:
-- git add .
-- git commit -m "your message"
-- git push
-
-## When you want to merge your branch (when you finish) with the master branch
-- Create pull request on Github
-
+# Atención
+## Por favor, antes de hacer el push:
+Revisar que funcione todo en tu eclipse, si falla cualquier cosa no lo subas al github, para evitar que se pete. Arréglalo y que funcione todo antes de subirlo
 
 
 
