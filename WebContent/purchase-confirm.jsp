@@ -677,9 +677,6 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 									<td class="thumb"><img src= "<%= product.getProduct().getImagePath() %>" alt=""></td>
 									<td class="details">
 										<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
-										<ul hidden>
-											<li><span>Size: M</span></li>
-										</ul>
 										<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
 										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
 										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>

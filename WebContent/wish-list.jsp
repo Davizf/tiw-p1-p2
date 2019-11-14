@@ -141,7 +141,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 							
 							<ul class="custom-menu">
 								<%if(user != null) { %>
-									<li hidden><a href="profile.jsp"><i class="fa fa-user-o"></i> My profile</a></li>	
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
@@ -193,7 +192,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
 													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
 												</div>
-												<button class="cancel-btn" hidden><i class="fa fa-trash"></i></button>
 											</div>
 											<%} 
 												} %>
@@ -625,21 +623,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
 						</ul>
 						<!-- /footer social -->
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6" hidden>
-					<div class="footer">
-						<h3 class="footer-header">My Account</h3>
-						<ul class="list-links">
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">My Wishlist</a></li>
-							<li><a href="#">Compare</a></li>
-							<li><a href="#">Checkout</a></li>
-							<li><a href="#">Login</a></li>
-						</ul>
 					</div>
 				</div>
 				<!-- /footer widget -->
