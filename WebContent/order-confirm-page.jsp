@@ -680,17 +680,15 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 										<ul hidden>
 											<li><span>Size: M</span></li>
 										</ul>
-									</td>
-									<form action="ShoppingCart" method="post">
 										<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
 										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
 										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
 										<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
-										<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
-										<input type="hidden" name="type" value= "deleteInCart" >
-										<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
-									</form>
-									
+									</td>
+				
+										
+								
+				
 								</tr>
 								
 							<% } %>	
