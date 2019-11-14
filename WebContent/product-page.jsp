@@ -257,9 +257,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
+			<form action="products.jsp" method="post" id="form_category" style="display:hidden;">
+				<input type="hidden" name="category" value="<%=p.getCategoryBean().getName() %>">
+			</form>
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="products.jsp?category=<%=p.getCategoryBean().getName() %>"><%=p.getCategoryBean().getName() %></a></li>
+				<li><a href="#" onclick="document.getElementById('form_category').submit();"><%=p.getCategoryBean().getName() %></a></li>
 				<li class="active"><%=p.getName() %></li>
 			</ul>
 		</div>
@@ -268,7 +271,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<%
 	String seller=(String)request.getAttribute("seller");
 	boolean isSeller=(seller!=null);
-	isSeller=true;
 	%>
 
 	<!-- section -->

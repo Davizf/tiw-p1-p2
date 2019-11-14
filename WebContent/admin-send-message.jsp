@@ -251,7 +251,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
+				<li><a href="index.jsp">Home</a></li>
 				<li class="active">Send a Message</li>
 			</ul>
 		</div>

@@ -255,7 +255,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="#">Home</a></li>
+				<li><a href="index.jsp">Home</a></li>
 				<li><a href="#">Checkout</a></li>
 				<li class="active">Order confirmation</li>
 			</ul>
