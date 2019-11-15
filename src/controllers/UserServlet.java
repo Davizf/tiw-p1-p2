@@ -58,7 +58,7 @@ public class UserServlet extends HttpServlet{
 				user.setCreditCardExpiration(req.getParameter("cardExpire"));
 				user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
 				String seller = req.getParameter("seller");
-				user.setSeller( (int) ((seller != null && seller.equals("on"))?1:0) );
+				user.setType( (int) ((seller != null && seller.equals("on"))?1:0) );
 
 				try {
 					manager.createUser(user);

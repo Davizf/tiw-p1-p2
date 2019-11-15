@@ -12,8 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="Products")
-@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
-@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
+@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
 @NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
 public class Product implements Serializable {
@@ -22,6 +21,7 @@ public class Product implements Serializable {
 	@Id
 	private int id;
 
+	@Lob
 	private String description;
 
 	@Column(name="image_path")
@@ -30,6 +30,12 @@ public class Product implements Serializable {
 	private String name;
 
 	private BigDecimal price;
+
+	@Column(name="sale_price")
+	private BigDecimal salePrice;
+
+	@Column(name="ship_price")
+	private BigDecimal shipPrice;
 
 	@Column(name="short_description")
 	private String shortDescription;
@@ -95,6 +101,22 @@ public class Product implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public BigDecimal getSalePrice() {
+		return this.salePrice;
+	}
+
+	public void setSalePrice(BigDecimal salePrice) {
+		this.salePrice = salePrice;
+	}
+
+	public BigDecimal getShipPrice() {
+		return this.shipPrice;
+	}
+
+	public void setShipPrice(BigDecimal shipPrice) {
+		this.shipPrice = shipPrice;
 	}
 
 	public String getShortDescription() {

@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 /**
@@ -17,9 +18,12 @@ public class Orders_has_Product implements Serializable {
 	@Id
 	private int order;
 
+	@Column(name="product_price")
+	private BigDecimal productPrice;
+
 	//bi-directional one-to-one association to Order
 	@OneToOne
-	@JoinColumn(name="order", insertable=false, updatable=false)
+	@JoinColumn(name="order", insertable = false, updatable = false)
 	private Order orderBean;
 
 	//bi-directional many-to-one association to Product
@@ -36,6 +40,14 @@ public class Orders_has_Product implements Serializable {
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+
+	public BigDecimal getProductPrice() {
+		return this.productPrice;
+	}
+
+	public void setProductPrice(BigDecimal productPrice) {
+		this.productPrice = productPrice;
 	}
 
 	public Order getOrderBean() {

@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.List;
 
 
@@ -44,12 +45,12 @@ public class User implements Serializable {
 	@Column(name="postal_code")
 	private int postalCode;
 
-	private int seller;
-
 	private String surnames;
 
 	//@Column(name="TOTAL_CONNECTIONS")
 	//private BigInteger totalConnections;
+
+	private int type;
 
 	//private String user;
 
@@ -123,14 +124,14 @@ public class User implements Serializable {
 	public void setCreditCardExpiration(String creditCardExpiration) {
 		this.creditCardExpiration = creditCardExpiration;
 	}
+	/*
+	public BigInteger getCurrentConnections() {
+		return this.currentConnections;
+	}
 
-	//public BigInteger getCurrentConnections() {
-	//	return this.currentConnections;
-	//}
-
-	//public void setCurrentConnections(BigInteger currentConnections) {
-	//	this.currentConnections = currentConnections;
-	//}
+	public void setCurrentConnections(BigInteger currentConnections) {
+		this.currentConnections = currentConnections;
+	}*/
 
 	public String getName() {
 		return this.name;
@@ -164,14 +165,6 @@ public class User implements Serializable {
 		this.postalCode = postalCode;
 	}
 
-	public int getSeller() {
-		return this.seller;
-	}
-
-	public void setSeller(int seller) {
-		this.seller = seller;
-	}
-
 	public String getSurnames() {
 		return this.surnames;
 	}
@@ -179,8 +172,8 @@ public class User implements Serializable {
 	public void setSurnames(String surnames) {
 		this.surnames = surnames;
 	}
-
-	/*public BigInteger getTotalConnections() {
+	/*
+	public BigInteger getTotalConnections() {
 		return this.totalConnections;
 	}
 
@@ -188,7 +181,15 @@ public class User implements Serializable {
 		this.totalConnections = totalConnections;
 	}*/
 
-	/*public String getUser() {
+	public int getType() {
+		return this.type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	/*
+	public String getUser() {
 		return this.user;
 	}
 
