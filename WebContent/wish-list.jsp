@@ -138,7 +138,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							
 							<ul class="custom-menu">
 								<%if(user != null) { %>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
+									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
