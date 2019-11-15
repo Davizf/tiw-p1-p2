@@ -268,6 +268,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<%
 	String seller=(String)request.getAttribute("seller");
 	boolean isSeller=(seller!=null);
+	// TODO if seller, no dejar ver cosas si no es tu producto
 	%>
 
 	<!-- section -->

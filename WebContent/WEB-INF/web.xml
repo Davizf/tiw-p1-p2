@@ -1,113 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	id="WebApp_ID" version="2.5">
-	<servlet>
-		<servlet-name>ShoppingCart</servlet-name>
-		<servlet-class>controllers.ShoppingCart</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ShoppingCart</servlet-name>
-		<url-pattern>/ShoppingCart</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>WishList</servlet-name>
-		<servlet-class>controllers.WishList</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WishList</servlet-name>
-		<url-pattern>/WishList</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>UserServlet</servlet-name>
-		<servlet-class>controllers.UserServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
-		<url-pattern>/UserServlet</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>Order</servlet-name>
-		<servlet-class>controllers.OrderServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Order</servlet-name>
-		<url-pattern>/Order</url-pattern>
-	</servlet-mapping>
-	
-		<servlet>
-		<servlet-name>Catalogue</servlet-name>
-		<servlet-class>controllers.CatalogueServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Catalogue</servlet-name>
-		<url-pattern>/Catalogue</url-pattern>
-	</servlet-mapping>
-	
-	
-	
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-	<resource-ref>
-		<description></description>
-		<res-ref-name>jdbc/tiw-p1-buyer-sellerRef</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-	</resource-ref>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/sorryNotFound.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/sorryNotFound.jsp</location>
-	</error-page>
-	
-	
-	
-		<servlet>
-		<description>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <servlet>
+    <servlet-name>ShoppingCart</servlet-name>
+    <servlet-class>controllers.ShoppingCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShoppingCart</servlet-name>
+    <url-pattern>/ShoppingCart</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>WishList</servlet-name>
+    <servlet-class>controllers.WishList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WishList</servlet-name>
+    <url-pattern>/WishList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>controllers.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/UserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Order</servlet-name>
+    <servlet-class>controllers.OrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Order</servlet-name>
+    <url-pattern>/Order</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Catalogue</servlet-name>
+    <servlet-class>controllers.CatalogueServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Catalogue</servlet-name>
+    <url-pattern>/Catalogue</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description></description>
+    <res-ref-name>jdbc/tiw-p1-buyer-sellerRef</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+    <res-sharing-scope>Shareable</res-sharing-scope>
+  </resource-ref>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/sorryNotFound.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/sorryNotFound.jsp</location>
+  </error-page>
+  <servlet>
+    <description>
 		</description>
-		<display-name>ServletController</display-name>
-		<servlet-name>ServletController</servlet-name>
-		<servlet-class>jhc.jms.ServletController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletController</servlet-name>
-		<url-pattern>/jms-controller</url-pattern>
-	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
-	<resource-ref>
-		<description />
-
-		<res-ref-name>jms/cf1.1Ref</res-ref-name>
-		<res-type>javax.jms.ConnectionFactory</res-type>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-		<mapped-name>jms/cf1.1</mapped-name>
-
-	</resource-ref>
-	<resource-ref>
-		<description />
-
-		<res-ref-name>jms/queue1.1Ref</res-ref-name>
-		<res-type>javax.jms.Queue</res-type>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-		<mapped-name>jms/queue1.1</mapped-name>
-
-	</resource-ref>
-	
-	
-	
+    <display-name>ServletController</display-name>
+    <servlet-name>ServletController</servlet-name>
+    <servlet-class>jhc.jms.ServletController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletController</servlet-name>
+    <url-pattern>/jms-controller</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description></description>
+    <res-ref-name>jms/cf1.1Ref</res-ref-name>
+    <res-type>javax.jms.ConnectionFactory</res-type>
+    <res-sharing-scope>Shareable</res-sharing-scope>
+    <mapped-name>jms/cf1.1</mapped-name>
+  </resource-ref>
+  <resource-ref>
+    <description></description>
+    <res-ref-name>jms/queue1.1Ref</res-ref-name>
+    <res-type>javax.jms.Queue</res-type>
+    <res-sharing-scope>Shareable</res-sharing-scope>
+    <mapped-name>jms/queue1.1</mapped-name>
+  </resource-ref>
 </web-app>

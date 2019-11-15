@@ -247,21 +247,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 	</div>
 	<!-- /NAVIGATION -->
 
-	<%
-	String category = request.getParameter("category");
-	%>
-	
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<%if(category == null || category.equals("null") || category.equals("")) { %>
-					<li class="active">Catalogue</li>
-				<%} else { %>
-					<li>Products</li>
-					<li class="active"><%=category %></li>
-				<%} %>
+				<li class="active">Catalogue</li>
 			</ul>
 		</div>
 	</div>
@@ -269,12 +260,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 
 	<%
 	List<Product> products = null;
-	if(category == null || category.equals("null") || category.equals("")) {
-		products = ProductController.getAllProducts();
-	} else {
-		products = ProductController.getProductsByCategory(category);
-	}
-	
+	products = ProductController.getProductsBySeller(user);
 	%>
 	<!-- section -->
 	<div class="section">
@@ -415,21 +401,16 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<!-- /aside widget -->
 				</div>
 				<!-- /ASIDE -->
-				
-				
 				<div class="section-title">
 					<h3 class="title">My Catalogue</h3>
 				</div>
-				
-				
 				<div class="input-checkbox">
-					<form action="Catalogue">
+					<form action="Catalogue" method="post">
 						<input type ="hidden" name="type" value="add"> 
 						<input type="submit" class="primary-btn add-to-cart" value="Add Product" />
 					</form>
-					
 				</div>
-							
+
 				<!-- MAIN -->
 				<div id="main" class="col-md-9" >
 					<!-- store top filter -->
@@ -477,6 +458,11 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
+									<form action="Catalogue" method="post">
+										<input type ="hidden" name="type" value="delete">
+										<input type ="hidden" name="id" value="<%=product.getId() %>">
+										<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+									</form>
 									<div class="product-thumb">
 										<div class="product-label" hidden>
 											<span>New</span>
@@ -496,12 +482,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 												<i class="fa fa-star-o empty"></i>
 											</div>
 										</div>
-										<h2 class="product-name"></h2>
-										<form action="Catalogue">
-											<input type="number" name="newStock" value = <%=product.getStock()%>>
+										<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
+										<form action="Catalogue" method="post">
+											<input type="number" class="" name="newStock" value = "<%=product.getStock()%>">
 											<input type="hidden" name="type" value = "change-stock">
-											<input type="hidden" name="id" value = <%=product.getId()%>>
-											<input type="submit" value = "Apply">
+											<input type="hidden" name="id" value = "<%=product.getId()%>">
+											<input type="submit" class="primary-btn add-to-cart" value = "Apply">
 										</form>
 										
 										
