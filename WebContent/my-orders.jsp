@@ -275,7 +275,102 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 						<h4 class="title">My orders</h4>
 					</div>
 					
-					<h4>You have successfully made the purchase!</h4>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<br>
+					
+					<h5>Nº Order: x</h5>
+					
+					<div class="col-md-12">
+					<div class="order-summary clearfix">
+						
+						<table class="shopping-cart-table table">
+							<thead>
+								<tr>
+									<th>Product</th>
+									<th></th>
+									<th class="text-center">Price</th>
+									<th class="text-center">Quantity</th>
+									<th class="text-center">Total</th>
+									<th class="text-right"></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								
+							<%--  		
+								
+							<%
+							for(Orders order : list ){
+							%>
+								<tr>
+									<td class="thumb"><img src= "<%= order.getProduct().getImagePath() %>" alt=""></td>
+									<td class="details">
+										<a href="product-page.jsp?id=<%=order.getProduct().getId() %>"><%= order.getProduct().getName() %></a>
+										<td class="price text-center"><strong>$<%=order.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
+										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
+										<td class="qty text-center"><strong><%=order.getQuantity() %></strong></td>
+										<td class="total text-center"><strong class="primary-color">$<%=order.getCost() %></strong></td>
+									</td>
+				
+										
+								
+				
+								</tr>
+								
+							
+							
+							--%>	
+									
+							</tbody>
+							<tfoot>
+								<tr>
+									<th class="empty" colspan="3"></th>
+									<th>TOTAL</th>
+									<th colspan="2" class="total">0</th>
+								</tr>
+							</tfoot>
+						</table>
+						
+					</div>
+					
+				</div>	
+				
+				<hr>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					
 		
 					
