@@ -130,7 +130,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</div>
 							
 							<%if(user != null) { %>
-								<form action="UserController" method="post" class="clearfix">
+								<form action="UserServlet" method="post" class="clearfix">
 									<input type="hidden" name="operation" value="My profile"/>
 									<a class="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
 								</form>
@@ -143,7 +143,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
-									<li><a href="UserController?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
+									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
 									<li><a href="register-page.jsp"><i class="fa fa-unlock-alt"></i> Create an account</a></li>
