@@ -13,16 +13,16 @@ public class ProductController {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		Product p= manager.getProduct(id);
+		Product product = manager.getProduct(id);
 		factory.close();
-		return p;
+		return product;
 	}
 	
 	public static List<Product> getProductsByCategory(String category){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		List<Product> products= manager.getProductsByCategory(category);
+		List<Product> products = manager.getProductsByCategory(category);
 		factory.close();
 		return products;
 	}
@@ -31,7 +31,7 @@ public class ProductController {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		List<Product> products= manager.getProductsBySeller(email);
+		List<Product> products = manager.getProductsBySeller(email);
 		factory.close();
 		return products;
 	}
@@ -41,7 +41,7 @@ public class ProductController {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		List<Product> products= manager.getLastProducts();
+		List<Product> products = manager.getLastProducts();
 		factory.close();
 		return products;
 	}
