@@ -50,7 +50,7 @@ public class ProductController {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
-		List<Product> products = manager.getProducts();
+		List<Product> products = manager.getAllProducts();
 		factory.close();
 		return products;
 	}

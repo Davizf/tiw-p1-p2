@@ -250,7 +250,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<%
 	String category = request.getParameter("category");
 	%>
-	----------------------------<%=category %>
+	
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">

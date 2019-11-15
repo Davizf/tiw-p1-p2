@@ -122,7 +122,7 @@ public class ProductManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Product> getProducts() {
+	public List<Product> getAllProducts() {
 		List<Product> products = null;
 		EntityManager em = getEntityManager();
 		try {
