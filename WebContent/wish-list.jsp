@@ -131,7 +131,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</div>
 							
 							<%if(user != null) { %>
-								<a class="text-camelcase" href="profile.jsp">My profile</a>lass="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
+								<a class="text-camelcase" href="profile.jsp">My profile</a>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
@@ -392,7 +392,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 								
 								<%
 								ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("wishList");
-								for(Product product : list ){
+								if(list != null){
+									for(Product product : list ){
 								%>
 									<tr>
 										<td class="thumb"><img src= <%= product.getImagePath() %> alt=""></td>
@@ -411,7 +412,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 										</form>
 										
 									</tr>
-									
+									<% } %>	
 								<% } %>	
 									
 									
