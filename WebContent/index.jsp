@@ -53,10 +53,6 @@ String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=IndexController.getCategories();
 %>
 
-
-<a href="catalogue.jsp">View all</a></li>
-
-
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->

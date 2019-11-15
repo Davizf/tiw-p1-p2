@@ -415,7 +415,21 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<!-- /aside widget -->
 				</div>
 				<!-- /ASIDE -->
-
+				
+				
+				<div class="section-title">
+					<h3 class="title">My Catalogue</h3>
+				</div>
+				
+				
+				<div class="input-checkbox">
+					<form action="Catalogue">
+						<input type ="hidden" name="type" value="add"> 
+						<input type="submit" class="primary-btn add-to-cart" value="Add Product" />
+					</form>
+					
+				</div>
+							
 				<!-- MAIN -->
 				<div id="main" class="col-md-9" >
 					<!-- store top filter -->
@@ -482,7 +496,14 @@ ArrayList<Category> categories=IndexController.getCategories();
 												<i class="fa fa-star-o empty"></i>
 											</div>
 										</div>
-										<h2 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
+										<h2 class="product-name"></h2>
+										<form action="Catalogue">
+											<input type="number" name="newStock" value = <%=product.getStock()%>>
+											<input type="hidden" name="type" value = "change-stock">
+											<input type="hidden" name="id" value = <%=product.getId()%>>
+											<input type="submit" value = "Apply">
+										</form>
+										
 										
 									</div>
 								</div>
