@@ -30,12 +30,12 @@
 	
 	
 	<servlet>
-		<servlet-name>PurchaseController</servlet-name>
-		<servlet-class>controllers.PurchaseController</servlet-class>
+		<servlet-name>Order</servlet-name>
+		<servlet-class>controllers.OrderServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>PurchaseController</servlet-name>
-		<url-pattern>/PurchaseController</url-pattern>
+		<servlet-name>Order</servlet-name>
+		<url-pattern>/Order</url-pattern>
 	</servlet-mapping>
 	
 	
