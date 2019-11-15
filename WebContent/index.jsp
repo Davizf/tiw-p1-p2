@@ -143,6 +143,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<li><a href="catalogue.jsp"><i class="fa fa-user-times"></i> My Catalogue</a></li>
 									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
