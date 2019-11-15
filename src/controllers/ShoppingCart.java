@@ -61,7 +61,7 @@ public class ShoppingCart extends HttpServlet{
 				rd.forward(req, res);
 			}else if(req.getParameter("type").equalsIgnoreCase("checkout")){
 				req.setAttribute("cartList", products);
-				RequestDispatcher rd = req.getRequestDispatcher("purchase-confirm.jsp");
+				RequestDispatcher rd = req.getRequestDispatcher("order-confirm.jsp");
 				rd.forward(req, res);
 			}
 		}else {

@@ -1,8 +1,10 @@
 <%@page import="controllers.IndexController"%>
+<%@page import="controllers.UserController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="models.Category"%>
+<%@page import="model.User"%>
 <%@page import="model.Messages"%>
 <%@page import="model.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
@@ -261,7 +263,8 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-
+	
+	
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -273,37 +276,81 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 			
 				<div class="col-md-6">
 				
-			
+				<% if(user != null) {
+					User user_info = UserController.getUserInformation(user); 
+				%>	
 					<div class="section-title">
 						<h4 class="title">Order confirmation</h4>
 					</div>
 					
 					
 					<br>
-					<h4>1. Shipping adress:</h4>
+					<h4>1. Shipping address:</h4>
 					<hr>
-					<p>First name: </p>
-					<p>Last name: </p>
-					<p>Adress: </p>
-					<p>City: </p>
-					<p>Country: </p>
-					<p>Zip code:</p>
-					<p>Email </p>
-					<p>Telephone: </p>
+					
+					<p>First name:</p>	
+						<div class="form-group">
+							<input class="input" type="text" name="firstName" value="<%=user_info.getName()%>" required>
+						</div>
+					<p>Last name:</p>	
+						<div class="form-group">
+							<input class="input" type="text" name="lastName" value="<%=user_info.getSurnames()%>" required>
+						</div>
+					<p>Email </p>	
+						<div class="form-group">
+							<input class="input" type="email" name="email" value="<%=user_info.getEmail()%>" required readonly>
+						</div>
+						<div class="form-group">
+							<input class="input" type="password" name="password" value="<%=user_info.getPassword()%>" required hidden>
+						</div>
+					<p>Address: </p>	
+						<div class="form-group">
+							<input class="input" type="text" name="address" value="<%=user_info.getAddress()%>" required>
+						</div>
+					<p>City: </p>	
+						<div class="form-group">
+							<input class="input" type="text" name="city" value="<%=user_info.getCity()%>" required>
+						</div>
+					<p>Country: </p>	
+						<div class="form-group">
+							<input class="input" type="text" name="country" value="<%=user_info.getCountry()%>" required>
+						</div>
+					<p>Postal code:</p>	
+						<div class="form-group">
+							<input class="input" type="number" name="zipCode" value="<%=user_info.getPostalCode()%>" required>
+						</div>
+					<p>Phone: </p>	
+						<div class="form-group">
+							<input class="input" type="tel" name="tel" value="<%=user_info.getPhone()%>" required>
+						</div>
+					
+					
 					<br>
 					
 					<h4>2. Payment method:</h4>
+					
 					<hr>
+					
 					<p>Credit card: </p>
-					<p>Expiration date: </p>
-					<p>CVV: </p>
+						<div class="form-group">
+							<input class="input" type="number" name="card" value="<%=user_info.getCreditCard()%>" required>
+						</div>
+					<p>Expiration date: </p>	
+						<div class="form-group">
+							<input class="input" type="text" name="cardExpire" value="<%=user_info.getCreditCardExpiration()%>" required>
+						</div>
+					<p>CVV: </p>	
+						<div class="form-group">
+							<input class="input" type="text" name="cvv" value="<%=user_info.getCredit_card_CVV()%>" maxlength="3" pattern="\d{3}" required>
+						</div>	
+					
 					<br>
 					
 					
-					
-					
 				</div>
-
+				
+				<% } %>
+				
 			</div>
 			<!-- /row -->
 			
@@ -380,7 +427,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 					
 
 				<div class="pull-right">
-					<form action="PurchaseController" method="post" class="clearfix">
+					<form action="Order" method="post" class="clearfix">
 						<input type="hidden" name="total-price" value= <%=total%> >
 						<input type="hidden" name="type" value= "confirm-checkout" >
 						<input type="submit" name="button" class="btn btn-success" value="Confirm my order" />

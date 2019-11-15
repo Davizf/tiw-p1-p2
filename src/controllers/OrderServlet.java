@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PurchaseController extends HttpServlet{
+public class OrderServlet extends HttpServlet{
 	
 	/**
 	 * 
@@ -20,8 +20,8 @@ public class PurchaseController extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		
 		
-		InteractionJMS mq=new InteractionJMS();
-		mq.confirmPurchase("123412124214", req.getParameter("total-price"));
+		//InteractionJMS mq=new InteractionJMS();
+		//mq.confirmPurchase("123412124214", req.getParameter("total-price"));
 		
 		
 		// El otro proceso que lee el mensaje y generar confirmacion de compra está en mi local, no sé si es un proyecto aparte o en este mismo, estoy esperando respuesta del profe
