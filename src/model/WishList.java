@@ -24,7 +24,7 @@ public class WishList implements Serializable {
 
 	//bi-directional one-to-one association to User
 	@OneToOne
-	@JoinColumn(name="user", insertable=false, updatable=false)
+	@JoinColumn(name="user", insertable = false, updatable = false)
 	private User userBean;
 
 	public WishList() {
