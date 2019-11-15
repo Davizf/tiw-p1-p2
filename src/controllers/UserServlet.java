@@ -85,15 +85,7 @@ public class UserServlet extends HttpServlet{
 				rd.forward(req, res);
 			}
 
-		} else if(req.getParameter("operation").equalsIgnoreCase("My Profile")) {
-
-			User user = manager.getUser((String) session.getAttribute("user"));
-
-			req.setAttribute("user_information", (User) user);
-			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
-			rd.forward(req, res);
-
-		} else if(req.getParameter("operation").equalsIgnoreCase("Save my profile")) {
+		}  else if(req.getParameter("operation").equalsIgnoreCase("Save my profile")) {
 
 			User user = new User();
 			user.setPhone(Integer.parseInt(req.getParameter("tel")));

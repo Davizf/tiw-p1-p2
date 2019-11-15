@@ -1,4 +1,5 @@
 <%@page import="controllers.IndexController"%>
+<%@page import="controllers.UserController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="controllers.ShoppingCart" %>
@@ -131,10 +132,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</div>
 							
 							<%if(user != null) { %>
-								<form action="UserServlet" method="post" class="clearfix">
-									<input type="hidden" name="operation" value="My profile"/>
-									<a class="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
-								</form>
+								<a class="text-camelcase" href="profile.jsp">My profile</a>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
@@ -271,8 +269,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 			
 			
 			
+			<% if(user != null) {
+					User user_info = UserController.getUserInformation(user); 
+			%>
 				<form action="UserServlet" method="post" class="clearfix">
-					<%User user_info = (User)request.getAttribute("user_information"); {%>
 					<div class="col-md-6">
 						<div class="billing-details">
 							<div class="section-title">
@@ -326,11 +326,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 															
 							</div>
 						</div>
-						<% } %>
 					</div>
 
 				</form>
-				
+				<% } %>
 				
 			</div>
 			<!-- /row -->

@@ -130,10 +130,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</div>
 							
 							<%if(user != null) { %>
-								<form action="UserServlet" method="post" class="clearfix">
-									<input type="hidden" name="operation" value="My profile"/>
-									<a class="text-camelcase" href="#" onclick="parentNode.submit();">My profile</a>
-								</form>
+								<a class="text-camelcase" href="profile.jsp">My profile</a>
 							<%} else{ %>
 								<a href="login-page.jsp" class="text-uppercase">Login</a> / <a href="register-page.jsp" class="text-uppercase">Join</a>
 							<%} %>
