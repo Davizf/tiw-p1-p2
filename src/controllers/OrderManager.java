@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import model.Order;
+import model.Product;
 
 public class OrderManager {
 
@@ -170,7 +171,19 @@ public class OrderManager {
 
 		return Orders;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Order> getLastOrder() {
+		List<Order> order = null;
+		EntityManager em = getEntityManager();
+		try {
+			order = (List<Order>) em.createNamedQuery("Order.OrderById").setMaxResults(1).getResultList();
+		} finally {
+			em.close();
+		}
 
+		return order;
+	}
 
 
 }

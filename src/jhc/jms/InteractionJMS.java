@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import jhc.info.InformationProperties;
-import model.Messages;
+import models.Messages;
 
 
 public class InteractionJMS {

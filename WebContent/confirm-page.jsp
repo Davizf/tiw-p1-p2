@@ -3,8 +3,8 @@
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="models.Category"%>
-<%@page import="model.Messages"%>
-<%@page import="model.ProductInCart" %>
+<%@page import="models.Messages"%>
+<%@page import="models.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
 
 <!DOCTYPE html>

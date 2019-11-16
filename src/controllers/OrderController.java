@@ -1,8 +1,12 @@
 package controllers;
 
+import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import model.Order;
+import model.Product;
 import model.User;
 
 public class OrderController {

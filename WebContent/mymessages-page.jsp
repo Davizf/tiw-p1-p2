@@ -1,10 +1,10 @@
-<%@page import="model.ProductInCart"%>
+<%@page import="models.ProductInCart"%>
 <%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="models.Category"%>
-<%@page import="model.Messages"%>
+<%@page import="models.Messages"%>
 
 <!DOCTYPE html>
 <html lang="en">

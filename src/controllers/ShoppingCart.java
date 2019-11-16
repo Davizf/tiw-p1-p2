@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ProductInCart;
+import models.ProductInCart;
 
 public class ShoppingCart extends HttpServlet{
 

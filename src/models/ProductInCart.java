@@ -1,6 +1,8 @@
-package model;
+package models;
 
 import java.io.Serializable;
+
+import model.Product;
 
 public class ProductInCart implements Serializable {
 	private static final long serialVersionUID = 1L;

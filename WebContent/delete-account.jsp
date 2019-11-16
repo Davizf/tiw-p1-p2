@@ -4,7 +4,7 @@
 <%@page pageEncoding="UTF-8"%>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
-<%@page import="model.ProductInCart"%>
+<%@page import="models.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">
