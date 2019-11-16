@@ -27,7 +27,7 @@ public class Orders_has_Product implements Serializable {
 	private BigDecimal shipPrice;
 
 	//bi-directional many-to-one association to Order
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="order", insertable = false, updatable = false)
 	private Order orderBean;
 

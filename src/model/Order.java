@@ -16,6 +16,7 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String address;
@@ -35,7 +36,7 @@ public class Order implements Serializable {
 	private User userBean;
 
 	//bi-directional many-to-one association to Orders_has_Product
-	@OneToMany(mappedBy="orderBean")
+	@OneToMany(mappedBy="orderBean", cascade = CascadeType.ALL)
 	private List<Orders_has_Product> ordersHasProducts;
 
 	public Order() {

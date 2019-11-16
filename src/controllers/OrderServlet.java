@@ -35,8 +35,6 @@ public class OrderServlet extends HttpServlet{
 		userManager.setEntityManagerFactory(factory);
 		OrderManager orderManager = new OrderManager();
 		orderManager.setEntityManagerFactory(factory);
-		Orders_has_ProductManager orderProductManager = new Orders_has_ProductManager();
-		orderProductManager.setEntityManagerFactory(factory);
 		
 		if(req.getParameter("type").equalsIgnoreCase("confirm-checkout")) {
 			//InteractionJMS mq=new InteractionJMS();
@@ -48,44 +46,38 @@ public class OrderServlet extends HttpServlet{
 			// Guardar la compra en la pagina de mis pedidos
 			
 
+			//List<Orders_has_Product> order_products = new ArrayList<Orders_has_Product>();;
+			Orders_has_ProductPK ids = null;
+			Orders_has_Product order_product = null;
+			Order order = new Order();
 			
-			Orders_has_Product order_products = new Orders_has_Product();
-			List<Order> orders = (List<Order>)orderManager.getLastOrder();
-			Order lastOrder = null;
-			
-			for(Order order : orders) {
-				lastOrder = order;
-			}
-			
-			/*order.setAddress(req.getParameter("address"));
+			order.setAddress(req.getParameter("address"));
 			order.setCity(req.getParameter("city"));
 			order.setCountry(req.getParameter("country"));
 			order.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
 			order.setUserBean(userManager.getUser(email));
-			order.setOrdersHasProduct(order_products);
-			
+			order.setOrdersHasProducts(new ArrayList<Orders_has_Product>());
+			for(ProductInCart product : productsInCart) {
+				ids = new Orders_has_ProductPK();
+				order_product = new Orders_has_Product();
+				order_product.setProductPrice(product.getProduct().getPrice());
+				order_product.setProductBean(product.getProduct());
+				order_product.setOrderBean(order);
+				order_product.setShipPrice(product.getProduct().getShipPrice());
+				order_product.setQuantity(product.getQuantity());
+				ids.setOrder(order.getId());
+				ids.setProduct(product.getProduct().getId());
+				order_product.setId(ids);
+				order.addOrdersHasProduct(order_product);
+			}
 
 			
 			try {
 				orderManager.createOrder(order);
 			} catch (Exception e) {
 				System.out.println("Descripci�n: " + e.getMessage());
-			}*/
-			Orders_has_ProductPK ids = new Orders_has_ProductPK();
-			
-			for(ProductInCart productInCart: productsInCart) {
-				order_products.setProductPrice(productInCart.getProduct().getPrice());
-				order_products.setProductBean(productInCart.getProduct());
-				order_products.setOrderBean(lastOrder);
-				ids.setOrder(lastOrder.getId());
-				ids.setProduct(productInCart.getProduct().getId());
-				order_products.setId(ids);
-				try {
-					orderProductManager.createOrders_has_Product(order_products);
-				} catch (Exception e) {
-					System.out.println("Descripci�n: " + e.getMessage());
-				}
 			}
+			
 			
 			factory.close();
 			//order_products.setOrderBean(order);
