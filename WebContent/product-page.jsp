@@ -250,10 +250,9 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<%
 	String seller=(String)request.getAttribute("seller");
 	boolean isSeller=(seller != null && !seller.equals("") && !seller.equals("null") && seller.equals("yes"));
-	// TODO add modify
+	
 	String operation=(String)request.getAttribute("operation");
 	boolean modify=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("modify"));
-	
 	boolean add=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("add"));
 	
 	String strId=request.getParameter("id");
@@ -266,15 +265,15 @@ ArrayList<Category> categories=IndexController.getCategories();
 	if (isSeller) {
 		p=new Product();
 		if (add) {
+			p.setId(-1);
 			p.setName("Insert name for the new product");
-			//p_category.setName("categ");
-			/*models.Category p_category=new models.Category();
-			p_category.setName("categ");
-			p.setCategoryBean(p_category);*/
+			model.Category p_category=new model.Category();
+			p_category.setName("");
+			p.setCategoryBean(p_category);
 			p.setPrice(new BigDecimal("0"));
 			p.setShortDescription("Insert short description for the new product");
 			p.setDescription("Insert description for the new product");
-			p.setImagePath(product.getImagePath());
+			p.setImagePath("/tiw-p1/images/default-img.png");
 			p.setStock(0);
 			p.setSalePrice(new BigDecimal("0"));
 			p.setShipPrice(new BigDecimal("0"));
@@ -287,7 +286,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 			p.setDescription(product.getDescription());
 			p.setImagePath(product.getImagePath());
 			p.setStock(product.getStock());
-			p.setSalePrice(product.getSalePrice());
+			if (product.getSalePrice()==null)
+				p.setSalePrice(new BigDecimal("0"));
+			else
+				p.setSalePrice(product.getSalePrice());
 			p.setShipPrice(product.getShipPrice());
 			p.setCategoryBean(product.getCategoryBean());
 		}
@@ -296,7 +298,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 	}
 	%>
 	<!-- TODO -->
-	---------------------<%=p.getId() %></br>
+	---------------------</br>
+	<%=p.getId() %></br>
 	<%=p.getImagePath() %></br>
 	<%=p.getPrice().doubleValue() %></br>
 	<%=p.getSalePrice().doubleValue() %></br>
@@ -333,6 +336,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
+	
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -345,11 +349,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 						<div id="product-main-view">
 							<div class="product-view">
 								<%if (isSeller) {%><!-- TODO -->
-									<%if (add) {%>
-									<img src="/tiw-p1/images/default-img.png" alt="">
-									<%} else { %>
-									<img src="<%=p.getImagePath() %>" alt="">
-									<%}%>
+								<img src="<%=p.getImagePath() %>" alt="">
 								<%} else {%>
 								<img src="<%=p.getImagePath() %>" alt="">
 								<%} %>
@@ -452,6 +452,11 @@ ArrayList<Category> categories=IndexController.getCategories();
 						String value_form="";// TODO
 						if (modify) value_form="Modify";
 						else if (add) value_form="Add";
+
+						int new_product_id=p.getId(), new_product_stock;
+						String new_product_image_path, new_product_name, new_product_category;
+						BigDecimal new_product_price, new_product_sale_price, new_product_ship_price;
+
 						%>
 						<script type="text/javascript">
 							function ola() {
@@ -459,9 +464,10 @@ ArrayList<Category> categories=IndexController.getCategories();
 							}
 						</script>
 						<%if (isSeller) {%>
-						<br><button onclick="ola();" class="primary-btn"><%=value_form %></button>
+						<br><form action="Catalogue" method="post">
+							<button onclick="getData();" class="primary-btn" name="product_operation" value="<%=value_form %>"><%=value_form %></button>
+						</form>
 						<%} %>
-					
 					</div>
 					
 					<div class="col-md-12">
@@ -474,7 +480,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
 									<%if (isSeller) {%>
-									<p><textarea id="product_description" required><%=p.getDescription() %></textarea></p>
+									<p><textarea id="product_description" required style="width: 100%;height: 200px;"><%=p.getDescription() %></textarea></p>
 									<%} else {%>
 									<p><%=p.getDescription() %></p>
 									<%} %>
