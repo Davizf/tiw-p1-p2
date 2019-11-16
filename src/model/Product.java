@@ -20,6 +20,7 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Lob
@@ -44,7 +45,7 @@ public class Product implements Serializable {
 	private int stock;
 
 	//bi-directional many-to-one association to Orders_has_Product
-	@OneToMany(mappedBy="productBean")
+	@OneToMany(mappedBy="productBean", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders_has_Product> ordersHasProducts;
 
 	//bi-directional many-to-one association to Category

@@ -16,6 +16,7 @@ public class Orders_has_Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name="product_price")
@@ -27,12 +28,12 @@ public class Orders_has_Product implements Serializable {
 	private BigDecimal shipPrice;
 
 	//bi-directional many-to-one association to Order
-	@ManyToOne
-	@JoinColumn(name="order")
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Order.class)
+	@JoinColumn(name="id_order")
 	private Order orderBean;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Product.class)
 	@JoinColumn(name="product")
 	private Product productBean;
 
@@ -42,10 +43,10 @@ public class Orders_has_Product implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-
+	/*
 	public void setId(int id) {
 		this.id = id;
-	}
+	}*/
 
 	public BigDecimal getProductPrice() {
 		return this.productPrice;
@@ -86,5 +87,10 @@ public class Orders_has_Product implements Serializable {
 	public void setProductBean(Product productBean) {
 		this.productBean = productBean;
 	}
+	
+	@Override
+    public int hashCode() {
+        return 31;
+    }
 
 }

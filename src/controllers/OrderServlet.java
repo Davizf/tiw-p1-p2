@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Order;
 import model.Orders_has_Product;
+import model.Product;
 import model.ProductInCart;
 import model.User;
 
@@ -26,7 +28,13 @@ public class OrderServlet extends HttpServlet{
 		String email = (String) session.getAttribute("user");
 		@SuppressWarnings("unchecked")
 		ArrayList<ProductInCart> productsInCart = (ArrayList<ProductInCart>)session.getAttribute("cartList");
-
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");
+		UserManager userManager = new UserManager();
+		userManager.setEntityManagerFactory(factory);
+		OrderManager orderManager = new OrderManager();
+		orderManager.setEntityManagerFactory(factory);
+		ProductManager productManager = new ProductManager();
+		
 		System.out.println("----------------"+email);
 		for (ProductInCart p : productsInCart) {
 			System.out.println(p);
@@ -40,8 +48,7 @@ public class OrderServlet extends HttpServlet{
 			// El otro proceso que lee el mensaje y generar confirmacion de compra está en mi local, no sé si es un proyecto aparte o en este mismo, estoy esperando respuesta del profe
 			// Guardar la compra en la pagina de mis pedidos
 
-
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");
+			/*
 			EntityManager em = factory.createEntityManager();
 			Order order = new Order();
 			order.setAddress(req.getParameter("address"));
@@ -51,22 +58,22 @@ public class OrderServlet extends HttpServlet{
 			order.setUserBean((User) em.find(User.class, email));
 			order.setDate("");// TODO
 
-			em.getTransaction().begin();
-			em.persist(order);
-			em.getTransaction().commit();
-			int kk=order.getId();
-			em.close();
-			factory.close();
 
-			factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");
-			em = factory.createEntityManager();
+			/*Order orderF = new Order();	
+			List<Order>orders = orderManager.getLastOrder();
+			for(Order orderFind : orders) {
+				orderF = orderFind;
+			}
+			int kk=orderF.getId(); 
+
+
 			em.getTransaction().begin();
+
 			ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
 
 			Orders_has_Product order_product;
-//			Orders_has_ProductPK ids;
 			for(ProductInCart p : productsInCart) {
-				System.out.println("+++++++++++++++++"+kk+"_"+p.getProduct().getId());
+				//System.out.println("+++++++++++++++++"+kk+"_"+p.getProduct().getId());
 //				ids = new Orders_has_ProductPK();
 //				ids.setOrder(kk);
 //				ids.setProduct(p.getProduct().getId());
@@ -74,24 +81,74 @@ public class OrderServlet extends HttpServlet{
 				order_product = new Orders_has_Product();
 				order_product.setProductPrice(p.getProduct().getPrice());
 				order_product.setProductBean(p.getProduct());
-				order_product.setOrderBean(order);
 				order_product.setShipPrice(p.getProduct().getShipPrice());
 				order_product.setQuantity(p.getQuantity());
 
 				System.out.println("1");
-				em.persist(order_product);
+				//em.persist(order_product);
 				System.out.println("2");
 				products.add(order_product);
+				//orderF.addOrdersHasProduct(order_product);
 			}
 //			order.setOrdersHasProducts(products);
 //			em.persist(order);
 
 			System.out.println("_1");
-			em.getTransaction().commit();
-			System.out.println("_2");
-			em.close();
-			factory.close();
 
+			System.out.println("_2");
+		
+			order.setOrdersHasProducts(products);
+			em.persist(order);
+			
+			for(Orders_has_Product product : products ) {
+				System.out.println(product.getQuantity());
+				System.out.println(product.getOrderBean());
+				System.out.println(product.getProductPrice());
+				System.out.println(product.getShipPrice());
+				em.persist(product);
+			}
+			
+			
+			em.getTransaction().commit();
+			em.close();
+			factory.close();*/
+			
+
+			Order order = new Order();
+			Orders_has_Product order_product;
+			order.setAddress(req.getParameter("address"));
+			order.setCity(req.getParameter("city"));
+			order.setCountry(req.getParameter("country"));
+			order.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
+			order.setUserBean(userManager.getUser(email));
+			//order.setOrdersHasProducts(new ArrayList<Orders_has_Product>());
+			ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
+			for(ProductInCart product : productsInCart) {
+				Product productInCart = product.getProduct();
+				order_product = new Orders_has_Product();
+				order_product.setProductPrice(product.getProduct().getPrice());
+				order_product.setProductBean(product.getProduct());
+				order_product.setOrderBean(order);
+				order_product.setShipPrice(product.getProduct().getShipPrice());
+				order_product.setQuantity(product.getQuantity());
+				products.add(order_product);
+				/*productInCart.addOrdersHasProduct(order_product);
+				try {
+					productManager.updateProduct(productInCart);
+				} catch (Exception e) {
+					System.out.println("Descripci�n: " + e.getMessage());
+				}*/
+			}
+			
+			order.setOrdersHasProducts(products);
+			
+			try {
+				orderManager.createOrder(order);
+			} catch (Exception e) {
+				System.out.println("Descripci�n: " + e.getMessage());
+			}
+			
+	
 			//			try {
 			//				orderManager.createOrder(order);
 			//			} catch (Exception e) {
