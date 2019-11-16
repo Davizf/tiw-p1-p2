@@ -24,7 +24,7 @@ public class UserManager {
 		this.emf = emf;
 	}
 
-	public EntityManager getEntityManager() {
+	private EntityManager getEntityManager() {
 		if (emf == null) {
 			throw new RuntimeException(
 					"The EntityManagerFactory is null.  This must be passed in to the constructor or set using the setEntityManagerFactory() method.");
