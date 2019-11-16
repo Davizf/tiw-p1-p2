@@ -252,7 +252,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li class="active">Catalogue</li>
+				<li href="catalogue.jsp" class="active">Catalogue</li>
 			</ul>
 		</div>
 	</div>
@@ -401,6 +401,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<!-- /aside widget -->
 				</div>
 				<!-- /ASIDE -->
+				<%
+				String msg_error=(String)request.getAttribute("msg_error");
+				if (msg_error != null && !msg_error.equals("") && !msg_error.equals("null")) {
+				%>
+				<h2 style="color: red;text-align:center;"><%=msg_error %></h2>
+				<%} %>
 				<div class="section-title">
 					<h3 class="title">My Catalogue</h3>
 				</div>

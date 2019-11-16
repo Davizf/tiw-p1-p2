@@ -8,6 +8,8 @@ import javax.persistence.Persistence;
 import model.Product;
 
 public class ProductController {
+	
+	public static final int MAX_STOCK=2147483647, MIN_STOCK=0;
 
 	public static Product getProduct(int id){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
@@ -69,6 +71,25 @@ public class ProductController {
 			factory.close();
 		}
 		return true;
+	}
+
+	public static boolean modifyProduct(Product p) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		try {
+			manager.updateProduct(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			factory.close();
+		}
+		return true;
+	}
+
+	public static boolean verifyStock(int stock) {
+		return stock>MAX_STOCK || stock<MIN_STOCK;
 	}
 
 }

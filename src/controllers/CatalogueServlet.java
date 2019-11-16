@@ -19,10 +19,16 @@ public class CatalogueServlet extends HttpServlet{
 		String user = (String) sesion.getAttribute("user");
 
 		if(req.getParameter("type").equalsIgnoreCase("change-stock")) {
-			// TODO
 			int id = Integer.parseInt(req.getParameter("id"));
-
-			// getProductById(productId).setStock(req.getParameter("newStock"))	:P
+			Product p = ProductController.getProduct(id);
+			int newStock = Integer.parseInt(req.getParameter("newStock"));
+			if (ProductController.verifyStock(newStock)) {
+				p.setStock(newStock);
+				if (p.getUserBean().getEmail().equals(user))
+					ProductController.modifyProduct(p);
+			} else {
+				req.setAttribute("msg_error", "Error, invalid stock value.");
+			}
 
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
