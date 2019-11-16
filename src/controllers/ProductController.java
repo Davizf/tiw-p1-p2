@@ -55,4 +55,20 @@ public class ProductController {
 		return products;
 	}
 
+	public static boolean deleteProduct(int id) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		Product p = manager.getProduct(id);
+		try {
+			manager.deleteProduct(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			factory.close();
+		}
+		return true;
+	}
+
 }
