@@ -89,7 +89,7 @@ public class ProductController {
 	}
 
 	public static boolean verifyStock(int stock) {
-		return stock>MAX_STOCK || stock<MIN_STOCK;
+		return stock<MAX_STOCK && stock>MIN_STOCK;
 	}
 
 }

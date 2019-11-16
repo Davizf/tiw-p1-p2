@@ -252,7 +252,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li href="catalogue.jsp" class="active">Catalogue</li>
+				<li class="active"><a href="catalogue.jsp">Catalogue</a></li>
 			</ul>
 		</div>
 	</div>
@@ -488,7 +488,11 @@ ArrayList<Category> categories=IndexController.getCategories();
 												<i class="fa fa-star-o empty"></i>
 											</div>
 										</div>
-										<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
+										<form action="Catalogue" method="post" id="form_modify_<%=product.getId()%>">
+											<input type="hidden" name="id" value="<%=product.getId() %>">
+											<input type="hidden" name="type" value="modify">
+											<h2 class="product-name"><a href="#" onclick="document.getElementById('form_modify_<%=product.getId()%>').submit();"><%=product.getName() %></a></h2>
+										</form>
 										<form action="Catalogue" method="post">
 											<input type="number" class="" name="newStock" value = "<%=product.getStock()%>">
 											<input type="hidden" name="type" value = "change-stock">

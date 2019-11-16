@@ -1,9 +1,10 @@
+<%@page import="models.Category"%>
+<%@page import="java.math.BigDecimal"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="controllers.IndexController"%>
 <%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.Category"%>
 <%@page import="model.Product"%>
 <%@page import="model.ProductInCart"%>
 
@@ -247,10 +248,64 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<!-- /NAVIGATION -->
 	
 	<%
-	int id=Integer.parseInt(request.getParameter("id"));
-	Product p=ProductController.getProduct(id);
+	String seller=(String)request.getAttribute("seller");
+	boolean isSeller=(seller != null && !seller.equals("") && !seller.equals("null") && seller.equals("yes"));
+	// TODO add modify
+	String operation=(String)request.getAttribute("operation");
+	boolean modify=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("modify"));
+	
+	boolean add=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("add"));
+	
+	String strId=request.getParameter("id");
+	int id=-1;
+	if (strId != null && !strId.equals("") && !strId.equals("null")) {
+		id=Integer.parseInt(strId);
+	}
+	Product product=(Product)request.getAttribute("product");
+	Product p;
+	if (isSeller) {
+		p=new Product();
+		if (add) {
+			p.setName("Insert name for the new product");
+			//p_category.setName("categ");
+			/*models.Category p_category=new models.Category();
+			p_category.setName("categ");
+			p.setCategoryBean(p_category);*/
+			p.setPrice(new BigDecimal("0"));
+			p.setShortDescription("Insert short description for the new product");
+			p.setDescription("Insert description for the new product");
+			p.setImagePath(product.getImagePath());
+			p.setStock(0);
+			p.setSalePrice(new BigDecimal("0"));
+			p.setShipPrice(new BigDecimal("0"));
+		}
+		if (modify) {
+			p.setId(product.getId());
+			p.setName(product.getName());
+			p.setPrice(product.getPrice());
+			p.setShortDescription(product.getShortDescription());
+			p.setDescription(product.getDescription());
+			p.setImagePath(product.getImagePath());
+			p.setStock(product.getStock());
+			p.setSalePrice(product.getSalePrice());
+			p.setShipPrice(product.getShipPrice());
+			p.setCategoryBean(product.getCategoryBean());
+		}
+	} else {
+		p=ProductController.getProduct(id);
+	}
 	%>
-
+	<!-- TODO -->
+	---------------------<%=p.getId() %></br>
+	<%=p.getImagePath() %></br>
+	<%=p.getPrice().doubleValue() %></br>
+	<%=p.getSalePrice().doubleValue() %></br>
+	<%=p.getShipPrice().doubleValue() %></br>
+	<%=p.getName() %></br>
+	<%=p.getStock() %></br>
+	<%=p.getCategoryBean().getName() %></br>
+	modify=<%=modify %></br>
+	add=<%=add%></br>
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
@@ -258,19 +313,26 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<input type="hidden" name="category" value="" id="form_category_input">
 			</form>
 			<ul class="breadcrumb">
+				<%
+				if (isSeller) {
+				%>
+				<li><a href="index.jsp">Home</a></li>
+				<li><a href="catalogue.jsp">Catalogue</a></li>
+					<%if (add) { %>
+					<li class="active">Add product</li>
+					<%} %>
+					<%if (modify) { %>
+					<li class="active">Modify product</li>
+					<%} %>
+				<%} else { %>
 				<li><a href="index.jsp">Home</a></li>
 				<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=p.getCategoryBean().getName() %>';document.getElementById('form_category').submit();"><%=p.getCategoryBean().getName() %></a></li>
 				<li class="active"><%=p.getName() %></li>
+				<%}%>
 			</ul>
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-	<%
-	String seller=(String)request.getAttribute("seller");
-	boolean isSeller=(seller!=null);
-	// TODO if seller, no dejar ver cosas si no es tu producto
-	%>
-
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -282,24 +344,71 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
+								<%if (isSeller) {%><!-- TODO -->
+									<%if (add) {%>
+									<img src="/tiw-p1/images/default-img.png" alt="">
+									<%} else { %>
+									<img src="<%=p.getImagePath() %>" alt="">
+									<%}%>
+								<%} else {%>
 								<img src="<%=p.getImagePath() %>" alt="">
+								<%} %>
 							</div>
 						</div>
 						
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
+							<%if (isSeller) {%>
+							<label for="product_name">Name</label>
+							<input class="input" id="product_name" value="<%=p.getName() %>" required>
+							<%} else {%>
 							<h2 class="product-name">
 								<%=p.getName() %>
 							</h2>
-							
+							<%} %>
+							<%if (isSeller) {%>
+								<%if(categories != null) { %>
+									<br></br>
+									<label for="product_category">Category</label>
+									<select class="input search-categories" name="category" id="product_category">
+									<option value="">Select a category for the new product</option>
+									<% for(Category category : categories) { %>
+										<%if ( p.getCategoryBean().getName().equals(category.getName()) ) {%>
+										<option value="<%=category.getName() %>" selected><%=category.getName() %></option>
+										<%} else {%>
+										<option value="<%=category.getName() %>"><%=category.getName() %></option>
+										<%} %>
+									<%} %>
+									</select>
+								<%} %>
+							<br></br>
+							<label for="product_price">Price</label>
+							<input class="input" type="text" id="product_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getPrice().doubleValue() %>">
+							<br></br>
+							<label for="product_sale_price">Sale price</label>
+							<input class="input" type="text" id="product_sale_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getSalePrice().doubleValue() %>">
+							<br></br>
+							<label for="product_ship_price">Ship price</label>
+							<input class="input" type="text" id="product_ship_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getShipPrice().doubleValue() %>">
+							<br></br>
+							<label for="product_stock">Stock</label>
+							<input class="input" type="text" id="product_stock" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getStock() %>">
+							<%} else {%>
 							<h3 class="product-price">$<%=p.getPrice().doubleValue() %> <del class="product-old-price" hidden>$45.00</del></h3>
 							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
+							<%} %>
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
+							<%if (isSeller) {%>
+							<br></br>
+							<label for="product_short_description">Short description</label>
+							<input class="input" id="product_short_description" value="<%=p.getShortDescription() %>" required>
+							<%} else {%>
 							<p><%=p.getShortDescription() %></p>
+							<%} %>
 
+							<%if (!isSeller) {%>
 							<div class="product-btns">
-							
 								<form action="ShoppingCart" method="post">
 								
 									<div class="qty-input">
@@ -309,12 +418,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 										<input type="hidden" name="type" value= "addToCart" >
 									</div>
 									<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
-								
-								
 								</form>
-								
 								<div class="pull-right">
-								
 									<form action="WishList" method="post">	
 										<input type="hidden" name="id" value= <%= id %> ><!-- TODO rehacer el WishList.java -->
 										<input type="hidden" name="type" value= "addToWishList" >
@@ -322,12 +427,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
 									</form>
-									
 								</div>
 							</div>
+							<%} %>
 						</div>
 						
-						
+						<%if (!isSeller) {%>
 						<br><br><hr>
 						<div class="pull-right">
 							<form action="/tiw-p1/jms-controller" method="post">	
@@ -340,16 +445,25 @@ ArrayList<Category> categories=IndexController.getCategories();
 								<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
 							</form>
 						</div>
-					
+						<%} %>
+						
+						
+						<%
+						String value_form="";// TODO
+						if (modify) value_form="Modify";
+						else if (add) value_form="Add";
+						%>
+						<script type="text/javascript">
+							function ola() {
+								alert("ola");
+							}
+						</script>
+						<%if (isSeller) {%>
+						<br><button onclick="ola();" class="primary-btn"><%=value_form %></button>
+						<%} %>
 					
 					</div>
 					
-				
-					
-					
-							
-							
-							
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-nav">
@@ -359,107 +473,11 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</ul>
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
+									<%if (isSeller) {%>
+									<p><textarea id="product_description" required><%=p.getDescription() %></textarea></p>
+									<%} else {%>
 									<p><%=p.getDescription() %></p>
-								</div>
-								<div id="tab2" class="tab-pane fade in">
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="product-reviews">
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<ul class="reviews-pages">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-												</ul>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<h4 class="text-uppercase">Write Your Review</h4>
-											<p>Your email address will not be published.</p>
-											<form class="review-form">
-												<div class="form-group">
-													<input class="input" type="text" placeholder="Your Name" />
-												</div>
-												<div class="form-group">
-													<input class="input" type="email" placeholder="Email Address" />
-												</div>
-												<div class="form-group">
-													<textarea class="input" placeholder="Your review"></textarea>
-												</div>
-												<div class="form-group">
-													<div class="input-rating">
-														<strong class="text-uppercase">Your Rating: </strong>
-														<div class="stars">
-															<input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
-															<input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
-															<input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
-															<input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
-															<input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
-														</div>
-													</div>
-												</div>
-												<button class="primary-btn">Submit</button>
-											</form>
-										</div>
-									</div>
-
-
-
+									<%} %>
 								</div>
 							</div>
 						</div>
