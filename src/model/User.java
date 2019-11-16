@@ -1,9 +1,17 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -50,7 +58,7 @@ public class User implements Serializable {
 //	@Column(name="TOTAL_CONNECTIONS")
 //	private BigInteger totalConnections;
 
-	private byte type;
+	private int type;
 
 //	private String user;
 
@@ -194,11 +202,11 @@ public class User implements Serializable {
 //		this.totalConnections = totalConnections;
 //	}
 
-	public byte getType() {
+	public int getType() {
 		return this.type;
 	}
 
-	public void setType(byte type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 

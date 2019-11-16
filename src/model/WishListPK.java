@@ -12,10 +12,10 @@ public class WishListPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(insertable=false, updatable=false)
+	@Column
 	private String user;
 
-	@Column(insertable=false, updatable=false)
+	@Column
 	private int product;
 
 	public WishListPK() {

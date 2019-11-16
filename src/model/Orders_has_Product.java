@@ -33,7 +33,7 @@ public class Orders_has_Product implements Serializable {
 
 	//bi-directional many-to-one association to Product
 	@ManyToOne
-	@JoinColumn(name="product")
+	@JoinColumn(name="product", insertable = false, updatable = false)
 	private Product productBean;
 
 	public Orders_has_Product() {
