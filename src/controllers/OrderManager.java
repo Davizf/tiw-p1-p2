@@ -6,10 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import model.Order;
-import model.Orders_has_Product;
-import model.Orders_has_ProductPK;
-import model.Product;
-import model.ProductInCart;
 
 public class OrderManager {
 
@@ -26,7 +22,7 @@ public class OrderManager {
 	public void setEntityManagerFactory(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
-
+	
 	private EntityManager getEntityManager() {
 		if (emf == null) {
 			throw new RuntimeException(

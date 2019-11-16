@@ -61,6 +61,10 @@ public class Product implements Serializable {
 	@ManyToMany(mappedBy="products2")
 	private List<User> users;
 
+	//bi-directional many-to-one association to WishList
+	@OneToMany(mappedBy="productBean")
+	private List<WishList> wishlists;
+
 	public Product() {
 	}
 
@@ -180,6 +184,28 @@ public class Product implements Serializable {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public List<WishList> getWishlists() {
+		return this.wishlists;
+	}
+
+	public void setWishlists(List<WishList> wishlists) {
+		this.wishlists = wishlists;
+	}
+
+	public WishList addWishlist(WishList wishlist) {
+		getWishlists().add(wishlist);
+		wishlist.setProductBean(this);
+
+		return wishlist;
+	}
+
+	public WishList removeWishlist(WishList wishlist) {
+		getWishlists().remove(wishlist);
+		wishlist.setProductBean(null);
+
+		return wishlist;
 	}
 
 }

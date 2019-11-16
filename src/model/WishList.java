@@ -14,23 +14,36 @@ import javax.persistence.*;
 public class WishList implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private WishListPK id;
+	@Id
+	private int id;
+
+	//bi-directional many-to-one association to Product
+	@ManyToOne
+	@JoinColumn(name="product")
+	private Product productBean;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="user", insertable = false, updatable = false)
+	@JoinColumn(name="user")
 	private User userBean;
 
 	public WishList() {
 	}
 
-	public WishListPK getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(WishListPK id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Product getProductBean() {
+		return this.productBean;
+	}
+
+	public void setProductBean(Product productBean) {
+		this.productBean = productBean;
 	}
 
 	public User getUserBean() {

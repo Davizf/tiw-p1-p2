@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 public class Orders_has_Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private Orders_has_ProductPK id;
+	@Id
+	private int id;
 
 	@Column(name="product_price")
 	private BigDecimal productPrice;
@@ -27,23 +27,23 @@ public class Orders_has_Product implements Serializable {
 	private BigDecimal shipPrice;
 
 	//bi-directional many-to-one association to Order
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="order", insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name="order")
 	private Order orderBean;
 
 	//bi-directional many-to-one association to Product
 	@ManyToOne
-	@JoinColumn(name="product", insertable = false, updatable = false)
+	@JoinColumn(name="product")
 	private Product productBean;
 
 	public Orders_has_Product() {
 	}
 
-	public Orders_has_ProductPK getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Orders_has_ProductPK id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

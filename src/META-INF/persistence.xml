@@ -5,10 +5,8 @@
 		<class>model.Category</class>
 		<class>model.Order</class>
 		<class>model.Orders_has_Product</class>
-		<class>model.Orders_has_ProductPK</class>
 		<class>model.Product</class>
 		<class>model.User</class>
 		<class>model.WishList</class>
-		<class>model.WishListPK</class>
 	</persistence-unit>
 </persistence>
