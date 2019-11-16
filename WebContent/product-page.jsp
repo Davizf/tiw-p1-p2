@@ -248,67 +248,14 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<!-- /NAVIGATION -->
 	
 	<%
-	String seller=(String)request.getAttribute("seller");
-	boolean isSeller=(seller != null && !seller.equals("") && !seller.equals("null") && seller.equals("yes"));
-	
-	String operation=(String)request.getAttribute("operation");
-	boolean modify=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("modify"));
-	boolean add=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("add"));
 	
 	String strId=request.getParameter("id");
 	int id=-1;
 	if (strId != null && !strId.equals("") && !strId.equals("null")) {
 		id=Integer.parseInt(strId);
-	}
-	Product product=(Product)request.getAttribute("product");
-	Product p;
-	if (isSeller) {
-		p=new Product();
-		if (add) {
-			p.setId(-1);
-			p.setName("Insert name for the new product");
-			model.Category p_category=new model.Category();
-			p_category.setName("");
-			p.setCategoryBean(p_category);
-			p.setPrice(new BigDecimal("0"));
-			p.setShortDescription("Insert short description for the new product");
-			p.setDescription("Insert description for the new product");
-			p.setImagePath("/tiw-p1/images/default-img.png");
-			p.setStock(0);
-			p.setSalePrice(new BigDecimal("0"));
-			p.setShipPrice(new BigDecimal("0"));
-		}
-		if (modify) {
-			p.setId(product.getId());
-			p.setName(product.getName());
-			p.setPrice(product.getPrice());
-			p.setShortDescription(product.getShortDescription());
-			p.setDescription(product.getDescription());
-			p.setImagePath(product.getImagePath());
-			p.setStock(product.getStock());
-			if (product.getSalePrice()==null)
-				p.setSalePrice(new BigDecimal("0"));
-			else
-				p.setSalePrice(product.getSalePrice());
-			p.setShipPrice(product.getShipPrice());
-			p.setCategoryBean(product.getCategoryBean());
-		}
-	} else {
-		p=ProductController.getProduct(id);
-	}
+	}// TODO else redirigir a products.jsp
+	Product p=ProductController.getProduct(id);
 	%>
-	<!-- TODO -->
-	---------------------</br>
-	<%=p.getId() %></br>
-	<%=p.getImagePath() %></br>
-	<%=p.getPrice().doubleValue() %></br>
-	<%=p.getSalePrice().doubleValue() %></br>
-	<%=p.getShipPrice().doubleValue() %></br>
-	<%=p.getName() %></br>
-	<%=p.getStock() %></br>
-	<%=p.getCategoryBean().getName() %></br>
-	modify=<%=modify %></br>
-	add=<%=add%></br>
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
@@ -316,22 +263,9 @@ ArrayList<Category> categories=IndexController.getCategories();
 				<input type="hidden" name="category" value="" id="form_category_input">
 			</form>
 			<ul class="breadcrumb">
-				<%
-				if (isSeller) {
-				%>
-				<li><a href="index.jsp">Home</a></li>
-				<li><a href="catalogue.jsp">Catalogue</a></li>
-					<%if (add) { %>
-					<li class="active">Add product</li>
-					<%} %>
-					<%if (modify) { %>
-					<li class="active">Modify product</li>
-					<%} %>
-				<%} else { %>
 				<li><a href="index.jsp">Home</a></li>
 				<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=p.getCategoryBean().getName() %>';document.getElementById('form_category').submit();"><%=p.getCategoryBean().getName() %></a></li>
 				<li class="active"><%=p.getName() %></li>
-				<%}%>
 			</ul>
 		</div>
 	</div>
@@ -348,66 +282,21 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
-								<%if (isSeller) {%><!-- TODO -->
 								<img src="<%=p.getImagePath() %>" alt="">
-								<%} else {%>
-								<img src="<%=p.getImagePath() %>" alt="">
-								<%} %>
 							</div>
 						</div>
 						
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
-							<%if (isSeller) {%>
-							<label for="product_name">Name</label>
-							<input class="input" id="product_name" value="<%=p.getName() %>" required>
-							<%} else {%>
 							<h2 class="product-name">
 								<%=p.getName() %>
 							</h2>
-							<%} %>
-							<%if (isSeller) {%>
-								<%if(categories != null) { %>
-									<br></br>
-									<label for="product_category">Category</label>
-									<select class="input search-categories" name="category" id="product_category">
-									<option value="">Select a category for the new product</option>
-									<% for(Category category : categories) { %>
-										<%if ( p.getCategoryBean().getName().equals(category.getName()) ) {%>
-										<option value="<%=category.getName() %>" selected><%=category.getName() %></option>
-										<%} else {%>
-										<option value="<%=category.getName() %>"><%=category.getName() %></option>
-										<%} %>
-									<%} %>
-									</select>
-								<%} %>
-							<br></br>
-							<label for="product_price">Price</label>
-							<input class="input" type="text" id="product_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getPrice().doubleValue() %>">
-							<br></br>
-							<label for="product_sale_price">Sale price</label>
-							<input class="input" type="text" id="product_sale_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getSalePrice().doubleValue() %>">
-							<br></br>
-							<label for="product_ship_price">Ship price</label>
-							<input class="input" type="text" id="product_ship_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getShipPrice().doubleValue() %>">
-							<br></br>
-							<label for="product_stock">Stock</label>
-							<input class="input" type="text" id="product_stock" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getStock() %>">
-							<%} else {%>
 							<h3 class="product-price">$<%=p.getPrice().doubleValue() %> <del class="product-old-price" hidden>$45.00</del></h3>
 							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
-							<%} %>
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
-							<%if (isSeller) {%>
-							<br></br>
-							<label for="product_short_description">Short description</label>
-							<input class="input" id="product_short_description" value="<%=p.getShortDescription() %>" required>
-							<%} else {%>
 							<p><%=p.getShortDescription() %></p>
-							<%} %>
 
-							<%if (!isSeller) {%>
 							<div class="product-btns">
 								<form action="ShoppingCart" method="post">
 								
@@ -429,10 +318,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 									</form>
 								</div>
 							</div>
-							<%} %>
 						</div>
 						
-						<%if (!isSeller) {%>
 						<br><br><hr>
 						<div class="pull-right">
 							<form action="/tiw-p1/jms-controller" method="post">	
@@ -445,29 +332,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 								<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
 							</form>
 						</div>
-						<%} %>
-						
-						
-						<%
-						String value_form="";// TODO
-						if (modify) value_form="Modify";
-						else if (add) value_form="Add";
-
-						int new_product_id=p.getId(), new_product_stock;
-						String new_product_image_path, new_product_name, new_product_category;
-						BigDecimal new_product_price, new_product_sale_price, new_product_ship_price;
-
-						%>
-						<script type="text/javascript">
-							function ola() {
-								alert("ola");
-							}
-						</script>
-						<%if (isSeller) {%>
-						<br><form action="Catalogue" method="post">
-							<button onclick="getData();" class="primary-btn" name="product_operation" value="<%=value_form %>"><%=value_form %></button>
-						</form>
-						<%} %>
 					</div>
 					
 					<div class="col-md-12">
@@ -479,11 +343,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</ul>
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
-									<%if (isSeller) {%>
-									<p><textarea id="product_description" required style="width: 100%;height: 200px;"><%=p.getDescription() %></textarea></p>
-									<%} else {%>
 									<p><%=p.getDescription() %></p>
-									<%} %>
 								</div>
 							</div>
 						</div>
