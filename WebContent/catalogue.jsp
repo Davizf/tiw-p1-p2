@@ -5,7 +5,7 @@
 <%@page import="java.util.*" %>
 <%@page import="models.Category"%>
 <%@page import="model.User"%>
-<%@page import="models.ProductInCart"%>
+<%@page import="model.ProductInCart"%>
 <%@page import="model.Product"%>
 
 <!DOCTYPE html>

@@ -1,4 +1,4 @@
-<%@page import="models.ProductInCart"%>
+<%@page import="model.ProductInCart"%>
 <%@page import="controllers.ProductController"%>
 <%@page import="model.Product"%>
 <%@page import="controllers.IndexController"%>

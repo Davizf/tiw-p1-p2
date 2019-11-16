@@ -5,7 +5,7 @@
 <%@page pageEncoding="UTF-8"%>
 <%@page import="models.Category"%>
 <%@page import="model.Product"%>
-<%@page import="models.ProductInCart"%>
+<%@page import="model.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">

@@ -1,15 +1,8 @@
 package controllers;
 
 import java.io.IOException;
-import jhc.jms.*;
-import model.Order;
-import model.Orders_has_Product;
-import model.Orders_has_ProductPK;
-import model.User;
-import models.ProductInCart;
-
-import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -19,6 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.Order;
+import model.Orders_has_Product;
+import model.Orders_has_ProductPK;
+import model.ProductInCart;
 
 public class OrderServlet extends HttpServlet{
 	

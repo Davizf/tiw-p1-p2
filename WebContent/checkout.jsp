@@ -2,7 +2,7 @@
 <%@page import="controllers.IndexController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.ProductInCart" %>
+<%@page import="model.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
 <%@page import="java.util.*" %>
 
