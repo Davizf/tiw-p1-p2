@@ -73,7 +73,7 @@ public class ProductController {
 		return true;
 	}
 
-	public static boolean modifyProduct(Product p) {
+	public static boolean modifyProduct(Product p) {// TODO
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
