@@ -30,6 +30,17 @@ public class Orders implements Serializable {
 
 	@Column(name="postal_code")
 	private int postalCode;
+	
+	@Column(name="confirmation_id")
+	private long confirmation_id;
+
+	public long getConfirmation_id() {
+		return confirmation_id;
+	}
+
+	public void setConfirmation_id(long confirmation_id) {
+		this.confirmation_id = confirmation_id;
+	}
 
 	//bi-directional many-to-one association to User
 	@ManyToOne()

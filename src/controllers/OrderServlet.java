@@ -48,6 +48,11 @@ public class OrderServlet extends HttpServlet{
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 				Orders order = new Orders();
 				Orders_has_Product order_product;
+				
+				
+				order.setConfirmation_id(1234567890);
+				
+				
 				order.setAddress(req.getParameter("address"));
 				order.setCity(req.getParameter("city"));
 				order.setCountry(req.getParameter("country"));

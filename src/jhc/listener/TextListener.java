@@ -18,6 +18,7 @@ public class TextListener implements MessageListener {
                 System.out.println("*******************************************************");
                 System.out.println("Reading card --> " + msg.getStringProperty("creditCard"));
                 System.out.println("Reading order'price --> " + msg.getStringProperty("totalPrice"));
+                System.out.println("The order has been successfully completed!");
                 System.out.println("*******************************************************");
             } else {
                 System.err.println("Message is not a TextMessage");
