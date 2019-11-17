@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jhc.jms.InteractionJMS;
 import model.Orders;
 import model.Orders_has_Product;
 
@@ -38,12 +39,9 @@ public class OrderServlet extends HttpServlet{
 
 
 		if(req.getParameter("type").equalsIgnoreCase("confirm-checkout")) {
-			//InteractionJMS mq=new InteractionJMS();
-			//mq.confirmPurchase("123412124214", req.getParameter("total-price"));
-
-			// El otro proceso que lee el mensaje y generar confirmacion de compra está en mi local, no sé si es un proyecto aparte o en este mismo, estoy esperando respuesta del profe
-			// Guardar la compra en la pagina de mis pedidos
-
+			
+			InteractionJMS mq=new InteractionJMS();
+			mq.confirmPurchase(req.getParameter("card"), req.getParameter("total-price"));
 		
 			
 			Date date = new Date();

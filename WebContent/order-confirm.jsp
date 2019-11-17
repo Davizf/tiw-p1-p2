@@ -422,10 +422,13 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 				</div>	
 				<hr>
 					
-
+				<%
+				User user_info = UserController.getUserInformation(user); 
+				%>
 				<div class="pull-right">
 					<input type="hidden" name="total-price" value= <%=total%> >
 					<input type="hidden" name="products" value= <%=list%> >
+					<input type="hidden" name="card" value="<%=user_info.getCreditCard()%>">
 					<input type="hidden" name="type" value= "confirm-checkout" >
 					<input type="submit" name="button" class="btn btn-success" value="Confirm my order" />
 				</div>

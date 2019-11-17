@@ -78,15 +78,11 @@ public class InteractionJMS {
 			queue = (javax.jms.Destination) initialContext.lookup(InformationProperties.getQueueAsincrona());
 				
 			Qcon = factory.createConnection();
-			QSes = Qcon
-					.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
-
+			QSes = Qcon.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
 			Mpro = QSes.createProducer(queue);
-
 			javax.jms.TextMessage msg = QSes.createTextMessage();
 
 			
-			msg.setJMSCorrelationID("confirm-purchase");
 			msg.setStringProperty("creditCard",creditCard);
 			msg.setStringProperty("totalPrice",totalPrice);
 			Qcon.start();
