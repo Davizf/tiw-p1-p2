@@ -4,8 +4,13 @@
 <%@page import="java.util.*"%>
 <%@page import="model.Category"%>
 <%@page import="model.Messages"%>
+<%@page import="model.User"%>
+<%@page import="model.Orders"%>
+<%@page import="model.Product"%>
+<%@page import="model.Orders_has_Product"%>
 <%@page import="model.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
+<%@page import="controllers.UserController" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -259,6 +264,10 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 	</div>
 	<!-- /BREADCRUMB -->
 
+<%
+	User u = UserController.getUserInformation(user);
+	List<Orders> orders = u.getOrders();
+%>
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -270,35 +279,32 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 			
 				<div class="col-md-6">
 				
-			
+				
 					<div class="section-title">
 						<h4 class="title">My orders</h4>
-					</div>
+					</div>			
 					
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+					<%if(orders != null){
+						
+						for(Orders order : orders){
+							
+							List<Orders_has_Product> orderProducts = order.getOrdersHasProducts();
+					%>			
 					
 					<br>
 					
-					<h5>Nº Order: x</h5>
+					<h5>Nº Order: <%= order.getId() %> Date:  <%= order.getDate() %> </h5>
 					
 					<div class="col-md-12">
 					<div class="order-summary clearfix">
-						
+						<%if(orderProducts != null) {
+							double total = 0;
+							for(Orders_has_Product orderProduct : orderProducts) {
+								total += orderProduct.getCost();
+								Product product = orderProduct.getProductBean();
+							
+						%>
 						<table class="shopping-cart-table table">
 							<thead>
 								<tr>
@@ -310,71 +316,34 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 									<th class="text-right"></th>
 								</tr>
 							</thead>
-							<tbody>
-								
-								
-							<%--  		
-								
-							<%
-							for(Orders order : list ){
-							%>
-								<tr>
-									<td class="thumb"><img src= "<%= order.getProduct().getImagePath() %>" alt=""></td>
+							<tr>
+									<td class="thumb"><img src= "<%= product.getImagePath() %>" alt=""></td>
 									<td class="details">
-										<a href="product-page.jsp?id=<%=order.getProduct().getId() %>"><%= order.getProduct().getName() %></a>
-										<td class="price text-center"><strong>$<%=order.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
-										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
-										<td class="qty text-center"><strong><%=order.getQuantity() %></strong></td>
-										<td class="total text-center"><strong class="primary-color">$<%=order.getCost() %></strong></td>
+										<a href="product-page.jsp?id=<%=product.getId() %>"><%= product.getName() %></a>
 									</td>
-				
-										
-								
-				
-								</tr>
-								
+									<td class="price text-center"><strong>$<%=product.getPrice() %></strong>
+									<td class="qty text-center"><strong><%=orderProduct.getQuantity() %></strong></td>
+									<td class="total text-center"><strong class="primary-color">$<%=orderProduct.getCost() %></strong></td>
+									</tr>
 							
-							
-							--%>	
+							<% } %>	
 									
-							</tbody>
 							<tfoot>
 								<tr>
 									<th class="empty" colspan="3"></th>
 									<th>TOTAL</th>
-									<th colspan="2" class="total">0</th>
+									<th colspan="2" class="total"><%=total %></th>
 								</tr>
 							</tfoot>
 						</table>
-						
+						<% } %>	
 					</div>
 					
 				</div>	
 				
 				<hr>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-		
-					
-					
+							<% } %>	
+						<% } %>
 					
 				</div>
 

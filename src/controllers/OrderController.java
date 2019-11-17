@@ -1,19 +1,23 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import model.ProductInCart;
 import model.User;
 
 public class OrderController {
 
-	public static User getUserInformation(String email){
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
-		UserManager manager = new UserManager();
-		manager.setEntityManagerFactory(factory);
-		User user = manager.getUser(email);
-		factory.close();
-		return user;
+	public static boolean checkProductsStock(ArrayList<ProductInCart> productsInCart){
+		for(ProductInCart productInCart : productsInCart) {
+			if(productInCart.getQuantity() > productInCart.getProduct().getStock()) {
+				return false;
+			}	
+		}
+		
+		return true;		
 	}
 
 }

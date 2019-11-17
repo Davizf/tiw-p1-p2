@@ -368,7 +368,11 @@ ArrayList<Category> categories=CategoryController.getCategories();
 					</div>
 
  --%>
-
+				<% String msg_error=(String)request.getAttribute("msg_error");
+				if (msg_error != null && !msg_error.equals("") && !msg_error.equals("null")) {
+				%>
+				<h2 style="color: red;text-align:center;"><%=msg_error %></h2>
+				<%} %>
 
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
