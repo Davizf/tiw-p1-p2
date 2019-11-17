@@ -6,40 +6,46 @@ import java.math.BigDecimal;
 
 
 /**
- * The persistent class for the Orders_has_Products database table.
+ * The persistent class for the orders_has_products database table.
  * 
  */
 @Entity
-@Table(name="Orders_has_Products")
+@Table(name="orders_has_products")
 @NamedQuery(name="Orders_has_Product.findAll", query="SELECT o FROM Orders_has_Product o")
 public class Orders_has_Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int order;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	@Column(name="product_price")
 	private BigDecimal productPrice;
 
-	//bi-directional one-to-one association to Order
-	@OneToOne
-	@JoinColumn(name="order", insertable = false, updatable = false)
-	private Order orderBean;
+	private int quantity;
+
+	@Column(name="ship_price")
+	private BigDecimal shipPrice;
+
+	//bi-directional many-to-one association to Order
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Orders.class)
+	@JoinColumn(name="id_order")
+	private Orders order;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Product.class)
 	@JoinColumn(name="product")
 	private Product productBean;
 
 	public Orders_has_Product() {
 	}
 
-	public int getOrder() {
-		return this.order;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setOrder(int order) {
-		this.order = order;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public BigDecimal getProductPrice() {
@@ -50,12 +56,28 @@ public class Orders_has_Product implements Serializable {
 		this.productPrice = productPrice;
 	}
 
-	public Order getOrderBean() {
-		return this.orderBean;
+	public int getQuantity() {
+		return this.quantity;
 	}
 
-	public void setOrderBean(Order orderBean) {
-		this.orderBean = orderBean;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public BigDecimal getShipPrice() {
+		return this.shipPrice;
+	}
+
+	public void setShipPrice(BigDecimal shipPrice) {
+		this.shipPrice = shipPrice;
+	}
+
+	public Orders getOrder() {
+		return this.order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
 	}
 
 	public Product getProductBean() {

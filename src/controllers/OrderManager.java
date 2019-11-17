@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import model.Order;
+import model.Orders;
 
 public class OrderManager {
 
@@ -22,7 +22,7 @@ public class OrderManager {
 	public void setEntityManagerFactory(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
-
+	
 	private EntityManager getEntityManager() {
 		if (emf == null) {
 			throw new RuntimeException(
@@ -31,7 +31,7 @@ public class OrderManager {
 		return emf.createEntityManager();
 	}
 
-	public String createOrder(Order order) throws Exception {
+	public String createOrder(Orders order) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -53,7 +53,7 @@ public class OrderManager {
 		return "";
 	}
 
-	public String deleteOrder(Order order) throws Exception {
+	public String deleteOrder(Orders order) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -76,7 +76,7 @@ public class OrderManager {
 		return "";
 	}
 
-	public String updateOrder(Order order) throws Exception {
+	public String updateOrder(Orders order) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -98,11 +98,11 @@ public class OrderManager {
 		return "";
 	}
 
-	public Order getOrder(int id) {
-		Order order = null;
+	public Orders getOrder(int id) {
+		Orders order = null;
 		EntityManager em = getEntityManager();
 		try {
-			order = (Order) em.find(Order.class, id);
+			order = (Orders) em.find(Orders.class, id);
 		} finally {
 			em.close();
 		}
@@ -110,10 +110,10 @@ public class OrderManager {
 	}
 
 	public Boolean verifyOrder(String email, String password) {
-		Order order = null;
+		Orders order = null;
 		EntityManager em = getEntityManager();
 		try {
-			order = (Order) em.find(Order.class, email);
+			order = (Orders) em.find(Orders.class, email);
 		} finally {
 			em.close();
 		}
@@ -122,11 +122,11 @@ public class OrderManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Order> getAllOrders() {
-		List<Order> orders = null;
+	public List<Orders> getAllOrders() {
+		List<Orders> orders = null;
 		EntityManager em = getEntityManager();
 		try {
-			orders = (List<Order>) em.createNamedQuery("Order.findAll").getResultList();
+			orders = (List<Orders>) em.createNamedQuery("Orders.findAll").getResultList();
 		} finally {
 			em.close();
 		}
@@ -134,11 +134,11 @@ public class OrderManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Order> getOrdersByCategory(String category) {
-		List<Order> orders = null;
+	public List<Orders> getOrdersByCategory(String category) {
+		List<Orders> orders = null;
 		EntityManager em = getEntityManager();
 		try {
-			orders = (List<Order>) em.createNamedQuery("Order.findAllByCategory").setParameter("category", category).getResultList();
+			orders = (List<Orders>) em.createNamedQuery("Orders.findAllByCategory").setParameter("category", category).getResultList();
 		} finally {
 			em.close();
 		}
@@ -146,11 +146,11 @@ public class OrderManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Order> getLastOrders() {
-		List<Order> Orders = null;
+	public List<Orders> getLastOrders() {
+		List<Orders> Orders = null;
 		EntityManager em = getEntityManager();
 		try {
-			Orders = (List<Order>) em.createNamedQuery("Order.OrderById").setMaxResults(3).getResultList();
+			Orders = (List<Orders>) em.createNamedQuery("Orders.OrderById").setMaxResults(3).getResultList();
 		} finally {
 			em.close();
 		}
@@ -159,18 +159,30 @@ public class OrderManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Order> getOrdersBySeller(String email) {
-		List<Order> Orders = null;
+	public List<Orders> getOrdersBySeller(String email) {
+		List<Orders> Orders = null;
 		EntityManager em = getEntityManager();
 		try {
-			Orders = (List<Order>) em.createNamedQuery("Order.findAllBySeller").setParameter("email", email).getResultList();
+			Orders = (List<Orders>) em.createNamedQuery("Orders.findAllBySeller").setParameter("email", email).getResultList();
 		} finally {
 			em.close();
 		}
 
 		return Orders;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Orders> getLastOrder() {
+		List<Orders> order = null;
+		EntityManager em = getEntityManager();
+		try {
+			order = (List<Orders>) em.createNamedQuery("Orders.OrderById").setMaxResults(1).getResultList();
+		} finally {
+			em.close();
+		}
 
+		return order;
+	}
 
 
 }

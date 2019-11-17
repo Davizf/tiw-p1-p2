@@ -6,17 +6,22 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Categories database table.
+ * The persistent class for the categories database table.
  * 
  */
 @Entity
-@Table(name="Categories")
+@Table(name="categories")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	private int id;
+
 	private String name;
+
+	@Column(name="parent_id")
+	private int parentId;
 
 	//bi-directional many-to-one association to Product
 	@OneToMany(mappedBy="categoryBean")
@@ -25,12 +30,28 @@ public class Category implements Serializable {
 	public Category() {
 	}
 
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getParentId() {
+		return this.parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
 
 	public List<Product> getProducts() {

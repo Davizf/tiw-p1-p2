@@ -270,7 +270,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 		<!-- container -->
 		<div class="container">
 		
-		
+		<form action="Order" method="post" class="clearfix">
 			<!-- row -->
 			<div class="row">
 			
@@ -299,9 +299,6 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 					<p>Email </p>	
 						<div class="form-group">
 							<input class="input" type="email" name="email" value="<%=user_info.getEmail()%>" required readonly>
-						</div>
-						<div class="form-group">
-							<input class="input" type="password" name="password" value="<%=user_info.getPassword()%>" required hidden>
 						</div>
 					<p>Address: </p>	
 						<div class="form-group">
@@ -389,7 +386,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
 										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
 										<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
-									</td>
+	
 				
 										
 								
@@ -427,14 +424,12 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 					
 
 				<div class="pull-right">
-					<form action="Order" method="post" class="clearfix">
-						<input type="hidden" name="total-price" value= <%=total%> >
-						<input type="hidden" name="type" value= "confirm-checkout" >
-						<input type="submit" name="button" class="btn btn-success" value="Confirm my order" />
-					</form>
+					<input type="hidden" name="total-price" value= <%=total%> >
+					<input type="hidden" name="products" value= <%=list%> >
+					<input type="hidden" name="type" value= "confirm-checkout" >
+					<input type="submit" name="button" class="btn btn-success" value="Confirm my order" />
 				</div>
-							
-
+		</form>			
 		
 		</div>
 		<!-- /container -->

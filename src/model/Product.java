@@ -7,18 +7,20 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Products database table.
+ * The persistent class for the products database table.
  * 
  */
 @Entity
-@Table(name="Products")
-@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
+@Table(name="products")
+@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
+@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
 @NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Lob
@@ -43,22 +45,30 @@ public class Product implements Serializable {
 	private int stock;
 
 	//bi-directional many-to-one association to Orders_has_Product
-	@OneToMany(mappedBy="productBean")
+	@OneToMany(mappedBy="productBean", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders_has_Product> ordersHasProducts;
 
 	//bi-directional many-to-one association to Category
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category")
 	private Category categoryBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user")
 	private User userBean;
 
+	//bi-directional many-to-many association to User
+	@ManyToMany(mappedBy="products2")
+	private List<User> users;
+
 	//bi-directional many-to-one association to WishList
 	@OneToMany(mappedBy="productBean")
-	private List<WishList> wishLists;
+	private List<WishList> wishlists;
+
+	//bi-directional many-to-one association to ShopingCart
+	@OneToMany(mappedBy="productBean")
+	private List<ShopingCart> shopingcarts;
 
 	public Product() {
 	}
@@ -173,26 +183,56 @@ public class Product implements Serializable {
 		this.userBean = userBean;
 	}
 
-	public List<WishList> getWishLists() {
-		return this.wishLists;
+	public List<User> getUsers() {
+		return this.users;
 	}
 
-	public void setWishLists(List<WishList> wishLists) {
-		this.wishLists = wishLists;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
-	public WishList addWishList(WishList wishList) {
-		getWishLists().add(wishList);
-		wishList.setProductBean(this);
-
-		return wishList;
+	public List<WishList> getWishlists() {
+		return this.wishlists;
 	}
 
-	public WishList removeWishList(WishList wishList) {
-		getWishLists().remove(wishList);
-		wishList.setProductBean(null);
+	public void setWishlists(List<WishList> wishlists) {
+		this.wishlists = wishlists;
+	}
 
-		return wishList;
+	public WishList addWishlist(WishList wishlist) {
+		getWishlists().add(wishlist);
+		wishlist.setProductBean(this);
+
+		return wishlist;
+	}
+
+	public WishList removeWishlist(WishList wishlist) {
+		getWishlists().remove(wishlist);
+		wishlist.setProductBean(null);
+
+		return wishlist;
+	}
+
+	public List<ShopingCart> getShopingcarts() {
+		return this.shopingcarts;
+	}
+
+	public void setShopingcarts(List<ShopingCart> shopingcarts) {
+		this.shopingcarts = shopingcarts;
+	}
+
+	public ShopingCart addShopingcart(ShopingCart shopingcart) {
+		getShopingcarts().add(shopingcart);
+		shopingcart.setProductBean(this);
+
+		return shopingcart;
+	}
+
+	public ShopingCart removeShopingcart(ShopingCart shopingcart) {
+		getShopingcarts().remove(shopingcart);
+		shopingcart.setProductBean(null);
+
+		return shopingcart;
 	}
 
 }

@@ -7,10 +7,6 @@ import model.User;
 
 public class OrderController {
 
-	public OrderController() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public static User getUserInformation(String email){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
@@ -19,4 +15,5 @@ public class OrderController {
 		factory.close();
 		return user;
 	}
+
 }
