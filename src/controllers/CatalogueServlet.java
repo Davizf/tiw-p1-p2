@@ -17,9 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import model.Category;
 import model.Product;
-import model.User;
 
 @WebServlet(name = "Catalogue", urlPatterns = "/Catalogue")
 @MultipartConfig
@@ -27,7 +25,6 @@ public class CatalogueServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	private static final String IMAGE_FOLDER="/images";
-
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		HttpSession sesion = req.getSession();
@@ -73,7 +70,6 @@ public class CatalogueServlet extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("add_product")) {
-			// TODO test with new BBDD
 			String product_name=req.getParameter("product_name");
 			double product_price=Double.parseDouble(req.getParameter("product_price"));
 			double product_sale_price=Double.parseDouble(req.getParameter("product_sale_price"));
@@ -84,16 +80,24 @@ public class CatalogueServlet extends HttpServlet{
 			String product_category=req.getParameter("product_category");
 			String product_user=req.getParameter("product_user");
 
+			String verify=verifyNewData(product_name, product_price, product_sale_price, product_ship_price, product_stock, product_short_description, product_description, product_category);
+			if (!verify.equals("")) {
+				req.setAttribute("msg_error", verify);
+				RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
+				rd.forward(req, res);
+				return;
+			}
+
 			String product_image_path;
 			Part product_image=req.getPart("product_image_file");
 			String image_fileName=extractFileName(product_image);
 			String image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER),
 					image_filePath="newProduct_"+new Date().getTime()+".png",
 					image_parentShortPath=req.getContextPath() + IMAGE_FOLDER,
-					//image_completePath=image_parentPath + "/" + image_filePath,
+					image_completePath=image_parentPath + "/" + image_filePath,
 					image_completeShortPath=image_parentShortPath + "/" + image_filePath;
 			File image_file;
-			
+
 			if (image_fileName.equals("")) {// There isnt new image
 				req.setAttribute("msg_error", "Error, select an image.");
 				RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
@@ -121,21 +125,26 @@ public class CatalogueServlet extends HttpServlet{
 			p.setShipPrice(new BigDecimal(product_ship_price));
 			p.setStock(product_stock);
 			p.setShortDescription(product_short_description);
-			Category c = new Category();
-			c.setName(product_category);
-			p.setCategoryBean(c);
+			p.setCategoryBean(CategoryController.getCategory(product_category));
 			p.setDescription(product_description);
 			p.setImagePath(product_image_path);
-			User u=new User();
-			u.setEmail(product_user);
-			p.setUserBean(u);
+			p.setUserBean(UserController.getUserInformation(product_user));
 
 			int newId=ProductController.addProduct(p);
-			//Change name of file to id
-			product_image_path=image_parentPath+File.separator+newId+".png";
-			File image_file2=new File(product_image_path);
+			if (newId==-1) {
+				req.setAttribute("msg_error", "Error adding a product.");
+				RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
+				rd.forward(req, res);
+				return;
+			}
+			// Change name of file to id
+			image_filePath=newId + ".png";
+			image_completePath=image_parentPath + "/" + image_filePath;
+			image_completeShortPath=image_parentShortPath + "/" + image_filePath;
+
+			File image_file2=new File(image_completePath);
 			image_file.renameTo(image_file2);
-			p.setImagePath(product_image_path);
+			p.setImagePath(image_completeShortPath);
 			ProductController.modifyProduct(p);
 
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
@@ -150,6 +159,14 @@ public class CatalogueServlet extends HttpServlet{
 			String product_short_description=req.getParameter("product_short_description");
 			String product_description=req.getParameter("product_description");
 			String product_category=req.getParameter("product_category");
+
+			String verify=verifyNewData(product_name, product_price, product_sale_price, product_ship_price, product_stock, product_short_description, product_description, product_category);
+			if (!verify.equals("")) {
+				req.setAttribute("msg_error", verify);
+				RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
+				rd.forward(req, res);
+				return;
+			}
 
 			String product_image_path;
 			Part product_image=req.getPart("product_image_file");
@@ -177,7 +194,7 @@ public class CatalogueServlet extends HttpServlet{
 				product_image_path=image_completeShortPath;
 			}
 
-			Product p=new Product();
+			Product p=ProductController.getProduct(product_id);
 			p.setId(product_id);
 			p.setName(product_name);
 			p.setPrice(new BigDecimal(product_price));
@@ -194,6 +211,26 @@ public class CatalogueServlet extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}
+	}
+
+	private String verifyNewData(String name, double price, double sale_price, double ship_price, int stock, String short_description, String description, String category) {
+		String resul = "";
+		if (name.length() > ProductController.NAME_CHARACTER) {
+			resul = "Error. Name must have less than "+ProductController.NAME_CHARACTER+" characters";
+		} else if (price < 0) {
+			resul = "Error. Price must be greater than 0";
+		}if (sale_price < 0) {
+			resul = "Error. Sale price must be greater than 0";
+		}if (ship_price < 0) {
+			resul = "Error. Ship price must be greater than 0";
+		}if (stock < 0) {
+			resul = "Error. Stock must be greater than 0";
+		}if (short_description.length() > ProductController.SHORT_DESC_CHARACTER) {
+			resul = "Error. Short description must have less than "+ProductController.SHORT_DESC_CHARACTER+" characters";
+		}if (category.equals("")) {
+			resul = "Error, select a category.";
+		}
+		return resul;
 	}
 
 	private static String extractFileName(Part part) {
