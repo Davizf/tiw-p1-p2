@@ -72,7 +72,7 @@ public class CatalogueServlet extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("add_product")) {
-			// TODO
+			// TODO test with new BBDD
 			String product_name=req.getParameter("product_name");
 			double product_price=Double.parseDouble(req.getParameter("product_price"));
 			double product_sale_price=Double.parseDouble(req.getParameter("product_sale_price"));
@@ -132,6 +132,7 @@ public class CatalogueServlet extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("modify_product")) {
+			// TODO test with new BBDD
 			int product_id=Integer.parseInt(req.getParameter("product_id"));
 			String product_name=req.getParameter("product_name");
 			double product_price=Double.parseDouble(req.getParameter("product_price"));
