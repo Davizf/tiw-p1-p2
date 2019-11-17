@@ -28,12 +28,12 @@ public class Orders_has_Product implements Serializable {
 	private BigDecimal shipPrice;
 
 	//bi-directional many-to-one association to Order
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Orders.class)
+	@ManyToOne()
 	@JoinColumn(name="id_order")
 	private Orders order;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Product.class)
+	@ManyToOne()
 	@JoinColumn(name="product")
 	private Product productBean;
 

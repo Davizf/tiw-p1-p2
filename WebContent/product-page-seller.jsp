@@ -1,7 +1,7 @@
-<%@page import="models.Category"%>
+<%@page import="model.Category"%>
 <%@page import="java.math.BigDecimal"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="controllers.IndexController"%>
+<%@page import="controllers.CategoryController"%>
 <%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
@@ -49,8 +49,8 @@
 
 <body>
 <%
-String user=(String)session.getAttribute("user");
-ArrayList<Category> categories=IndexController.getCategories();
+	String user=(String)session.getAttribute("user");
+ArrayList<Category> categories=CategoryController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>

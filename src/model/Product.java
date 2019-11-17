@@ -49,12 +49,12 @@ public class Product implements Serializable {
 	private List<Orders_has_Product> ordersHasProducts;
 
 	//bi-directional many-to-one association to Category
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name="category")
 	private Category categoryBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name="user")
 	private User userBean;
 

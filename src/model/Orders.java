@@ -32,7 +32,7 @@ public class Orders implements Serializable {
 	private int postalCode;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name="user")
 	private User userBean;
 

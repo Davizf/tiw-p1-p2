@@ -1,9 +1,9 @@
 <%@page import="model.ProductInCart"%>
-<%@page import="controllers.IndexController"%>
+<%@page import="controllers.CategoryController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-<%@page import="models.Category"%>
+<%@page import="model.Category"%>
 <%@page import="model.Messages"%>
 
 <!DOCTYPE html>
@@ -48,8 +48,8 @@
 <body>
 
 <%
-String user=(String)session.getAttribute("user");
-ArrayList<Category> categories=IndexController.getCategories();
+	String user=(String)session.getAttribute("user");
+ArrayList<Category> categories=CategoryController.getCategories();
 %>
 
 

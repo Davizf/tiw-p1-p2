@@ -1,6 +1,6 @@
 <%@page import="model.ProductInCart"%>
-<%@page import="controllers.IndexController"%>
-<%@page import="models.Category"%>
+<%@page import="controllers.CategoryController"%>
+<%@page import="model.Category"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*" %>
@@ -46,8 +46,8 @@
 
 <body>
 <%
-String user=(String)session.getAttribute("user");
-ArrayList<Category> categories=IndexController.getCategories();
+	String user=(String)session.getAttribute("user");
+ArrayList<Category> categories=CategoryController.getCategories();
 %>
 	<!-- HEADER -->
 	<header>

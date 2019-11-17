@@ -8,11 +8,15 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import jdbc.info.InformationProperties;
-import models.Category;
+import model.User;
+import model.Category;
 
 
-public class IndexController {
+public class CategoryController {
 
 	public static ArrayList<Category> getCategories(){
 		ArrayList<Category> categories = new ArrayList<Category>();
@@ -60,6 +64,15 @@ public class IndexController {
 		}
 		
 		return categories;
+	}
+	
+	public static Category  getCategory(String name) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		CategoryManager manager = new CategoryManager();
+		manager.setEntityManagerFactory(factory);
+		Category category = (Category) manager.getCategoryByName(name).get(0);
+		factory.close();
+		return category;
 	}
 
 }

@@ -19,12 +19,12 @@ public class WishList implements Serializable {
 	private int id;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name="product")
 	private Product productBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne()
 	@JoinColumn(name="user")
 	private User userBean;
 

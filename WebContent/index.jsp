@@ -4,12 +4,12 @@
 <%@page import="model.ProductInCart"%>
 <%@page import="controllers.ProductController"%>
 <%@page import="model.Product"%>
-<%@page import="controllers.IndexController"%>
+<%@page import="controllers.CategoryController"%>
 <%@page import="controllers.OrderServlet"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-<%@page import="models.Category"%>
+<%@page import="model.Category"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,8 +52,8 @@
 
 <body>
 <%
-String user=(String)session.getAttribute("user");
-ArrayList<Category> categories=IndexController.getCategories();
+	String user=(String)session.getAttribute("user");
+ArrayList<Category> categories=CategoryController.getCategories();
 User userBean=null;
 if (user!=null) {
 	userBean=UserController.getUserInformation(user);

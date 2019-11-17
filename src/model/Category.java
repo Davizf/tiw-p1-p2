@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="categories")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
+@NamedQuery(name="Category.findByName",  query="SELECT c FROM Category c WHERE c.name LIKE :name")
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -27,6 +27,7 @@ public class CatalogueServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	private static final String IMAGE_FOLDER=File.separator+"images";
+	
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		HttpSession sesion = req.getSession();
@@ -171,14 +172,10 @@ public class CatalogueServlet extends HttpServlet{
 			p.setShipPrice(new BigDecimal(product_ship_price));
 			p.setStock(product_stock);
 			p.setShortDescription(product_short_description);
-			Category c = new Category();
-			c.setName(product_category);
-			p.setCategoryBean(c);
+			p.setCategoryBean(CategoryController.getCategory(product_category));
 			p.setDescription(product_description);
 			p.setImagePath(product_image_path);
-			User u=new User();
-			u.setEmail(product_user);
-			p.setUserBean(u);
+			p.setUserBean(UserController.getUserInformation(user));
 			
 			ProductController.modifyProduct(p);
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");

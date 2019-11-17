@@ -21,12 +21,12 @@ public class ShopingCart implements Serializable {
 	private int quantity;
 
 	//bi-directional many-to-one association to Product
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Product.class)
+	@ManyToOne()
 	@JoinColumn(name="product")
 	private Product productBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY, targetEntity=User.class)
+	@ManyToOne()
 	@JoinColumn(name="user")
 	private User userBean;
 
