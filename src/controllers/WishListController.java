@@ -3,7 +3,6 @@ package controllers;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import model.Product;
 import model.WishList;
 
 public class WishListController {

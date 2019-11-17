@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import model.Category;
-import model.Product;
 
 public class CategoryManager {
 
