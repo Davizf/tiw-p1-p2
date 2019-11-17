@@ -357,7 +357,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 					<div class="col-md-6">
 						<div class="product-body">
 							<label for="product_name">Name</label>
-							<input class="input" name="product_name" value="<%=p.getName() %>" required>
+							<input class="input" name="product_name" placeholder="<%=p.getName() %>" required>
 							<%if(categories != null) { %>
 								<br></br>
 								<label for="product_category">Category</label>
@@ -374,20 +374,20 @@ ArrayList<Category> categories=CategoryController.getCategories();
 							<%} %>
 							<br></br>
 							<label for="product_price">Price</label>
-							<input class="input" type="text" name="product_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getPrice().doubleValue() %>">
+							<input class="input" type="text" name="product_price" pattern="^\d*(\.\d{0,2})?$" required placeholder="<%=p.getPrice().doubleValue() %>">
 							<br></br>
 							<label for="product_sale_price">Sale price</label>
-							<input class="input" type="text" name="product_sale_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getSalePrice().doubleValue() %>">
+							<input class="input" type="text" name="product_sale_price" pattern="^\d*(\.\d{0,2})?$" required placeholder="<%=p.getSalePrice().doubleValue() %>">
 							<br></br>
 							<label for="product_ship_price">Ship price</label>
-							<input class="input" type="text" name="product_ship_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getShipPrice().doubleValue() %>">
+							<input class="input" type="text" name="product_ship_price" pattern="^\d*(\.\d{0,2})?$" required placeholder="<%=p.getShipPrice().doubleValue() %>">
 							<br></br>
 							<label for="product_stock">Stock</label>
-							<input class="input" type="text" name="product_stock" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getStock() %>">
+							<input class="input" type="text" name="product_stock" pattern="^\d*(\.\d{0,2})?$" required placeholder="<%=p.getStock() %>">
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
 							<br></br>
 							<label for="product_short_description">Short description</label>
-							<input class="input" name="product_short_description" value="<%=p.getShortDescription() %>" required>
+							<input class="input" name="product_short_description" placeholder="<%=p.getShortDescription() %>" required>
 
 						</div>
 						
@@ -413,7 +413,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 							</ul>
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
-									<p><textarea name="product_description" required style="width: 100%;height: 200px;"><%=p.getDescription() %></textarea></p>
+									<p><textarea name="product_description" required style="width: 100%;height: 200px;" placeholder="<%=p.getDescription() %>"></textarea></p>
 								</div>
 							</div>
 						</div>
