@@ -9,7 +9,7 @@ import model.Product;
 
 public class ProductController {
 	
-	public static final int MAX_STOCK=2147483647, MIN_STOCK=0;
+	public static final int MAX_STOCK=2147483647, MIN_STOCK=0, NAME_CHARACTER=100, SHORT_DESC_CHARACTER=300;
 
 	public static Product getProduct(int id){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
@@ -73,7 +73,7 @@ public class ProductController {
 		return true;
 	}
 
-	public static boolean modifyProduct(Product p) {// TODO
+	public static boolean modifyProduct(Product p) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
@@ -88,8 +88,20 @@ public class ProductController {
 		return true;
 	}
 
-	public static int addProduct(Product p) {// TODO
+	public static int addProduct(Product p) {
 		int id=-1;
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		try {
+			manager.createProduct(p);
+			id=p.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			factory.close();
+		}
 		return id;
 	}
 
