@@ -104,6 +104,21 @@ public class ProductController {
 		}
 		return id;
 	}
+	
+	public static void updateStock(Product product, int quantity) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		int stock = product.getStock() - quantity;
+		product.setStock(stock);
+		try {
+			manager.updateProduct(product);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			factory.close();
+		}
+	}
 
 	public static boolean verifyStock(int stock) {
 		return stock<MAX_STOCK && stock>MIN_STOCK;
