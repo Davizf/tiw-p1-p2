@@ -88,6 +88,11 @@ public class ProductController {
 		return true;
 	}
 
+	public static int addProduct(Product p) {// TODO
+		int id=-1;
+		return id;
+	}
+
 	public static boolean verifyStock(int stock) {
 		return stock<MAX_STOCK && stock>MIN_STOCK;
 	}
