@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import controllers.UserController;
 
 @WebFilter(
-		urlPatterns = "/product-page.jsp",
-		filterName = "ProductPageFilter"
+		urlPatterns = "/product-page-seller.jsp",
+		filterName = "ProductPageSellerFilter"
 		)
-public class ProductPageFilter implements Filter {
+public class ProductPageSellerFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
@@ -29,8 +29,8 @@ public class ProductPageFilter implements Filter {
 			return;
 		} else {
 			int type = UserController.getUserInformation(email).getType();
-			if (type == 1)
-				res.sendRedirect("catalogue.jsp");
+			if (type != 1)
+				res.sendRedirect("products.jsp");
 
 			chain.doFilter(request, response);
 		}
