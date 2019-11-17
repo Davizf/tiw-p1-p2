@@ -468,7 +468,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 									<form action="Catalogue" method="post">
 										<input type ="hidden" name="type" value="delete">
 										<input type ="hidden" name="id" value="<%=product.getId() %>">
-										<button class="cancel-btn"><i class="fa fa-trash"></i></button>
+										<button class="cancel-btn primary-btn"><i class="fa fa-trash"></i></button>
 									</form>
 									<div class="product-thumb">
 										<div class="product-label" hidden>
