@@ -56,7 +56,7 @@ public class User implements Serializable {
 
 	//bi-directional many-to-one association to Order
 	@OneToMany(mappedBy="userBean")
-	private List<Order> orders;
+	private List<Orders> orders;
 
 	//bi-directional many-to-one association to Product
 	@OneToMany(mappedBy="userBean")
@@ -78,6 +78,10 @@ public class User implements Serializable {
 	//bi-directional many-to-one association to WishList
 	@OneToMany(mappedBy="userBean")
 	private List<WishList> wishlists;
+
+	//bi-directional many-to-one association to ShopingCart
+	@OneToMany(mappedBy="userBean")
+	private List<ShopingCart> shopingcarts;
 
 	public User() {
 	}
@@ -210,22 +214,22 @@ public class User implements Serializable {
 //		this.user = user;
 //	}
 
-	public List<Order> getOrders() {
+	public List<Orders> getOrders() {
 		return this.orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<Orders> orders) {
 		this.orders = orders;
 	}
 
-	public Order addOrder(Order order) {
+	public Orders addOrder(Orders order) {
 		getOrders().add(order);
 		order.setUserBean(this);
 
 		return order;
 	}
 
-	public Order removeOrder(Order order) {
+	public Orders removeOrder(Orders order) {
 		getOrders().remove(order);
 		order.setUserBean(null);
 
@@ -282,6 +286,28 @@ public class User implements Serializable {
 		wishlist.setUserBean(null);
 
 		return wishlist;
+	}
+
+	public List<ShopingCart> getShopingcarts() {
+		return this.shopingcarts;
+	}
+
+	public void setShopingcarts(List<ShopingCart> shopingcarts) {
+		this.shopingcarts = shopingcarts;
+	}
+
+	public ShopingCart addShopingcart(ShopingCart shopingcart) {
+		getShopingcarts().add(shopingcart);
+		shopingcart.setUserBean(this);
+
+		return shopingcart;
+	}
+
+	public ShopingCart removeShopingcart(ShopingCart shopingcart) {
+		getShopingcarts().remove(shopingcart);
+		shopingcart.setUserBean(null);
+
+		return shopingcart;
 	}
 
 }

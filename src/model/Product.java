@@ -49,12 +49,12 @@ public class Product implements Serializable {
 	private List<Orders_has_Product> ordersHasProducts;
 
 	//bi-directional many-to-one association to Category
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category")
 	private Category categoryBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user")
 	private User userBean;
 
@@ -65,6 +65,10 @@ public class Product implements Serializable {
 	//bi-directional many-to-one association to WishList
 	@OneToMany(mappedBy="productBean")
 	private List<WishList> wishlists;
+
+	//bi-directional many-to-one association to ShopingCart
+	@OneToMany(mappedBy="productBean")
+	private List<ShopingCart> shopingcarts;
 
 	public Product() {
 	}
@@ -207,6 +211,28 @@ public class Product implements Serializable {
 		wishlist.setProductBean(null);
 
 		return wishlist;
+	}
+
+	public List<ShopingCart> getShopingcarts() {
+		return this.shopingcarts;
+	}
+
+	public void setShopingcarts(List<ShopingCart> shopingcarts) {
+		this.shopingcarts = shopingcarts;
+	}
+
+	public ShopingCart addShopingcart(ShopingCart shopingcart) {
+		getShopingcarts().add(shopingcart);
+		shopingcart.setProductBean(this);
+
+		return shopingcart;
+	}
+
+	public ShopingCart removeShopingcart(ShopingCart shopingcart) {
+		getShopingcarts().remove(shopingcart);
+		shopingcart.setProductBean(null);
+
+		return shopingcart;
 	}
 
 }

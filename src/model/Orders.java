@@ -11,9 +11,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="orders")
-@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o")
-@NamedQuery(name="Order.OrderById", query="SELECT o FROM Order o ORDER BY o.id DESC")
-public class Order implements Serializable {
+@NamedQuery(name="Orders.findAll", query="SELECT o FROM Orders o")
+@NamedQuery(name="Orders.OrderById", query="SELECT o FROM Orders o ORDER BY o.id DESC")
+public class Orders implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,15 +32,15 @@ public class Order implements Serializable {
 	private int postalCode;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user")
 	private User userBean;
 
 	//bi-directional many-to-one association to Orders_has_Product
-	@OneToMany(mappedBy="orderBean", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders_has_Product> ordersHasProducts;
 
-	public Order() {
+	public Orders() {
 	}
 
 	public int getId() {
@@ -109,14 +109,14 @@ public class Order implements Serializable {
 
 	public Orders_has_Product addOrdersHasProduct(Orders_has_Product ordersHasProduct) {
 		getOrdersHasProducts().add(ordersHasProduct);
-		ordersHasProduct.setOrderBean(this);
+		ordersHasProduct.setOrder(this);
 
 		return ordersHasProduct;
 	}
 
 	public Orders_has_Product removeOrdersHasProduct(Orders_has_Product ordersHasProduct) {
 		getOrdersHasProducts().remove(ordersHasProduct);
-		ordersHasProduct.setOrderBean(null);
+		ordersHasProduct.setOrder(null);
 
 		return ordersHasProduct;
 	}

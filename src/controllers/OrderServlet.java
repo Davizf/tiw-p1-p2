@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Order;
+import model.Orders;
 import model.Orders_has_Product;
 import model.Product;
 import model.ProductInCart;
@@ -114,7 +114,7 @@ public class OrderServlet extends HttpServlet{
 			factory.close();*/
 			
 
-			Order order = new Order();
+			Orders order = new Orders();
 			Orders_has_Product order_product;
 			order.setAddress(req.getParameter("address"));
 			order.setCity(req.getParameter("city"));
@@ -128,7 +128,7 @@ public class OrderServlet extends HttpServlet{
 				order_product = new Orders_has_Product();
 				order_product.setProductPrice(product.getProduct().getPrice());
 				order_product.setProductBean(product.getProduct());
-				order_product.setOrderBean(order);
+				order_product.setOrder(order);
 				order_product.setShipPrice(product.getProduct().getShipPrice());
 				order_product.setQuantity(product.getQuantity());
 				products.add(order_product);

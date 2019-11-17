@@ -5,30 +5,32 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the wishlists database table.
+ * The persistent class for the shopingcarts database table.
  * 
  */
 @Entity
-@Table(name="wishlists")
-@NamedQuery(name="WishList.findAll", query="SELECT w FROM WishList w")
-public class WishList implements Serializable {
+@Table(name="shopingcarts")
+@NamedQuery(name="ShopingCart.findAll", query="SELECT s FROM ShopingCart s")
+public class ShopingCart implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	private int quantity;
+
 	//bi-directional many-to-one association to Product
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=Product.class)
 	@JoinColumn(name="product")
 	private Product productBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, targetEntity=User.class)
 	@JoinColumn(name="user")
 	private User userBean;
 
-	public WishList() {
+	public ShopingCart() {
 	}
 
 	public int getId() {
@@ -37,6 +39,14 @@ public class WishList implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getQuantity() {
+		return this.quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public Product getProductBean() {
