@@ -26,8 +26,8 @@ import model.User;
 public class CatalogueServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
-	private static final String IMAGE_FOLDER=File.separator+"images";
-	
+	private static final String IMAGE_FOLDER="/images";
+
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		HttpSession sesion = req.getSession();
@@ -83,27 +83,35 @@ public class CatalogueServlet extends HttpServlet{
 			String product_description=req.getParameter("product_description");
 			String product_category=req.getParameter("product_category");
 			String product_user=req.getParameter("product_user");
-			
+
 			String product_image_path;
 			Part product_image=req.getPart("product_image_file");
 			String image_fileName=extractFileName(product_image);
-			String image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER), image_filePath="newProduct_"+new Date().getTime()+".png";
+			String image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER),
+					image_filePath="newProduct_"+new Date().getTime()+".png",
+					image_parentShortPath=req.getContextPath() + IMAGE_FOLDER,
+					//image_completePath=image_parentPath + "/" + image_filePath,
+					image_completeShortPath=image_parentShortPath + "/" + image_filePath;
 			File image_file;
-
+			
 			if (image_fileName.equals("")) {// There isnt new image
 				req.setAttribute("msg_error", "Error, select an image.");
 				RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 				rd.forward(req, res);
 				return;
 			} else {
-				//fileName=getServletContext().getRealPath(IMAGE_FOLDER) + File.separator + product_id+".png";
+				/*System.out.println("-----------------------image_completePath\t"+image_completePath);
+				System.out.println("-----------------------image_parentPath\t"+image_parentPath);
+				System.out.println("-----------------------image_parentShortPath\t"+image_parentShortPath);
+				System.out.println("-----------------------image_completeShortPath\t"+image_completeShortPath);*/
+
 				image_file = new File(new File(image_parentPath), image_filePath);
 
 				if (image_file.exists()) image_file.delete();
 				try (InputStream input = product_image.getInputStream()) {
 					Files.copy(input, image_file.toPath());
 				}
-				product_image_path=image_file.getAbsolutePath();
+				product_image_path=image_completeShortPath;
 			}
 
 			Product p=new Product();
@@ -129,11 +137,10 @@ public class CatalogueServlet extends HttpServlet{
 			image_file.renameTo(image_file2);
 			p.setImagePath(product_image_path);
 			ProductController.modifyProduct(p);
-			
+
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("modify_product")) {
-			// TODO test with new BBDD
 			int product_id=Integer.parseInt(req.getParameter("product_id"));
 			String product_name=req.getParameter("product_name");
 			double product_price=Double.parseDouble(req.getParameter("product_price"));
@@ -143,25 +150,31 @@ public class CatalogueServlet extends HttpServlet{
 			String product_short_description=req.getParameter("product_short_description");
 			String product_description=req.getParameter("product_description");
 			String product_category=req.getParameter("product_category");
-			String product_user=req.getParameter("product_user");
 
 			String product_image_path;
 			Part product_image=req.getPart("product_image_file");
-			String image_fileName=extractFileName(product_image);
-			String image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER), image_filePath=product_id+".png";
+			String image_fileName=extractFileName(product_image),
+					image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER),
+					image_filePath=product_id + ".png",
+					image_parentShortPath=req.getContextPath() + IMAGE_FOLDER,
+					//image_completePath=image_parentPath + "/" + image_filePath,
+					image_completeShortPath=image_parentShortPath + "/" + image_filePath;
 			File image_file;
 
 			if (image_fileName.equals("")) {// There isnt new image
 				product_image_path=req.getParameter("product_image_path");
 			} else {
-				//fileName=getServletContext().getRealPath(IMAGE_FOLDER) + File.separator + product_id+".png";
-				image_file = new File(new File(image_parentPath), image_filePath);
+				/*System.out.println("-----------------------image_completePath\t"+image_completePath);
+				System.out.println("-----------------------image_parentPath\t"+image_parentPath);
+				System.out.println("-----------------------image_parentShortPath\t"+image_parentShortPath);
+				System.out.println("-----------------------image_completeShortPath\t"+image_completeShortPath);*/
 
+				image_file = new File(new File(image_parentPath), image_filePath);
 				if (image_file.exists()) image_file.delete();
 				try (InputStream input = product_image.getInputStream()) {
 					Files.copy(input, image_file.toPath());
 				}
-				product_image_path=image_file.getAbsolutePath();
+				product_image_path=image_completeShortPath;
 			}
 
 			Product p=new Product();
@@ -176,7 +189,7 @@ public class CatalogueServlet extends HttpServlet{
 			p.setDescription(product_description);
 			p.setImagePath(product_image_path);
 			p.setUserBean(UserController.getUserInformation(user));
-			
+
 			ProductController.modifyProduct(p);
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
