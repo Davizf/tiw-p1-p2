@@ -1,12 +1,12 @@
+<%@page import="models.Category"%>
+<%@page import="java.math.BigDecimal"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="controllers.IndexController"%>
 <%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="java.util.*" %>
-<%@page import="models.Category"%>
-<%@page import="model.User"%>
-<%@page import="model.ProductInCart"%>
 <%@page import="model.Product"%>
+<%@page import="model.ProductInCart"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +139,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							
 							<ul class="custom-menu">
 								<%if(user != null) { %>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
+									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
 									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
@@ -246,317 +246,186 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<!-- /container -->
 	</div>
 	<!-- /NAVIGATION -->
-
+	
+	<%
+	String operation=(String)request.getAttribute("operation");
+	boolean modify=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("modify"));
+	boolean add=(operation != null && !operation.equals("") && !operation.equals("null") && operation.equals("add"));
+	
+	Product product=(Product)request.getAttribute("product");
+	Product p=new Product();
+	if (add) {
+		p.setId(-1);
+		p.setName("Insert name for the new product");
+		model.Category p_category=new model.Category();
+		p_category.setName("");
+		p.setCategoryBean(p_category);
+		p.setPrice(new BigDecimal("0"));
+		p.setShortDescription("Insert short description for the new product");
+		p.setDescription("Insert description for the new product");
+		p.setImagePath("/tiw-p1/images/default-img.png");
+		p.setStock(0);
+		p.setSalePrice(new BigDecimal("0"));
+		p.setShipPrice(new BigDecimal("0"));
+	}
+	if (modify) {
+		p.setId(product.getId());
+		p.setName(product.getName());
+		p.setPrice(product.getPrice());
+		p.setShortDescription(product.getShortDescription());
+		p.setDescription(product.getDescription());
+		p.setImagePath(product.getImagePath());
+		p.setStock(product.getStock());
+		p.setSalePrice(product.getSalePrice());
+		p.setShipPrice(product.getShipPrice());
+		p.setCategoryBean(product.getCategoryBean());
+	}
+	%>
+	
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
+			<form action="products.jsp" method="post" id="form_category" hidden>
+				<input type="hidden" name="category" value="" id="form_category_input">
+			</form>
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li class="active"><a href="catalogue.jsp">Catalogue</a></li>
+				<li><a href="catalogue.jsp">Catalogue</a></li>
+				<%if (add) { %>
+				<li class="active">Add product</li>
+				<%} %>
+				<%if (modify) { %>
+				<li class="active">Modify product</li>
+				<%} %>
 			</ul>
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-
-	<%
-	List<Product> products = null;
-	products = ProductController.getProductsBySeller(user);
-	%>
+	
 	<!-- section -->
 	<div class="section">
+		<form action="Catalogue" method="post" enctype="multipart/form-data">
+		<input class="input" type="hidden" name="product_user" value="<%=((String)request.getAttribute("seller_user")) %>" required>
+		<input class="input" type="hidden" name="product_id" value="<%=p.getId() %>" required>
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-				<!-- ASIDE -->
-				<div id="aside" class="col-md-3" hidden>
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Shop by:</h3>
-						<ul class="filter-list">
-							<li><span class="text-uppercase">color:</span></li>
-							<li><a href="#" style="color:#FFF; background-color:#8A2454;">Camelot</a></li>
-							<li><a href="#" style="color:#FFF; background-color:#475984;">East Bay</a></li>
-							<li><a href="#" style="color:#FFF; background-color:#BF6989;">Tapestry</a></li>
-							<li><a href="#" style="color:#FFF; background-color:#9A54D8;">Medium Purple</a></li>
-						</ul>
-
-						<ul class="filter-list">
-							<li><span class="text-uppercase">Size:</span></li>
-							<li><a href="#">X</a></li>
-							<li><a href="#">XL</a></li>
-						</ul>
-
-						<ul class="filter-list">
-							<li><span class="text-uppercase">Price:</span></li>
-							<li><a href="#">MIN: $20.00</a></li>
-							<li><a href="#">MAX: $120.00</a></li>
-						</ul>
-
-						<ul class="filter-list">
-							<li><span class="text-uppercase">Gender:</span></li>
-							<li><a href="#">Men</a></li>
-						</ul>
-
-						<button class="primary-btn">Clear All</button>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Price</h3>
-						<div id="price-slider"></div>
-					</div>
-					<!-- aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter By Color:</h3>
-						<ul class="color-option">
-							<li><a href="#" style="background-color:#475984;"></a></li>
-							<li><a href="#" style="background-color:#8A2454;"></a></li>
-							<li class="active"><a href="#" style="background-color:#BF6989;"></a></li>
-							<li><a href="#" style="background-color:#9A54D8;"></a></li>
-							<li><a href="#" style="background-color:#675F52;"></a></li>
-							<li><a href="#" style="background-color:#050505;"></a></li>
-							<li><a href="#" style="background-color:#D5B47B;"></a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter By Size:</h3>
-						<ul class="size-option">
-							<li class="active"><a href="#">S</a></li>
-							<li class="active"><a href="#">XL</a></li>
-							<li><a href="#">SL</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Brand</h3>
-						<ul class="list-links">
-							<li><a href="#">Nike</a></li>
-							<li><a href="#">Adidas</a></li>
-							<li><a href="#">Polo</a></li>
-							<li><a href="#">Lacost</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Gender</h3>
-						<ul class="list-links">
-							<li class="active"><a href="#">Men</a></li>
-							<li><a href="#">Women</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Top Rated Product</h3>
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-								<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
+				<!--  Product Details -->
+				<div class="product product-details clearfix">
+					<div class="col-md-6">
+						<div id="product-main-view">
+							<div class="product-view">
+								<img id="product_image_tag" src="<%=p.getImagePath() %>" alt="">
+								<input type="hidden" name="product_image_path" value="<%=p.getImagePath() %>">
 							</div>
 						</div>
-						<!-- /widget product -->
+						<input type="file" id="input_files_image" name="product_image_file">
+						<script type="text/javascript">
+							if (window.File && window.FileReader && window.FileList && window.Blob) {
+								// Great success! All the File APIs are supported
+							} else {
+								document.getElementById("product_image_tag").style.display = "none";
+								alert('The File APIs are not fully supported in this browser.');
+							}
+							function handleFileSelect(evt) {
+								var files = evt.target.files;
 
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-								<h3 class="product-price">$32.50</h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
-							</div>
-						</div>
-						<!-- /widget product -->
-					</div>
-					<!-- /aside widget -->
-				</div>
-				<!-- /ASIDE -->
-				<%
-				String msg_error=(String)request.getAttribute("msg_error");
-				if (msg_error != null && !msg_error.equals("") && !msg_error.equals("null")) {
-				%>
-				<h2 style="color: red;text-align:center;"><%=msg_error %></h2>
-				<%} %>
-				<div class="section-title">
-					<h3 class="title">My Catalogue</h3>
-				</div>
-				<div class="input-checkbox">
-					<form action="Catalogue" method="post">
-						<input type ="hidden" name="type" value="add">
-						<input type ="hidden" name="seller_user" value="<%=user %>">
-						<input type="submit" class="primary-btn add-to-cart" value="Add Product" />
-					</form>
-				</div>
+								for (var i = 0, f; f = files[i]; i++) {
+									// Only process image files.
+									if (!f.type.match('image.*')) {
+										alert("Only images, please");
+										continue;
+									}
 
-				<!-- MAIN -->
-				<div id="main" class="col-md-9" >
-					<!-- store top filter -->
-					<div class="store-filter clearfix" hidden>
-						<div class="pull-left">
-							<div class="row-filter">
-								<a href="#"><i class="fa fa-th-large"></i></a>
-								<a href="#" class="active"><i class="fa fa-bars"></i></a>
-							</div>
-							<div class="sort-filter">
-								<span class="text-uppercase">Sort By:</span>
-								<select class="input">
-										<option value="0">Position</option>
-										<option value="0">Price</option>
-										<option value="0">Rating</option>
-									</select>
-								<a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-							</div>
-						</div>
-						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
-							</div>
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-							</ul>
-						</div>
+									var reader = new FileReader();
+									// Put the image to img tag
+									reader.onload = (function(theFile) {
+										return function(e) {
+											var name=escape(theFile.name), path=e.target.result;
+											//alert("name="+name+", path"+path);
+											document.getElementById("product_image_tag").src=path;
+										};
+									})(f);
+									// Read in the image file as a data URL.
+									reader.readAsDataURL(f);
+								}
+							}
+							document.getElementById('input_files_image').addEventListener('change', handleFileSelect, false);
+						</script>
 					</div>
-					<!-- /store top filter -->
-					<% if(products != null) { %>
-					<!-- STORE -->
-					<div id="store">
-						<!-- row -->
-						<div class="row">
-						<% for(Product product : products) { %>
-							<!-- Product Single -->
-							<div class="col-md-4 col-sm-6 col-xs-6">
-								<div class="product product-single">
-									<form action="Catalogue" method="post">
-										<input type ="hidden" name="type" value="delete">
-										<input type ="hidden" name="id" value="<%=product.getId() %>">
-										<button class="cancel-btn"><i class="fa fa-trash"></i></button>
-									</form>
-									<div class="product-thumb">
-										<div class="product-label" hidden>
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-										<img src="<%=product.getImagePath() %>" alt="">
-									</div>
-									<div class="product-body">
-										<h3 class="product-price"><%=product.getPrice().doubleValue() %><del class="product-old-price" hidden>$45.00</del></h3>
-										<div hidden>
-											<div class="product-rating" hidden >
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o empty"></i>
-											</div>
-										</div>
-										<form action="Catalogue" method="post" id="form_modify_<%=product.getId()%>">
-											<input type="hidden" name="id" value="<%=product.getId() %>">
-											<input type="hidden" name="type" value="modify">
-											<input type ="hidden" name="seller_user" value="<%=user %>">
-											<h2 class="product-name"><a href="#" onclick="document.getElementById('form_modify_<%=product.getId()%>').submit();"><%=product.getName() %></a></h2>
-										</form>
-										<form action="Catalogue" method="post">
-											<input type="number" class="" name="newStock" value = "<%=product.getStock()%>">
-											<input type="hidden" name="type" value = "change-stock">
-											<input type="hidden" name="id" value = "<%=product.getId()%>">
-											<input type="submit" class="primary-btn add-to-cart" value = "Apply">
-										</form>
-										
-									</div>
-								</div>
-							</div>
+					<div class="col-md-6">
+						<div class="product-body">
+							<label for="product_name">Name</label>
+							<input class="input" name="product_name" value="<%=p.getName() %>" required>
+							<%if(categories != null) { %>
+								<br></br>
+								<label for="product_category">Category</label>
+								<select class="input search-categories" name="product_category">
+								<option value="">Select a category for the new product</option>
+								<% for(Category category : categories) { %>
+									<%if ( p.getCategoryBean().getName().equals(category.getName()) ) {%>
+									<option value="<%=category.getName() %>" selected><%=category.getName() %></option>
+									<%} else {%>
+									<option value="<%=category.getName() %>"><%=category.getName() %></option>
+									<%} %>
+								<%} %>
+								</select>
 							<%} %>
-						<%} %>
-							<!-- /Product Single -->
+							<br></br>
+							<label for="product_price">Price</label>
+							<input class="input" type="text" name="product_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getPrice().doubleValue() %>">
+							<br></br>
+							<label for="product_sale_price">Sale price</label>
+							<input class="input" type="text" name="product_sale_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getSalePrice().doubleValue() %>">
+							<br></br>
+							<label for="product_ship_price">Ship price</label>
+							<input class="input" type="text" name="product_ship_price" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getShipPrice().doubleValue() %>">
+							<br></br>
+							<label for="product_stock">Stock</label>
+							<input class="input" type="text" name="product_stock" pattern="^\d*(\.\d{0,2})?$" required value="<%=p.getStock() %>">
+							<p hidden><strong>Brand:</strong> E-SHOP</p>
+							<br></br>
+							<label for="product_short_description">Short description</label>
+							<input class="input" name="product_short_description" value="<%=p.getShortDescription() %>" required>
 
-							<div class="clearfix visible-sm visible-xs"></div>
 						</div>
-						<!-- /row -->
+						
+						<%
+						String product_operation="", value_button="";
+						if (modify) {
+							product_operation="modify_product";
+							value_button="Modify";
+						} else if (add) {
+							product_operation="add_product";
+							value_button="Add";
+						}
+						%>
+						<br><button type="submit" class="primary-btn" name="type" value="<%=product_operation %>"><%=value_button %></button>
 					</div>
-					<!-- /STORE -->
-
-					<!-- store bottom filter -->
-					<div class="store-filter clearfix" hidden>
-						<div class="pull-left">
-							<div class="row-filter">
-								<a href="#"><i class="fa fa-th-large"></i></a>
-								<a href="#" class="active"><i class="fa fa-bars"></i></a>
-							</div>
-							<div class="sort-filter">
-								<span class="text-uppercase">Sort By:</span>
-								<select class="input">
-										<option value="0">Position</option>
-										<option value="0">Price</option>
-										<option value="0">Rating</option>
-									</select>
-								<a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
-							</div>
-						</div>
-						<div class="pull-right">
-							<div class="page-filter">
-								<span class="text-uppercase">Show:</span>
-								<select class="input">
-										<option value="0">10</option>
-										<option value="1">20</option>
-										<option value="2">30</option>
-									</select>
-							</div>
-							<ul class="store-pages">
-								<li><span class="text-uppercase">Page:</span></li>
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+					
+					<div class="col-md-12">
+						<div class="product-tab">
+							<ul class="tab-nav">
+								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+								<!-- <li><a data-toggle="tab" href="#tab1">Details</a></li>
+								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li> -->
 							</ul>
+							<div class="tab-content">
+								<div id="tab1" class="tab-pane fade in active">
+									<p><textarea name="product_description" required style="width: 100%;height: 200px;"><%=p.getDescription() %></textarea></p>
+								</div>
+							</div>
 						</div>
 					</div>
-					<!-- /store bottom filter -->
+
 				</div>
-				<!-- /MAIN -->
+				<!-- /Product Details -->
 			</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->
+		</form>
 	</div>
 	<!-- /section -->
 
@@ -642,13 +511,14 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<!-- /container -->
 	</footer>
 	<!-- /FOOTER -->
+	
+	
 
 	<!-- jQuery Plugins -->
 	<script src="/tiw-p1/animation/jquery.min.js"></script>
 	<script src="/tiw-p1/animation/bootstrap.min.js"></script>
 	<script src="/tiw-p1/animation/slick.min.js"></script>
 	<script src="/tiw-p1/animation/nouislider.min.js"></script>
-	<script src="/tiw-p1/animation/jquery.zoom.min.js"></script>
 	<script src="/tiw-p1/animation/main.js"></script>
 
 </body>

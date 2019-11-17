@@ -1,9 +1,10 @@
+<%@page import="models.Category"%>
+<%@page import="java.math.BigDecimal"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="controllers.IndexController"%>
 <%@page import="controllers.ProductController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@page import="models.Category"%>
 <%@page import="model.Product"%>
 <%@page import="model.ProductInCart"%>
 
@@ -247,10 +248,14 @@ ArrayList<Category> categories=IndexController.getCategories();
 	<!-- /NAVIGATION -->
 	
 	<%
-	int id=Integer.parseInt(request.getParameter("id"));
+	
+	String strId=request.getParameter("id");
+	int id=-1;
+	if (strId != null && !strId.equals("") && !strId.equals("null")) {
+		id=Integer.parseInt(strId);
+	}// TODO else redirigir a products.jsp
 	Product p=ProductController.getProduct(id);
 	%>
-
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
@@ -265,12 +270,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-	<%
-	String seller=(String)request.getAttribute("seller");
-	boolean isSeller=(seller!=null);
-	// TODO if seller, no dejar ver cosas si no es tu producto
-	%>
-
+	
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -292,14 +292,12 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<h2 class="product-name">
 								<%=p.getName() %>
 							</h2>
-							
 							<h3 class="product-price">$<%=p.getPrice().doubleValue() %> <del class="product-old-price" hidden>$45.00</del></h3>
 							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
 							<p><%=p.getShortDescription() %></p>
 
 							<div class="product-btns">
-							
 								<form action="ShoppingCart" method="post">
 								
 									<div class="qty-input">
@@ -309,12 +307,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 										<input type="hidden" name="type" value= "addToCart" >
 									</div>
 									<input type="submit" class="primary-btn add-to-cart" value="ADD TO CART" />
-								
-								
 								</form>
-								
 								<div class="pull-right">
-								
 									<form action="WishList" method="post">	
 										<input type="hidden" name="id" value= <%= id %> ><!-- TODO rehacer el WishList.java -->
 										<input type="hidden" name="type" value= "addToWishList" >
@@ -322,11 +316,9 @@ ArrayList<Category> categories=IndexController.getCategories();
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 										<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
 									</form>
-									
 								</div>
 							</div>
 						</div>
-						
 						
 						<br><br><hr>
 						<div class="pull-right">
@@ -340,16 +332,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 								<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
 							</form>
 						</div>
-					
-					
 					</div>
 					
-				
-					
-					
-							
-							
-							
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-nav">
@@ -360,106 +344,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
 									<p><%=p.getDescription() %></p>
-								</div>
-								<div id="tab2" class="tab-pane fade in">
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="product-reviews">
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<div class="single-review">
-													<div class="review-heading">
-														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
-														<div class="review-rating pull-right">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-													</div>
-												</div>
-
-												<ul class="reviews-pages">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
-												</ul>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<h4 class="text-uppercase">Write Your Review</h4>
-											<p>Your email address will not be published.</p>
-											<form class="review-form">
-												<div class="form-group">
-													<input class="input" type="text" placeholder="Your Name" />
-												</div>
-												<div class="form-group">
-													<input class="input" type="email" placeholder="Email Address" />
-												</div>
-												<div class="form-group">
-													<textarea class="input" placeholder="Your review"></textarea>
-												</div>
-												<div class="form-group">
-													<div class="input-rating">
-														<strong class="text-uppercase">Your Rating: </strong>
-														<div class="stars">
-															<input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
-															<input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
-															<input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
-															<input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
-															<input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
-														</div>
-													</div>
-												</div>
-												<button class="primary-btn">Submit</button>
-											</form>
-										</div>
-									</div>
-
-
-
 								</div>
 							</div>
 						</div>

@@ -1,3 +1,6 @@
+<%@page import="controllers.UserController"%>
+<%@page import="controllers.UserManager"%>
+<%@page import="model.User"%>
 <%@page import="model.ProductInCart"%>
 <%@page import="controllers.ProductController"%>
 <%@page import="model.Product"%>
@@ -51,6 +54,10 @@
 <%
 String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=IndexController.getCategories();
+User userBean=null;
+if (user!=null) {
+	userBean=UserController.getUserInformation(user);
+}
 %>
 
 	<!-- HEADER -->
@@ -143,7 +150,9 @@ ArrayList<Category> categories=IndexController.getCategories();
 									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<%if (userBean!=null && userBean.getType()==1){ %>
 									<li><a href="catalogue.jsp"><i class="fa fa-user-times"></i> My Catalogue</a></li>
+									<%} %>
 									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
