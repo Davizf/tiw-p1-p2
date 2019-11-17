@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 
 /**
@@ -86,6 +87,12 @@ public class Orders_has_Product implements Serializable {
 
 	public void setProductBean(Product productBean) {
 		this.productBean = productBean;
+	}
+	
+	public double getCost() { 
+		double cost = quantity * (productPrice.doubleValue() + shipPrice.doubleValue());
+		
+		return  cost=Math.floor(cost * 100) / 100;
 	}
 
 }

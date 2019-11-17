@@ -45,40 +45,47 @@ public class OrderServlet extends HttpServlet{
 			// Guardar la compra en la pagina de mis pedidos
 
 		
-			
-			Date date = new Date();
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-			Orders order = new Orders();
-			Orders_has_Product order_product;
-			order.setAddress(req.getParameter("address"));
-			order.setCity(req.getParameter("city"));
-			order.setCountry(req.getParameter("country"));
-			order.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
-			order.setUserBean(userManager.getUser(email));
-			order.setDate(formatter.format(date));
-			
-			ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
-			for(ProductInCart product : productsInCart) {
-				order_product = new Orders_has_Product();
-				order_product.setProductPrice(product.getProduct().getPrice());
-				order_product.setProductBean(product.getProduct());
-				order_product.setOrder(order);
-				order_product.setShipPrice(product.getProduct().getShipPrice());
-				order_product.setQuantity(product.getQuantity());
-				products.add(order_product);
+			if(OrderController.checkProductsStock(productsInCart)) {
+				Date date = new Date();
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+				Orders order = new Orders();
+				Orders_has_Product order_product;
+				order.setAddress(req.getParameter("address"));
+				order.setCity(req.getParameter("city"));
+				order.setCountry(req.getParameter("country"));
+				order.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
+				order.setUserBean(userManager.getUser(email));
+				order.setDate(formatter.format(date));
+				
+				ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
+				for(ProductInCart product : productsInCart) {
+					order_product = new Orders_has_Product();
+					order_product.setProductPrice(product.getProduct().getPrice());
+					order_product.setProductBean(product.getProduct());
+					order_product.setOrder(order);
+					order_product.setShipPrice(product.getProduct().getShipPrice());
+					order_product.setQuantity(product.getQuantity());
+					products.add(order_product);
+					ProductController.updateStock(product.getProduct(), product.getQuantity());
+				}
+				
+				order.setOrdersHasProducts(products);
+				
+				try {
+					orderManager.createOrder(order);
+				} catch (Exception e) {
+					System.out.println("Descripci�n: " + e.getMessage());
+				}
+		
+				session.setAttribute("cartList", null);
+				RequestDispatcher rd = req.getRequestDispatcher("confirm-page.jsp");
+				rd.forward(req, res);
+			} else {
+				req.setAttribute("msg_error", "Check the quantity of your products, not enough stock.");
+				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
+				rd.forward(req, res);
 			}
 			
-			order.setOrdersHasProducts(products);
-			
-			try {
-				orderManager.createOrder(order);
-			} catch (Exception e) {
-				System.out.println("Descripci�n: " + e.getMessage());
-			}
-	
-			session.setAttribute("cartList", null);
-			RequestDispatcher rd = req.getRequestDispatcher("confirm-page.jsp");
-			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("my-orders")) {
 			RequestDispatcher rd = req.getRequestDispatcher("my-orders.jsp");
 			rd.forward(req, res);
