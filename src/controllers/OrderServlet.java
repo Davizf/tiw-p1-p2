@@ -74,7 +74,7 @@ public class OrderServlet extends HttpServlet{
 				System.out.println("Descripci�n: " + e.getMessage());
 			}
 	
-
+			session.setAttribute("cartList", null);
 			RequestDispatcher rd = req.getRequestDispatcher("confirm-page.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("my-orders")) {
