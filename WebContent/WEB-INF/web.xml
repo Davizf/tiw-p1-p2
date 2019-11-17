@@ -10,7 +10,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>WishList</servlet-name>
-    <servlet-class>controllers.WishList</servlet-class>
+    <servlet-class>controllers.WishListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>WishList</servlet-name>

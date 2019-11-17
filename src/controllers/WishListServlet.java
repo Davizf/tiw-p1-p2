@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Product;
+import model.User;
+import model.WishList;
 
-public class WishList extends HttpServlet{
+public class WishListServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	ArrayList<Product> products = new ArrayList<Product>();
@@ -21,30 +23,28 @@ public class WishList extends HttpServlet{
 
 		HttpSession session = req.getSession();
 		if(session.getAttribute("user") != null) {
-
+			String email = (String) session.getAttribute("user");
 			if(req.getParameter("type").equalsIgnoreCase("addToWishList")) {
 				int id = Integer.parseInt(req.getParameter("id"));
-
-				for(Product product : products) {
-					if(product.getId()==id) {
-						RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
-						rd.forward(req, res);
-						return;
-					}
-				}
-				products.add(ProductController.getProduct(id));
-				req.setAttribute("wishList", products);
+				Product product = ProductController.getProduct(id);
+				User user = UserController.getUserInformation(email);
+				WishList wishList = new WishList();
+				
+				wishList.setProductBean(product);
+				wishList.setUserBean(user);
+				user.addWishlist(wishList);
+				
+				UserController.modifyUser(user);
 
 				RequestDispatcher rd = req.getRequestDispatcher("wish-list.jsp");
 				rd.forward(req, res);
 
 
 			} else if(req.getParameter("type").equalsIgnoreCase("deleteInWishList")) {
+				int product = Integer.parseInt(req.getParameter("product"));
+				WishList wishList = WishListController.getWishListByUserAndProduct(email, product);
 
-				int index = Integer.parseInt(req.getParameter("indexToRemove"));
-
-				products.remove(index);
-				req.setAttribute("wishList", products);
+				WishListController.deleteWishList(wishList);
 
 				RequestDispatcher rd = req.getRequestDispatcher("wish-list.jsp");
 				rd.forward(req, res);

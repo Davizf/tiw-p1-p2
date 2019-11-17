@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="wishlists")
 @NamedQuery(name="WishList.findAll", query="SELECT w FROM WishList w")
+@NamedQuery(name="WishList.findByUserAndProduct", query="SELECT w FROM WishList w WHERE w.userBean.email LIKE :email AND w.productBean.id LIKE :product")
 public class WishList implements Serializable {
 	private static final long serialVersionUID = 1L;
 

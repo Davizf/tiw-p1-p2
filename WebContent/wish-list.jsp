@@ -1,9 +1,11 @@
 <%@page import="model.Category"%>
+<%@page import="model.User"%>
 <%@page import="controllers.CategoryController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="model.Product" %>
 <%@page import="controllers.ShoppingCart" %>
+<%@page import="controllers.UserController" %>
 <%@page import="java.util.*" %>
 <%@page import="model.ProductInCart"%>
 
@@ -391,7 +393,8 @@ ArrayList<Category> categories=CategoryController.getCategories();
 								
 								
 								<%
-								ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("wishList");
+								User u = UserController.getUserInformation(user);
+								ArrayList<Product> list = (ArrayList<Product>) UserController.getWishListProduct(u);
 								if(list != null){
 									for(Product product : list ){
 								%>
@@ -406,7 +409,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 										<form action="WishList" method="post">
 											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
 											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
+											<input type="hidden" name="product" value= <%= product.getId() %> >
 											<input type="hidden" name="type" value= "deleteInWishList" >
 											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
 										</form>

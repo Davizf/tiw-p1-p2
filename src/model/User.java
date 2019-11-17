@@ -76,7 +76,7 @@ public class User implements Serializable {
 	private List<Product> products2;
 
 	//bi-directional many-to-one association to WishList
-	@OneToMany(mappedBy="userBean")
+	@OneToMany(mappedBy="userBean", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<WishList> wishlists;
 
 	//bi-directional many-to-one association to ShopingCart
