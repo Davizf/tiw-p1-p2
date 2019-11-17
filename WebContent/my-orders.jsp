@@ -294,7 +294,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 					
 					<br>
 					
-					<h5>Nº Order: <%= order.getId() %></h5>
+					<h5>Nº Order: <%= order.getId() %> Date:  <%= order.getDate() %> </h5>
 					
 					<div class="col-md-12">
 					<div class="order-summary clearfix">
