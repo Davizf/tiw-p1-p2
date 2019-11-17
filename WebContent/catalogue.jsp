@@ -412,7 +412,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 				</div>
 				<div class="input-checkbox">
 					<form action="Catalogue" method="post">
-						<input type ="hidden" name="type" value="add"> 
+						<input type ="hidden" name="type" value="add">
+						<input type ="hidden" name="seller_user" value="<%=user %>">
 						<input type="submit" class="primary-btn add-to-cart" value="Add Product" />
 					</form>
 				</div>
@@ -491,6 +492,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 										<form action="Catalogue" method="post" id="form_modify_<%=product.getId()%>">
 											<input type="hidden" name="id" value="<%=product.getId() %>">
 											<input type="hidden" name="type" value="modify">
+											<input type ="hidden" name="seller_user" value="<%=user %>">
 											<h2 class="product-name"><a href="#" onclick="document.getElementById('form_modify_<%=product.getId()%>').submit();"><%=product.getName() %></a></h2>
 										</form>
 										<form action="Catalogue" method="post">
@@ -499,7 +501,6 @@ ArrayList<Category> categories=IndexController.getCategories();
 											<input type="hidden" name="id" value = "<%=product.getId()%>">
 											<input type="submit" class="primary-btn add-to-cart" value = "Apply">
 										</form>
-										
 										
 									</div>
 								</div>

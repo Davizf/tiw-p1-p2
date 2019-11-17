@@ -276,26 +276,11 @@ ArrayList<Category> categories=IndexController.getCategories();
 		p.setDescription(product.getDescription());
 		p.setImagePath(product.getImagePath());
 		p.setStock(product.getStock());
-		if (product.getSalePrice()==null)
-			p.setSalePrice(new BigDecimal("0"));
-		else
-			p.setSalePrice(product.getSalePrice());
+		p.setSalePrice(product.getSalePrice());
 		p.setShipPrice(product.getShipPrice());
 		p.setCategoryBean(product.getCategoryBean());
 	}
 	%>
-	<!-- TODO -->
-	---------------------</br>
-	<%=p.getId() %></br>
-	<%=p.getImagePath() %></br>
-	<%=p.getPrice().doubleValue() %></br>
-	<%=p.getSalePrice().doubleValue() %></br>
-	<%=p.getShipPrice().doubleValue() %></br>
-	<%=p.getName() %></br>
-	<%=p.getStock() %></br>
-	<%=p.getCategoryBean().getName() %></br>
-	modify=<%=modify %></br>
-	add=<%=add%></br>
 	
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
@@ -319,7 +304,9 @@ ArrayList<Category> categories=IndexController.getCategories();
 	
 	<!-- section -->
 	<div class="section">
-		<form action="Catalogue" method="post">
+		<form action="Catalogue" method="post" enctype="multipart/form-data">
+		<input class="input" type="hidden" name="product_user" value="<%=((String)request.getAttribute("seller_user")) %>" required>
+		<input class="input" type="hidden" name="product_id" value="<%=p.getId() %>" required>
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
@@ -329,11 +316,43 @@ ArrayList<Category> categories=IndexController.getCategories();
 					<div class="col-md-6">
 						<div id="product-main-view">
 							<div class="product-view">
-								<img src="<%=p.getImagePath() %>" alt=""><!-- TODO -->
-								<input type="hidden" name="product_image_path">
+								<img id="product_image_tag" src="<%=p.getImagePath() %>" alt="">
+								<input type="hidden" name="product_image_path" value="<%=p.getImagePath() %>">
 							</div>
 						</div>
-						
+						<input type="file" id="input_files_image" name="product_image_file">
+						<script type="text/javascript">
+							if (window.File && window.FileReader && window.FileList && window.Blob) {
+								// Great success! All the File APIs are supported
+							} else {
+								document.getElementById("product_image_tag").style.display = "none";
+								alert('The File APIs are not fully supported in this browser.');
+							}
+							function handleFileSelect(evt) {
+								var files = evt.target.files;
+
+								for (var i = 0, f; f = files[i]; i++) {
+									// Only process image files.
+									if (!f.type.match('image.*')) {
+										alert("Only images, please");
+										continue;
+									}
+
+									var reader = new FileReader();
+									// Put the image to img tag
+									reader.onload = (function(theFile) {
+										return function(e) {
+											var name=escape(theFile.name), path=e.target.result;
+											//alert("name="+name+", path"+path);
+											document.getElementById("product_image_tag").src=path;
+										};
+									})(f);
+									// Read in the image file as a data URL.
+									reader.readAsDataURL(f);
+								}
+							}
+							document.getElementById('input_files_image').addEventListener('change', handleFileSelect, false);
+						</script>
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
@@ -342,7 +361,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							<%if(categories != null) { %>
 								<br></br>
 								<label for="product_category">Category</label>
-								<select class="input search-categories" name="category" name="product_category">
+								<select class="input search-categories" name="product_category">
 								<option value="">Select a category for the new product</option>
 								<% for(Category category : categories) { %>
 									<%if ( p.getCategoryBean().getName().equals(category.getName()) ) {%>
@@ -394,7 +413,7 @@ ArrayList<Category> categories=IndexController.getCategories();
 							</ul>
 							<div class="tab-content">
 								<div id="tab1" class="tab-pane fade in active">
-									<p><textarea id="product_description" required style="width: 100%;height: 200px;"><%=p.getDescription() %></textarea></p>
+									<p><textarea name="product_description" required style="width: 100%;height: 200px;"><%=p.getDescription() %></textarea></p>
 								</div>
 							</div>
 						</div>
@@ -492,6 +511,8 @@ ArrayList<Category> categories=IndexController.getCategories();
 		<!-- /container -->
 	</footer>
 	<!-- /FOOTER -->
+	
+	
 
 	<!-- jQuery Plugins -->
 	<script src="/tiw-p1/animation/jquery.min.js"></script>
