@@ -1,4 +1,5 @@
 <%@page import="controllers.CategoryController"%>
+<%@page import="controllers.OrderController"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
@@ -265,8 +266,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 	<!-- /BREADCRUMB -->
 
 <%
-	User u = UserController.getUserInformation(user);
-	List<Orders> orders = u.getOrders();
+	List<Orders> orders = OrderController.getOrdersByUser(user);
 %>
 	<!-- section -->
 	<div class="section">
