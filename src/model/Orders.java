@@ -32,13 +32,13 @@ public class Orders implements Serializable {
 	private int postalCode;
 	
 	@Column(name="confirmation_id")
-	private long confirmation_id;
+	private String confirmation_id;
 
-	public long getConfirmation_id() {
+	public String getConfirmation_id() {
 		return confirmation_id;
 	}
 
-	public void setConfirmation_id(long confirmation_id) {
+	public void setConfirmation_id(String confirmation_id) {
 		this.confirmation_id = confirmation_id;
 	}
 

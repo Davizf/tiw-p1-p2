@@ -193,10 +193,69 @@ public class InteractionJMS {
 			return null;
 		}
 		return messages;
-	
-		
-		
 
 	}
+	
+	
+	
+	
+	
+	public String readConfirm( String receiver) {
+
+		StringBuffer mSB = new StringBuffer(64);
+		try {
+			initialContext = new javax.naming.InitialContext();
+			factory = (javax.jms.ConnectionFactory) initialContext.lookup(InformationProperties.getQCF());
+			queue = (javax.jms.Destination) initialContext.lookup(InformationProperties.getQueue());
+			Qcon = factory.createConnection();
+			QSes = Qcon.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+			if (receiver.equals("")) {
+				Mcon = QSes.createConsumer(queue);
+			} else {
+				Mcon = QSes.createConsumer(queue, "JMSCorrelationID = '" + receiver.trim() + "'");
+			}
+			
+			Qcon.start();
+			Message message = null;
+			while (true) {
+				message = Mcon.receive(100);
+				if (message != null) {
+					if (message instanceof TextMessage) {
+						TextMessage m = (TextMessage) message;
+						mSB.append(m.getText());
+					} else {
+						System.out.println("The type of JHC is not correct");
+						break;
+					}
+				} else 
+				{
+					// message doesn't exist
+					break;
+				}
+
+			}
+			this.Mcon.close();
+			this.QSes.close();
+			this.Qcon.close();
+
+		} catch (javax.jms.JMSException e) {
+			System.out
+					.println(".....JHC *************************************** Error de JMS: "
+							+ e.getLinkedException().getMessage());
+			System.out
+					.println(".....JHC *************************************** Error de JMS: "
+							+ e.getLinkedException().toString());
+		} catch (Exception e) {
+			System.out
+					.println("JHC *************************************** Error Read Exception: "
+							+ e.getMessage());
+		}
+
+		return mSB.toString();
+
+	}
+	
+	
 
 }

@@ -42,7 +42,8 @@ public class OrderServlet extends HttpServlet{
 			
 			InteractionJMS mq=new InteractionJMS();
 			mq.confirmPurchase(req.getParameter("card"), req.getParameter("total-price"));
-		
+			String associatedCode = mq.readConfirm("confirm");
+			
 			if(OrderController.checkProductsStock(productsInCart)) {
 				Date date = new Date();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -50,7 +51,7 @@ public class OrderServlet extends HttpServlet{
 				Orders_has_Product order_product;
 				
 				
-				order.setConfirmation_id(1234567890);
+				order.setConfirmation_id(associatedCode);
 				
 				
 				order.setAddress(req.getParameter("address"));
@@ -81,6 +82,7 @@ public class OrderServlet extends HttpServlet{
 				}
 		
 				session.setAttribute("cartList", null);
+				session.setAttribute("cleanProductInCart", 1);
 				RequestDispatcher rd = req.getRequestDispatcher("confirm-page.jsp");
 				rd.forward(req, res);
 			} else {

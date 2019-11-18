@@ -12,7 +12,7 @@ import javax.jms.JMSException;
 public class TextListener implements MessageListener {
 
 
-    public void onMessage(Message message) {
+	public void onMessage(Message message) {
         TextMessage msg = null;
         InteractionJMS mq=new InteractionJMS();
         try {
@@ -23,7 +23,7 @@ public class TextListener implements MessageListener {
                 System.out.println("Reading order'price --> " + msg.getStringProperty("totalPrice"));
                 System.out.println("The order has been successfully completed!");
                 System.out.println("*******************************************************");
-                mq.writeJMS(""+System.currentTimeMillis(), "confirm", "process");
+                mq.writeJMS(String.valueOf(System.currentTimeMillis()), "confirm", "process");
             } else {
                 System.err.println("Message is not a TextMessage");
             }
