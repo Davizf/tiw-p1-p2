@@ -5,6 +5,7 @@ import javax.jms.Message;
 import javax.jms.TextMessage;
 
 import jhc.jms.InteractionJMS;
+import java.util.Random;
 
 import javax.jms.JMSException;
 
@@ -15,6 +16,8 @@ public class TextListener implements MessageListener {
 	public void onMessage(Message message) {
         TextMessage msg = null;
         InteractionJMS mq=new InteractionJMS();
+        Random rand = new Random();
+        int n = rand.nextInt(1234567);
         try {
             if (message instanceof TextMessage) {
                 msg = (TextMessage) message;
@@ -23,7 +26,7 @@ public class TextListener implements MessageListener {
                 System.out.println("Reading order'price --> " + msg.getStringProperty("totalPrice"));
                 System.out.println("The order has been successfully completed!");
                 System.out.println("*******************************************************");
-                mq.writeJMS(String.valueOf(System.currentTimeMillis()/9999999), "confirm", "process");
+                mq.writeJMS(String.valueOf(n), "confirm", "process");
             } else {
                 System.err.println("Message is not a TextMessage");
             }
