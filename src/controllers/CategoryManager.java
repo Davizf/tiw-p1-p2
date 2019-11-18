@@ -110,4 +110,15 @@ public class CategoryManager {
 		return category;
 	}
 
+	public Category getCategoryById(int id) {
+		Category category = null;
+		EntityManager em = getEntityManager();
+		try {
+			category = (Category) em.find(Category.class, id);
+		} finally {
+			em.close();
+		}
+		return category;
+	}
+
 }
