@@ -73,10 +73,6 @@ public class ShoppingCart extends HttpServlet{
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		if(req.getSession().getAttribute("cleanProductInCart").equals(1) ){
-			products.clear();
-			req.getSession().setAttribute("cleanProductInCart", 0);
-		}
 		req.getSession().setAttribute("cartList", products);
 		RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 		rd.forward(req, res);

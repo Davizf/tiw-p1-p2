@@ -23,7 +23,7 @@ public class TextListener implements MessageListener {
                 System.out.println("Reading order'price --> " + msg.getStringProperty("totalPrice"));
                 System.out.println("The order has been successfully completed!");
                 System.out.println("*******************************************************");
-                mq.writeJMS(String.valueOf(System.currentTimeMillis()), "confirm", "process");
+                mq.writeJMS(String.valueOf(System.currentTimeMillis()/9999999), "confirm", "process");
             } else {
                 System.err.println("Message is not a TextMessage");
             }

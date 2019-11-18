@@ -49,11 +49,7 @@ public class OrderServlet extends HttpServlet{
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 				Orders order = new Orders();
 				Orders_has_Product order_product;
-				
-				
 				order.setConfirmation_id(associatedCode);
-				
-				
 				order.setAddress(req.getParameter("address"));
 				order.setCity(req.getParameter("city"));
 				order.setCountry(req.getParameter("country"));
@@ -82,7 +78,6 @@ public class OrderServlet extends HttpServlet{
 				}
 		
 				session.setAttribute("cartList", null);
-				session.setAttribute("cleanProductInCart", 1);
 				RequestDispatcher rd = req.getRequestDispatcher("confirm-page.jsp");
 				rd.forward(req, res);
 			} else {
