@@ -20,21 +20,40 @@ public class HierarchicalCategories {
 		ArrayList<Category> cs=new ArrayList<>(categories);
 		for (int i = 0; i < cs.size(); i++) {
 			// If inserted, delete
-			if (insertInside(cs.get(i), this.categories, 0))
+			if (insertInside(cs.get(i), this.categories, 0)) {
 				cs.remove(i--);
+			}
+		}
+	}
+	
+	public ArrayList<Category> getCategoriesOrdered() {
+		ArrayList<Category> l=new ArrayList<>();
+		insert(l, categories);
+		return l;
+	}
+
+	private void insert(ArrayList<Category> l, LinkedList<CategoryLevel> categories) {
+		Category nc;
+		for (CategoryLevel c : categories) {
+			nc=new Category();
+			nc.setId(c.id);
+			nc.setParentId(c.parentId);
+			nc.setName(c.name);
+			l.add(nc);
+			insert(l, c.childs);
 		}
 	}
 
 	public String getLineOfId(int id) {
-		return search(id, categories);
+		return getLineOfId(id, categories);
 	}
 
-	private String search(int id, LinkedList<CategoryLevel> categories) {
+	private String getLineOfId(int id, LinkedList<CategoryLevel> categories) {
 		for (CategoryLevel c : categories) {
 			if (c.id == id)
-				return c.name;
-			String name = search(id, c.childs);
-			if (name != null) return name;
+				return line(c);
+			String line = getLineOfId(id, c.childs);
+			if (line != null) return line;
 		}
 		return null;
 	}
