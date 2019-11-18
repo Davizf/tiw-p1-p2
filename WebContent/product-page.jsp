@@ -326,9 +326,9 @@ ArrayList<Category> categories=CategoryController.getCategories();
 								<input type="hidden" name="op" value="1">
 								
 								<!--  Aqui tiene que ir el email del vendedor -->
-								<input type="hidden" name="correlationId" value="123@gmail.com">
+								<input type="hidden" name="correlationId" value=<%=p.getUserBean().getEmail()  %> >
 								<INPUT type="hidden" name="sender" value="<%=user%>"> 
-								<input type="text" name="message" value= "Hello there! Im interested in this item!" >
+								<input type="text" name="message" value= "Im interested in this item!" size="48" >
 								<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
 							</form>
 						</div>
