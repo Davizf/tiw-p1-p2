@@ -28,9 +28,10 @@ public class ProductPageSellerFilter implements Filter {
 			res.sendRedirect("index.jsp");
 			return;
 		} else {
-			int type = UserController.getUserInformation(email).getType();
-			if (type != 1)
+			if (UserController.getUserInformation(email).getType() != UserController.USER_TYPE_SELLER) {
 				res.sendRedirect("products.jsp");
+				return;
+			}
 
 			chain.doFilter(request, response);
 		}

@@ -52,5 +52,8 @@
         <url-pattern>/AsynchReadingServlet</url-pattern>
     </servlet-mapping>
     
-    
+  <error-page>
+	<exception-type>java.lang.NumberFormatException</exception-type>
+    <location>/index.jsp</location>
+  </error-page>
 </web-app>

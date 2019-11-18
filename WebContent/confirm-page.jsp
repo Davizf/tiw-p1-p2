@@ -6,6 +6,9 @@
 <%@page import="model.Messages"%>
 <%@page import="model.ProductInCart" %>
 <%@page import="controllers.ShoppingCart" %>
+<%@page import="controllers.UserController"%>
+<%@page import="model.HierarchicalCategories"%>
+<%@page import="model.User"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,12 +50,20 @@
 </head>
 
 <body>
-
 <%
-	String user=(String)session.getAttribute("user");
+String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=CategoryController.getCategories();
-ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("cartList");
+HierarchicalCategories hc=null;
+if (categories!=null) {
+	hc=new HierarchicalCategories(categories, "&nbsp;&nbsp;&nbsp;>", "&nbsp;&nbsp;&nbsp;&nbsp;");
+	categories=hc.getCategoriesOrdered();
+}
+User userBean=null;
+if (user!=null) {
+	userBean=UserController.getUserInformation(user);
+}
 %>
+
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -108,7 +119,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 								<option value="">All Categories</option>
 								<%if(categories != null) { %>
 									<% for(Category category : categories) { %>
-										<option value="<%=category.getName() %>"><%=category.getName() %></option>
+										<option value="<%=category.getId() %>"><%=hc.getLineOfId(category.getId()) %></option>
 									<%} %>
 								<%} %>
 							</select>
@@ -143,6 +154,9 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<%if (userBean!=null && userBean.getType()==1){ %>
+									<li><a href="catalogue.jsp"><i class="fa fa-user-times"></i> My Catalogue</a></li>
+									<%} %>
 									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>

@@ -1,3 +1,4 @@
+<%@page import="model.HierarchicalCategories"%>
 <%@page import="controllers.UserController"%>
 <%@page import="controllers.UserManager"%>
 <%@page import="model.User"%>
@@ -52,8 +53,13 @@
 
 <body>
 <%
-	String user=(String)session.getAttribute("user");
+String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=CategoryController.getCategories();
+HierarchicalCategories hc=null;
+if (categories!=null) {
+	hc=new HierarchicalCategories(categories, "&nbsp;&nbsp;&nbsp;>", "&nbsp;&nbsp;&nbsp;&nbsp;");
+	categories=hc.getCategoriesOrdered();
+}
 User userBean=null;
 if (user!=null) {
 	userBean=UserController.getUserInformation(user);
@@ -115,7 +121,7 @@ if (user!=null) {
 								<option value="">All Categories</option>
 								<%if(categories != null) { %>
 									<% for(Category category : categories) { %>
-										<option value="<%=category.getName() %>"><%=category.getName() %></option>
+										<option value="<%=category.getId() %>"><%=hc.getLineOfId(category.getId()) %></option>
 									<%} %>
 								<%} %>
 							</select>
@@ -244,11 +250,11 @@ if (user!=null) {
 						<input type="hidden" name="category" value="" id="form_category_input">
 					</form>
 					<ul class="category-list">
-						<%if(categories != null) { %>
-							<% for(Category category : categories) { %>
-								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getName() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
-							<%} %>
-						<%} %>
+						<%if(categories != null) {
+							for(Category category : categories) { %>
+								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=hc.getLineOfId(category.getId()) %></a></li>
+							<%}
+						} %>
 						<li><a href="products.jsp">View all</a></li>
 					</ul>
 				</div>

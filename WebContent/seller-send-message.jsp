@@ -1,3 +1,4 @@
+<%@page import="model.User"%>
 <%@page import="model.ProductInCart"%>
 <%@page import="controllers.CategoryController"%>
 <%@page import="controllers.UserController"%>
@@ -6,6 +7,8 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*" %>
+<%@page import="controllers.UserController"%>
+<%@page import="model.HierarchicalCategories"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,9 +51,19 @@
 
 <body>
 <%
-	String user=(String)session.getAttribute("user");
+String user=(String)session.getAttribute("user");
 ArrayList<Category> categories=CategoryController.getCategories();
+HierarchicalCategories hc=null;
+if (categories!=null) {
+	hc=new HierarchicalCategories(categories, "&nbsp;&nbsp;&nbsp;>", "&nbsp;&nbsp;&nbsp;&nbsp;");
+	categories=hc.getCategoriesOrdered();
+}
+User userBean=null;
+if (user!=null) {
+	userBean=UserController.getUserInformation(user);
+}
 %>
+
 	<!-- HEADER -->
 	<header>
 		<!-- top Header -->
@@ -106,7 +119,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 								<option value="">All Categories</option>
 								<%if(categories != null) { %>
 									<% for(Category category : categories) { %>
-										<option value="<%=category.getName() %>"><%=category.getName() %></option>
+										<option value="<%=category.getId() %>"><%=hc.getLineOfId(category.getId()) %></option>
 									<%} %>
 								<%} %>
 							</select>
@@ -138,9 +151,12 @@ ArrayList<Category> categories=CategoryController.getCategories();
 							
 							<ul class="custom-menu">
 								<%if(user != null) { %>
-									<li><a href="profile.jsp"><i class="fa fa-user-o"></i> My orders</a></li><!-- TODO -->
+									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
 									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
 									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<%if (userBean!=null && userBean.getType()==1){ %>
+									<li><a href="catalogue.jsp"><i class="fa fa-user-times"></i> My Catalogue</a></li>
+									<%} %>
 									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>

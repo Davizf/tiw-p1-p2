@@ -12,6 +12,8 @@ import model.WishList;
 
 public class UserController {
 
+	public static final int USER_TYPE_SELLER = 1;
+
 	public static User getUserInformation(String email) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
@@ -20,7 +22,7 @@ public class UserController {
 		factory.close();
 		return user;
 	}
-	
+
 	public static void modifyUser(User user) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
@@ -33,15 +35,15 @@ public class UserController {
 		}
 		factory.close();
 	}
-	
+
 	public static ArrayList<Product> getWishListProduct(User user) {
 		List<WishList> wishLists = user.getWishlists();
 		ArrayList<Product> wishListProducts =  new ArrayList<Product>();
-		
+
 		for(WishList wishList : wishLists) {
 			wishListProducts.add(wishList.getProductBean());
 		}
-		
+
 		return wishListProducts;
 	}
 	

@@ -37,7 +37,9 @@ public class CategoryController {
 			res = myStatement.executeQuery(query);
 			while(res.next()) {
 				category = new Category();
+				category.setId(res.getInt("id"));
 				category.setName(res.getString("name"));
+				category.setParentId(res.getInt("parent_id"));
 				categories.add(category);
 			}
 			res.close();

@@ -146,6 +146,18 @@ public class ProductManager {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByCategory(int category) {
+		List<Product> products = null;
+		EntityManager em = getEntityManager();
+		try {
+			products = (List<Product>) em.createNamedQuery("Product.findAllByCategoryId").setParameter("category", category).getResultList();
+		} finally {
+			em.close();
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Product> getLastProducts() {
 		List<Product> products = null;
 		EntityManager em = getEntityManager();
