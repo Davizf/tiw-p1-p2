@@ -62,6 +62,7 @@ User userBean=null;
 if (user!=null) {
 	userBean=UserController.getUserInformation(user);
 }
+ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("cartList");
 %>
 
 	<!-- HEADER -->
