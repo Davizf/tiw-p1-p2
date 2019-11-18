@@ -1,10 +1,13 @@
 package jhc.jms;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import jhc.info.InformationProperties;
+import model.User;
+import controllers.UserController;
 import model.Messages;
 
 
@@ -55,17 +58,15 @@ public class InteractionJMS {
 	
 	
 	public void writeJMSToAllBuyers(String message, String sender) {
-
-		String receiver = "123@gmail.com";
-		// Bucle para meter email de todos los compradores
-		writeJMS(message, receiver, sender);
+		
+		List<User>buyers = UserController.getAllBuyers();
+		for(User buyer: buyers){	
+			if(buyer.getType() == 0){
+				writeJMS(message, buyer.getEmail(), sender);
+			}
+		}
 
 	}
-	
-	
-	
-	
-	
 	
 	
 	public void confirmPurchase(String creditCard, String totalPrice) {

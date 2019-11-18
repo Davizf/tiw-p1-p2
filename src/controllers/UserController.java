@@ -44,4 +44,14 @@ public class UserController {
 		
 		return wishListProducts;
 	}
+	
+	
+	public static List<User> getAllBuyers(){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		UserManager manager = new UserManager();
+		manager.setEntityManagerFactory(factory);
+		List<User> buyers= manager.getAllBuyers();
+		factory.close();
+		return buyers;
+	}
 }

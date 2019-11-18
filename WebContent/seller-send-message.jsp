@@ -1,6 +1,8 @@
 <%@page import="model.ProductInCart"%>
 <%@page import="controllers.CategoryController"%>
+<%@page import="controllers.UserController"%>
 <%@page import="model.Category"%>
+<%@page import="model.User"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*" %>
@@ -271,7 +273,6 @@ ArrayList<Category> categories=CategoryController.getCategories();
 							<div class="section-title">
 								<h3 class="title">Send an offer to buyers:</h3>
 							</div>
-
 							<form name="nombre" method="post" action="/tiw-p1/jms-controller">
 								
 								 
@@ -279,14 +280,13 @@ ArrayList<Category> categories=CategoryController.getCategories();
 								<br><br>
 
 								<INPUT type="hidden" name="op" value="4"> 
-								<INPUT type="hidden" name="correlationId" value="broadcast">
 								<INPUT type="hidden" name="sender" value=<%=session.getAttribute("username") %>> 
 								<INPUT type="submit" class="primary-btn" name="ejecutar" value="Send">
-								
 							</form>
 							
-							<hr>
-						
+							
+
+
 					</div>
 					
 				</div>

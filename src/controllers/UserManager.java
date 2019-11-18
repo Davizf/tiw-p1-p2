@@ -1,8 +1,11 @@
 package controllers;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import model.Product;
 import model.User;
 
 
@@ -133,5 +136,18 @@ public class UserManager {
 		}
 		return user;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> getAllBuyers() {
+		List<User> buyers= null;
+		EntityManager em = getEntityManager();
+		try {
+			buyers = (List<User>) em.createNamedQuery("User.findAll").getResultList();
+		} finally {
+			em.close();
+		}
+		return buyers;
+	}
+	
 
 }
