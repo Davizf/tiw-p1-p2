@@ -48,11 +48,11 @@ public class UserController {
 	}
 	
 	
-	public static List<User> getAllBuyers(){
+	public static List<User> getAllUsersByType(int type){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
 		manager.setEntityManagerFactory(factory);
-		List<User> buyers= manager.getAllBuyers();
+		List<User> buyers= manager.getAllUsersByType(type);
 		factory.close();
 		return buyers;
 	}

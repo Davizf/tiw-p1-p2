@@ -58,12 +58,10 @@ public class InteractionJMS {
 	
 	
 	public void writeJMSToAllBuyers(String message, String sender) {
-		
-		List<User>buyers = UserController.getAllBuyers();
-		for(User buyer: buyers){	
-			if(buyer.getType() == 0){
+
+		List<User>buyers = UserController.getAllUsersByType(0);
+		for(User buyer: buyers) {	
 				writeJMS(message, buyer.getEmail(), sender);
-			}
 		}
 
 	}

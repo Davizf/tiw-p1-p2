@@ -138,11 +138,11 @@ public class UserManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> getAllBuyers() {
+	public List<User> getAllUsersByType(int type) {
 		List<User> buyers= null;
 		EntityManager em = getEntityManager();
 		try {
-			buyers = (List<User>) em.createNamedQuery("User.findAll").getResultList();
+			buyers = (List<User>) em.createNamedQuery("User.findAll").setParameter("type", type).getResultList();
 		} finally {
 			em.close();
 		}
