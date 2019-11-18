@@ -55,10 +55,17 @@ public class ShoppingCart extends HttpServlet{
 
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
+			} else if(req.getParameter("type").equalsIgnoreCase("modifyInCart")) {
+
+				int index = Integer.parseInt(req.getParameter("indexToModify"));
+				
+				int newQuantity = Integer.parseInt(req.getParameter("quantity"));
+
+				products.get(index).setQuantity(newQuantity);;
+
+				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
+				rd.forward(req, res);
 			} else if(req.getParameter("type").equalsIgnoreCase("placeOrder")) {
-
-				// TODO
-
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
 			}else if(req.getParameter("type").equalsIgnoreCase("checkout")){

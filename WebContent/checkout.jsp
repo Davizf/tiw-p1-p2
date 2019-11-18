@@ -386,6 +386,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 										<th></th>
 										<th class="text-center">Price</th>
 										<th class="text-center">Quantity</th>
+										<th class="text-left"></th>
 										<th class="text-center">Total</th>
 										<th class="text-right"></th>
 									</tr>
@@ -404,15 +405,23 @@ ArrayList<Category> categories=CategoryController.getCategories();
 										<td class="details">
 											<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
 										</td>
-										<form action="ShoppingCart" method="post">
+										
 											<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
 											<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
-											<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
+											
+											
+											<form action="ShoppingCart" method="post">
+												<input type="hidden" name="indexToModify" value= <%= list.indexOf(product) %> >
+												<input type="hidden" name="type" value= "modifyInCart" >
+												<td class="qty text-center">    <input name="quantity" type = number value = <%=product.getQuantity() %>></td>
+												<td class="qty text-left"><input type="submit" class="btn btn-warning" value="Modify"></td>
+											</form>
 											<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
-											<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
-											<input type="hidden" name="type" value= "deleteInCart" >
-											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
-										</form>
+											<form action="ShoppingCart" method="post">
+												<input type="hidden" name="indexToRemove" value= <%= list.indexOf(product) %> >
+												<input type="hidden" name="type" value= "deleteInCart" >
+												<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
+											</form>
 										
 									</tr>
 									
