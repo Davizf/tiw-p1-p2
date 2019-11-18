@@ -19,24 +19,29 @@ public class ServletController extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		int op = Integer.parseInt(req.getParameter("op")) ;	// 1 = send message &&	2 = read message
+		int op = Integer.parseInt(req.getParameter("op")) ;	
 		String sender = req.getParameter("sender") ;	
 		InteractionJMS mq=new InteractionJMS();
-		String correlationId = req.getParameter("correlationId");	
+		String correlationId = req.getParameter("correlationId");
+		String msg = req.getParameter("message");
 
-		if (op==1){
-			mq.writeJMS(req.getParameter("message"),correlationId,sender);
-			RequestDispatcher miR=req.getRequestDispatcher("admin-send-message.jsp");
+		if (op==1){	// send a message to a seller
+			mq.writeJMS(msg,correlationId,sender);
+			RequestDispatcher miR=req.getRequestDispatcher("index.jsp");
 			miR.forward(req, resp);
 
-		}if (op==2) {
+		}if (op==2) {	// read messages in my messages page
 			req.setAttribute("messages", mq.readJMS(correlationId));
 			RequestDispatcher miR=req.getRequestDispatcher("mymessages-page.jsp");
 			miR.forward(req, resp);
 
-		}else if(op == 3){
+		}else if(op == 3){	// answer a message
 			mq.writeJMS(req.getParameter("message"),correlationId,sender);
 			RequestDispatcher miR=req.getRequestDispatcher("mymessages-page.jsp");
+			miR.forward(req, resp);
+		}else if(op == 4) {	// send a offer to buyers
+			mq.writeJMSToAllBuyers(msg, sender);
+			RequestDispatcher miR=req.getRequestDispatcher("index.jsp");
 			miR.forward(req, resp);
 		}
 

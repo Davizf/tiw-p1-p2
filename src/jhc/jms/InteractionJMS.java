@@ -54,8 +54,9 @@ public class InteractionJMS {
 	
 	
 	
-	public void writeJMSToAllBuyers(String message, String receiver, String sender) {
+	public void writeJMSToAllBuyers(String message, String sender) {
 
+		String receiver = "123@gmail.com";
 		// Bucle para meter email de todos los compradores
 		writeJMS(message, receiver, sender);
 

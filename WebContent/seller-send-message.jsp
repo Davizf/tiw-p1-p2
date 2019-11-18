@@ -249,7 +249,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 		<div class="container">
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li class="active">Send a Message</li>
+				<li class="active">Send an offer to buyers</li>
 			</ul>
 		</div>
 	</div>
@@ -264,70 +264,31 @@ ArrayList<Category> categories=CategoryController.getCategories();
 			<!-- row -->
 			<div class="row">
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-				
 
 					<div class="col-md-6">
 					
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Send a message to a user:</h3>
+								<h3 class="title">Send an offer to buyers:</h3>
 							</div>
 
 							<form name="nombre" method="post" action="/tiw-p1/jms-controller">
-		
-								<!--  							sellers and buyers 						-->
-								<B>Select a user:</B> 
-								<SELECT name="correlationId">
-									<OPTION value="123@gmail.com" selected>Fulanito</OPTION>
-									<OPTION value="receiver@gmail.com_2">Melanie</OPTION>
-								</SELECT> 	
 								
-								
-								<br><br> 
-								<B>Message content</B>: <INPUT type="text" name="message" size="94"> 
+								 
+								<h4>Message content:</h4> <INPUT type="text" name="message" size="94"> 
 								<br><br>
 
-								<INPUT type="hidden" name="op" value="1"> 
-								<INPUT type="hidden" name="sender" value="123@gmail.com"> 
-								<INPUT type="submit" name="ejecutar" value="Send">
+								<INPUT type="hidden" name="op" value="4"> 
+								<INPUT type="hidden" name="correlationId" value="broadcast">
+								<INPUT type="hidden" name="sender" value=<%=session.getAttribute("username") %>> 
+								<INPUT type="submit" class="primary-btn" name="ejecutar" value="Send">
 								
 							</form>
 							
 							<hr>
-							
-							<form name="xd" method="post" action="/tiw-p1/jms-controller">
-								<INPUT type="hidden" name="op" value="2">
-								<INPUT type="hidden" name="correlationId" value="123@gmail.com">
-								<INPUT type="submit" name="ejecutar" value="View my messages">
-							</form>
-						
 						
 					</div>
 					
-				
-
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				</div>
 				
 			</div>
