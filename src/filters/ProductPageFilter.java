@@ -24,16 +24,13 @@ public class ProductPageFilter implements Filter {
 
 		String email = (String) ((HttpServletRequest) request).getSession().getAttribute("user");
 
-		if (email == null) {
-			res.sendRedirect("index.jsp");
-			return;
-		} else {
-			int type = UserController.getUserInformation(email).getType();
-			if (type == 1)
+		if (email != null) {
+			if (UserController.getUserInformation(email).getType() == UserController.USER_TYPE_SELLER) {
 				res.sendRedirect("catalogue.jsp");
-
-			chain.doFilter(request, response);
+				return;
+			}
 		}
+		chain.doFilter(request, response);
 	}
 
 }
