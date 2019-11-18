@@ -383,9 +383,7 @@ ArrayList<Category> categories=CategoryController.getCategories();
 									<tr>
 										<th>Product</th>
 										<th></th>
-										<th class="text-center">Price</th>
-										<th class="text-center">Quantity</th>
-										<th class="text-center">Total</th>
+										<th class="text-center">Price</th>										
 										<th class="text-right"></th>
 									</tr>
 								</thead>
@@ -407,8 +405,8 @@ ArrayList<Category> categories=CategoryController.getCategories();
 											</ul>
 										</td>
 										<form action="WishList" method="post">
-											<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-											<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
+											<td class="price text-center"><strong>$<%= product.getSalePrice()%></strong><br>
+											<del class="font-weak"><small>$<%=product.getPrice().doubleValue()%></small></del></td>
 											<input type="hidden" name="product" value= <%= product.getId() %> >
 											<input type="hidden" name="type" value= "deleteInWishList" >
 											<td class="text-right"><input type="submit" class="primary-btn add-to-cart" value="X" /></td>
