@@ -310,12 +310,8 @@ if (user!=null) {
 					
 					<div class="col-md-12">
 					<div class="order-summary clearfix">
-						<%if(orderProducts != null) {
-							double total = 0;
-							for(Orders_has_Product orderProduct : orderProducts) {
-								total += orderProduct.getCost();
-								Product product = orderProduct.getProductBean();
-							
+						<%
+						if(orderProducts != null) {	
 						%>
 						<table class="shopping-cart-table table">
 							<thead>
@@ -328,6 +324,13 @@ if (user!=null) {
 									<th class="text-right"></th>
 								</tr>
 							</thead>
+							<%
+							double total = 0;
+							for(Orders_has_Product orderProduct : orderProducts) {
+								total += orderProduct.getCost();
+								Product product = orderProduct.getProductBean();
+							
+							%>
 							<tr>
 									<td class="thumb"><img src= "<%= product.getImagePath() %>" alt=""></td>
 									<td class="details">
