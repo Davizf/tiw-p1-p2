@@ -1,12 +1,13 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import model.Orders;
 import model.ProductInCart;
-import model.User;
 
 public class OrderController {
 
@@ -19,5 +20,13 @@ public class OrderController {
 		
 		return true;		
 	}
-
+	
+	public static List<Orders> getOrdersByUser(String email){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		OrderManager manager = new OrderManager();
+		manager.setEntityManagerFactory(factory);
+		List<Orders> orders = manager.getOrdersByUser(email);
+		factory.close();
+		return orders;
+	}
 }

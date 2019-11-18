@@ -134,55 +134,16 @@ public class OrderManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Orders> getOrdersByCategory(String category) {
+	public List<Orders> getOrdersByUser(String email) {
 		List<Orders> orders = null;
 		EntityManager em = getEntityManager();
 		try {
-			orders = (List<Orders>) em.createNamedQuery("Orders.findAllByCategory").setParameter("category", category).getResultList();
+			orders = (List<Orders>) em.createNamedQuery("Orders.findAllByUser").setParameter("email", email).getResultList();
 		} finally {
 			em.close();
 		}
+
 		return orders;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Orders> getLastOrders() {
-		List<Orders> Orders = null;
-		EntityManager em = getEntityManager();
-		try {
-			Orders = (List<Orders>) em.createNamedQuery("Orders.OrderById").setMaxResults(3).getResultList();
-		} finally {
-			em.close();
-		}
-
-		return Orders;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Orders> getOrdersBySeller(String email) {
-		List<Orders> Orders = null;
-		EntityManager em = getEntityManager();
-		try {
-			Orders = (List<Orders>) em.createNamedQuery("Orders.findAllBySeller").setParameter("email", email).getResultList();
-		} finally {
-			em.close();
-		}
-
-		return Orders;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Orders> getLastOrder() {
-		List<Orders> order = null;
-		EntityManager em = getEntityManager();
-		try {
-			order = (List<Orders>) em.createNamedQuery("Orders.OrderById").setMaxResults(1).getResultList();
-		} finally {
-			em.close();
-		}
-
-		return order;
-	}
-
 
 }
