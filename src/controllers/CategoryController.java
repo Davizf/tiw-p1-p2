@@ -75,5 +75,14 @@ public class CategoryController {
 		factory.close();
 		return category;
 	}
+	
+	public static Category getCategory(int id) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		CategoryManager manager = new CategoryManager();
+		manager.setEntityManagerFactory(factory);
+		Category category = (Category) manager.getCategoryById(id);
+		factory.close();
+		return category;
+	}
 
 }

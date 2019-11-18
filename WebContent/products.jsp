@@ -279,7 +279,7 @@ if (user!=null) {
 					<li class="active">Products</li>
 				<%} else { %>
 					<li>Products</li>
-					<li class="active"><%=category %></li>
+					<li class="active"><%=CategoryController.getCategory(category).getName() %></li>
 				<%} %>
 			</ul>
 		</div>
