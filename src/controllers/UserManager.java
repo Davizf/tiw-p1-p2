@@ -142,7 +142,7 @@ public class UserManager {
 		List<User> buyers= null;
 		EntityManager em = getEntityManager();
 		try {
-			buyers = (List<User>) em.createNamedQuery("User.findAll").setParameter("type", type).getResultList();
+			buyers = (List<User>) em.createNamedQuery("User.findAllByType").setParameter("type", type).getResultList();
 		} finally {
 			em.close();
 		}
