@@ -30,7 +30,7 @@ public class ProductServlet extends HttpServlet{
 		
 		String nameToQuery = req.getParameter("query");
 		
-		if(req.getParameter("category").equalsIgnoreCase("all")) {
+		if(req.getParameter("type").equalsIgnoreCase("search")) {
 			List<Product> products = ProductController.getProductByName(nameToQuery);
 			
 			//req.setAttribute("keyword", nameToQuery);
