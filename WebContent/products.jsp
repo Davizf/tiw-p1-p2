@@ -320,7 +320,8 @@ if (user!=null) {
 						<!-- aside widget -->
 						<div class="aside">
 							<h3 class="aside-title">Filter by Price</h3>
-							<div id="price-slider"></div>
+							Minimum: &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="minimun" value=0>
+							Maximum: &nbsp;&nbsp;&nbsp;<input type="number" name="maximum" value=100>
 						</div>
 						<!-- aside widget -->
 	
