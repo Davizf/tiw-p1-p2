@@ -5,7 +5,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 /**
  * The persistent class for the products database table.
  * 
@@ -15,7 +14,7 @@ import java.util.List;
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
 @NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
 @NamedQuery(name="Product.findAllByCategoryId", query="SELECT p FROM Product p WHERE p.categoryBean.id LIKE :category")
-@NamedQuery(name="Product.findAllByCategoriesId", query="SELECT p FROM Product p WHERE p.categoryBean.id IN :categories")// TODO juanjo
+@NamedQuery(name="Product.findAllByCategoriesId", query="SELECT p FROM Product p WHERE p.categoryBean.id IN :categories")
 @NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
 @NamedQuery(name="Product.getProductByName", query="SELECT p FROM Product p WHERE p.name LIKE :name")

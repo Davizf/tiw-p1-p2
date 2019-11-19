@@ -40,15 +40,11 @@ public class ProductServlet extends HttpServlet{
 				List<Integer> idCategories=new ArrayList<Integer>(); 
 				for (int i = 0; i < categories.length; i++)
 					idCategories.add(Integer.parseInt(categories[i]));
-				// TODO juanjo
+
 				products = ProductController.getProductsByCategories(idCategories);
-				req.setAttribute("category", 2);
 			}
-			System.out.println("----------------------products encontrados size="+products.size());
-			System.out.println(products);
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
-			// TODO david
 
 		}
 

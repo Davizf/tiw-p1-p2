@@ -267,7 +267,10 @@ if (user!=null) {
 	String strCategory=request.getParameter("category");
 	int category=-1;
 	if (strCategory!= null && !strCategory.equals("")) {
-		category=Integer.parseInt(strCategory);
+		if (strCategory.contains(","))
+			category=Integer.parseInt(strCategory.split(",")[0]);
+		else
+			category=Integer.parseInt(strCategory);
 	}
 	%>
 

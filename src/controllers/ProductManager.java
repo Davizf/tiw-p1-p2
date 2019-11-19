@@ -158,7 +158,7 @@ public class ProductManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Product> getProductsByCategories(List<Integer> idCategories) {// TODO juanjo
+	public List<Product> getProductsByCategories(List<Integer> idCategories) {
 		List<Product> products = null;
 		EntityManager em = getEntityManager();
 		try {

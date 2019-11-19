@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class HierarchicalCategories {
 
@@ -24,6 +25,25 @@ public class HierarchicalCategories {
 				cs.remove(i--);
 			}
 		}
+	}
+
+	public static String getIdChildsStr(CategoryLevel category) {
+		List<Integer> list=getIdChilds(category);
+		String resul="";
+		for (Integer i : list) resul+=i+",";
+		return resul.substring(0, resul.length()-1);
+	}
+	public static List<Integer> getIdChilds(CategoryLevel category) {
+		List<Integer> list=new ArrayList<Integer>();
+		list.add(category.id);
+		return getIdChilds(category, list);
+	}
+	private static List<Integer> getIdChilds(CategoryLevel category, List<Integer> list) {
+		for (CategoryLevel c : category.childs) {
+			list.add(c.id);
+			getIdChilds(c, list);
+		}
+		return list;
 	}
 
 	public LinkedList<CategoryLevel> getCategories() {

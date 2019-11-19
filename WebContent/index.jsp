@@ -251,7 +251,7 @@ if (user!=null) {
 							<%for(CategoryLevel category : hc.getCategories()) {
 								if (category.getDepth()==0) {
 									if (category.getChilds().size() == 0) {%>
-										<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
+										<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(category) %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
 									<%} else {%>
 										<li class="dropdown side-dropdown">
 											<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=category.getName() %><i class="fa fa-angle-right"></i></a>
@@ -261,15 +261,15 @@ if (user!=null) {
 														<ul class="list-links">
 															<li>
 																<h3 class="list-links"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
-																onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></h3>
+																onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(category) %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></h3>
 															</li><br>
 															<%for (CategoryLevel categorySon : category.getChilds()) {%>
 																<li><h3 class="list-links-title">
-																	<a href="#" onclick="document.getElementById('form_category_input').value='<%=categorySon.getId() %>,<%=category.getId() %>';document.getElementById('form_category').submit();"
+																	<a href="#" onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(categorySon) %>';document.getElementById('form_category').submit();"
 																	class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=categorySon.getName() %></a></h3>
 																</li>
 																	<%for (CategoryLevel categoryGrandChild : categorySon.getChilds()) {%>
-																		<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=categoryGrandChild.getId() %>,<%=categorySon.getId() %>,<%=category.getId() %>';document.getElementById('form_category').submit();"
+																		<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(categoryGrandChild) %>';document.getElementById('form_category').submit();"
 																			class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=categoryGrandChild.getName() %></a>
 																		</li>
 																	<%} %>
