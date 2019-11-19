@@ -114,17 +114,10 @@ if (user!=null) {
 
 					<!-- Search -->
 					<div class="header-search">
-						<form action="products.jsp" method="post">
-							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
-							<select class="input search-categories" name="category">
-								<option value="">All Categories</option>
-								<%if(categories != null) { %>
-									<% for(Category category : categories) { %>
-										<option value="<%=category.getId() %>"><%=hc.getLineOfId(category.getId()) %></option>
-									<%} %>
-								<%} %>
-							</select>
-							<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+						<form action="ProductServlet" method="post">							
+							<input  type="hidden" value="search" name="op">
+							<input  type="text" placeholder="Search the product" name="query">
+							<button type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
 					<!-- /Search -->
