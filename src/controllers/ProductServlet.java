@@ -34,7 +34,7 @@ public class ProductServlet extends HttpServlet{
 			List<Product> products = ProductController.getProductByName(nameToQuery);
 			
 			//req.setAttribute("keyword", nameToQuery);
-			RequestDispatcher rd = req.getRequestDispatcher("search-page.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("products.jsp");
 			rd.forward(req, res);
 		}
 		
