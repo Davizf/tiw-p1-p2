@@ -34,6 +34,7 @@ public class ProductServlet extends HttpServlet{
 
 			List<Product> products;
 			if (categories.length == 1) {
+				System.out.println(category);
 				products = ProductController.getProductsByCategory(Integer.parseInt(category));
 			} else {
 				List<Integer> idCategories=new ArrayList<Integer>(); 
@@ -41,10 +42,12 @@ public class ProductServlet extends HttpServlet{
 					idCategories.add(Integer.parseInt(categories[i]));
 				// TODO juanjo
 				products = ProductController.getProductsByCategories(idCategories);
-				System.out.println("----------------------products encontrados size="+products.size());
-				System.out.println(products);
+				req.setAttribute("category", 2);
 			}
+			System.out.println("----------------------products encontrados size="+products.size());
+			System.out.println(products);
 			req.setAttribute("foundProducts", products);
+			req.setAttribute("resultType", "foundByKey");
 			// TODO david
 
 		}
