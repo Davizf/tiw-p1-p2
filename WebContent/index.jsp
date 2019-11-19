@@ -243,7 +243,7 @@ if (user!=null) {
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
 					<form action="ProductServlet" method="post" id="form_category" hidden>
-						<input type="hidden" name="op" value="category" id="form_category_input">
+						<input type="hidden" name="op" value="category">
 						<input type="hidden" name="category" value="" id="form_category_input">
 					</form>
 					<ul class="category-list">
