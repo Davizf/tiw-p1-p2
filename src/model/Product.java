@@ -18,6 +18,9 @@ import java.util.List;
 @NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
 @NamedQuery(name="Product.getProductByName", query="SELECT p FROM Product p WHERE p.name LIKE :name")
+@NamedQuery(name="Product.findAllByFreeShipment", query="SELECT p FROM Product p WHERE p.shipPrice LIKE :price")
+@NamedQuery(name="Product.findAllBetweenSalePrices", query="SELECT p FROM Product p WHERE p.salePrice BETWEEN ?1 AND ?2")
+@NamedQuery(name="Product.findAllBetweenPrices", query="SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 

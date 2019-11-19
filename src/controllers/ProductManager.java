@@ -206,5 +206,43 @@ public class ProductManager {
 		}
 		return product;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByShipPrice(int price) {
+		List<Product> product = null;
+		EntityManager em = getEntityManager();
+		try {
+			product = (List<Product>) em.createNamedQuery("Product.findAllByFreeShipment").setParameter("price", price).getResultList();
+		} finally {
+			em.close();
+		}
+		return product;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsBetweenSalePrices(int min, int max) {
+		List<Product> product = null;
+		EntityManager em = getEntityManager();
+		try {
+			product = (List<Product>) em.createNamedQuery("Product.findAllBetweenSalePrices").setParameter("1", min)
+					.setParameter("2", max).getResultList();
+		} finally {
+			em.close();
+		}
+		return product;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsBetweenPrices(int min, int max) {
+		List<Product> product = null;
+		EntityManager em = getEntityManager();
+		try {
+			product = (List<Product>) em.createNamedQuery("Product.findAllBetweenPrices").setParameter("1", min)
+					.setParameter("2", max).getResultList();
+		} finally {
+			em.close();
+		}
+		return product;
+	}
 
 }
