@@ -16,16 +16,21 @@ import javax.servlet.http.Part;
 
 import model.Product;
 
-@WebServlet(name = "SearchServlet", urlPatterns = "/SearchServlet")
+@WebServlet(name = "ProductServlet", urlPatterns = "/ProductServlet")
 @MultipartConfig
-public class SearchServlet extends HttpServlet{
+public class ProductServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		HttpSession sesion = req.getSession();
-		PrintWriter out = res.getWriter();
 		
-		out.print("Lol");
+		HttpSession sesion = req.getSession();
+		
+		
+		
+		if(req.getParameter("category").equalsIgnoreCase("all")) {
+			
+		}
+		
 		
 	}	
 

@@ -115,10 +115,10 @@ if (user!=null) {
 
 					<!-- Search -->
 					<div class="header-search">
-						<form action="SearchServlet" method="post">
+						<form action="ProductServlet" method="post">
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
-								<option value="">All Categories</option>
+								<option value="all">All Categories</option>
 								<%if(categories != null) { %>
 									<% for(Category category : categories) { %>
 										<option value="<%=category.getId() %>"><%=hc.getLineOfId(category.getId()) %></option>
