@@ -442,7 +442,7 @@ if (user!=null) {
 				<!-- MAIN -->
 				<div id="main" class="col-md-9" >
 					<div class="section-title">
-					<h4 class="title">Search results</h4>
+					<h4 class="title">Search results for the keyword:</h4>
 				</div>	
 					<!-- store top filter -->
 					<div class="store-filter clearfix" hidden>
@@ -479,6 +479,15 @@ if (user!=null) {
 							</ul>
 						</div>
 					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					<!-- /store top filter -->
 					<% if(products != null) { %>
 					<!-- STORE -->
@@ -516,6 +525,14 @@ if (user!=null) {
 							<%} %>
 						<%} %>
 							<!-- /Product Single -->
+							
+							
+							
+							
+							
+							
+							
+							
 
 							<div class="clearfix visible-sm visible-xs"></div>
 						</div>

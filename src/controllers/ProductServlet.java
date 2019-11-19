@@ -30,14 +30,12 @@ public class ProductServlet extends HttpServlet{
 		
 		String nameToQuery = req.getParameter("query");
 		
-		
-		
 		if(req.getParameter("category").equalsIgnoreCase("all")) {
 			List<Product> products = ProductController.getProductByName(nameToQuery);
-			for(Product product : products) {
-				out.println(product.getName());
-			}
 			
+			//req.setAttribute("keyword", nameToQuery);
+			RequestDispatcher rd = req.getRequestDispatcher("search-page.jsp");
+			rd.forward(req, res);
 		}
 		
 		
