@@ -1,3 +1,4 @@
+<%@page import="model.CategoryLevel"%>
 <%@page import="model.HierarchicalCategories"%>
 <%@page import="controllers.UserController"%>
 <%@page import="controllers.UserManager"%>
@@ -241,15 +242,48 @@ if (user!=null) {
 				<!-- category nav -->
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
-					<form action="ProductServlet?op=view" method="post" id="form_category" style="display:hidden;">
+					<form action="ProductServlet" method="post" id="form_category" hidden>
+						<input type="hidden" name="op" value="category" id="form_category_input">
 						<input type="hidden" name="category" value="" id="form_category_input">
 					</form>
 					<ul class="category-list">
-						<%if(categories != null) {
-							for(Category category : categories) { %>
-								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=hc.getLineOfId(category.getId()) %></a></li>
-							<%}
-						} %>
+						<%if(categories != null) {%>
+							<%for(CategoryLevel category : hc.getCategories()) {
+								if (category.getDepth()==0) {
+									if (category.getChilds().size() == 0) {%>
+										<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
+									<%} else {%>
+										<li class="dropdown side-dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=category.getName() %><i class="fa fa-angle-right"></i></a>
+											<div class="custom-menu">
+												<div class="row">
+													<div class="col-md-6">
+														<ul class="list-links">
+															<li>
+																<h3 class="list-links"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+																onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></h3>
+															</li><br>
+															<%for (CategoryLevel categorySon : category.getChilds()) {%>
+																<li><h3 class="list-links-title">
+																	<a href="#" onclick="document.getElementById('form_category_input').value='<%=categorySon.getId() %>,<%=category.getId() %>';document.getElementById('form_category').submit();"
+																	class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=categorySon.getName() %></a></h3>
+																</li>
+																	<%for (CategoryLevel categoryGrandChild : categorySon.getChilds()) {%>
+																		<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=categoryGrandChild.getId() %>,<%=categorySon.getId() %>,<%=category.getId() %>';document.getElementById('form_category').submit();"
+																			class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=categoryGrandChild.getName() %></a>
+																		</li>
+																	<%} %>
+																<hr>
+															<%} %>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</li>
+									<%}
+								}
+							}%>
+						<%} %>
 						<li><a href="ProductServlet?op=view">View all</a></li>
 					</ul>
 				</div>

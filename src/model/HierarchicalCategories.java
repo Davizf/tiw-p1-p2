@@ -25,7 +25,11 @@ public class HierarchicalCategories {
 			}
 		}
 	}
-	
+
+	public LinkedList<CategoryLevel> getCategories() {
+		return categories;
+	}
+
 	public ArrayList<Category> getCategoriesOrdered() {
 		ArrayList<Category> l=new ArrayList<>();
 		insert(l, categories);
@@ -109,23 +113,6 @@ public class HierarchicalCategories {
 			resul.append(lineRecursive(c));
 
 		return resul.toString();
-	}
-
-	class CategoryLevel {
-		int id, parentId, depth;
-		String name;
-		LinkedList<CategoryLevel> childs;
-		public CategoryLevel(int id, int parentId, String name, int depth) {
-			this.id = id;
-			this.parentId = parentId;
-			this.depth = depth;
-			this.name = name;
-			childs = new LinkedList<>();
-		}
-		@Override
-		public String toString() {
-			return "CategoryLevel [id=" + id + ", parentId=" + parentId + ", depth=" + depth + ", name=" + name + "]";
-		}
 	}
 
 }
