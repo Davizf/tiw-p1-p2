@@ -23,22 +23,31 @@ public class ProductServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter out = res.getWriter();
-		out.print("Im out");
-		HttpSession sesion = req.getSession();
 		
 		
-		String nameToQuery = req.getParameter("query");
-		
-		if(req.getParameter("type").equalsIgnoreCase("search")) {
+		if(req.getParameter("op").equalsIgnoreCase("view")) {
+			req.setAttribute("resultType", "showAll");
+	
+		}else if(req.getParameter("op").equalsIgnoreCase("search")) {
+			String nameToQuery = req.getParameter("query");
 			List<Product> products = ProductController.getProductByName(nameToQuery);
-			
-			//req.setAttribute("keyword", nameToQuery);
-			RequestDispatcher rd = req.getRequestDispatcher("products.jsp");
-			rd.forward(req, res);
+			req.setAttribute("foundProducts", products);
+			req.setAttribute("resultType", "foundByKey");
+	
 		}
 		
 		
+		RequestDispatcher rd = req.getRequestDispatcher("products.jsp");
+		rd.forward(req, res);
+		
+		
 	}	
+	
+	
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doPost(req, resp);
+	}
+	
 
 }

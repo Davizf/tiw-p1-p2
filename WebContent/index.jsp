@@ -1,6 +1,7 @@
 <%@page import="model.HierarchicalCategories"%>
 <%@page import="controllers.UserController"%>
 <%@page import="controllers.UserManager"%>
+<%@page import="controllers.ProductServlet"%>
 <%@page import="model.User"%>
 <%@page import="model.ProductInCart"%>
 <%@page import="controllers.ProductController"%>
@@ -117,7 +118,7 @@ if (user!=null) {
 					<div class="header-search">
 						<form action="ProductServlet" method="post">							
 							<b>Search for a product:</b>
-							<input  type="hidden" value="search" name="type">
+							<input  type="hidden" value="search" name="op">
 							<input  type="text" placeholder="Enter the keyword" name="query">
 							<button type="submit"><i class="fa fa-search"></i></button>
 						</form>
@@ -240,7 +241,7 @@ if (user!=null) {
 				<!-- category nav -->
 				<div class="category-nav">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
-					<form action="products.jsp" method="post" id="form_category" style="display:hidden;">
+					<form action="ProductServlet?op=view" method="post" id="form_category" style="display:hidden;">
 						<input type="hidden" name="category" value="" id="form_category_input">
 					</form>
 					<ul class="category-list">
@@ -249,7 +250,7 @@ if (user!=null) {
 								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getId() %>';document.getElementById('form_category').submit();"><%=hc.getLineOfId(category.getId()) %></a></li>
 							<%}
 						} %>
-						<li><a href="products.jsp">View all</a></li>
+						<li><a href="ProductServlet?op=view">View all</a></li>
 					</ul>
 				</div>
 				<!-- /category nav -->

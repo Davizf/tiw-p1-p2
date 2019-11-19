@@ -474,7 +474,14 @@ if (user!=null) {
 						</div>
 					</div>
 					<!-- /store top filter -->
-					<% if(products != null) { %>
+					
+					
+					
+					
+					
+				<%if(request.getAttribute("resultType").toString().equalsIgnoreCase("showAll")){%>	
+					
+						<% if(products != null) { %>
 					<!-- STORE -->
 					<div id="store">
 						<!-- row -->
@@ -509,6 +516,45 @@ if (user!=null) {
 							</div>
 							<%} %>
 						<%} %>
+					
+						
+					
+					
+					
+					<%}else if(request.getAttribute("resultType").toString().equalsIgnoreCase("foundByKey")){
+						List<Product> founds = (List<Product>)request.getAttribute("foundProducts");
+					%>
+					
+					
+					
+					
+					
+					
+					
+					
+						
+					
+						
+						
+						
+						
+						
+					
+						
+					
+					<%}%>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+						
+						
 							<!-- /Product Single -->
 
 							<div class="clearfix visible-sm visible-xs"></div>
