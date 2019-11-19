@@ -118,9 +118,8 @@ if (user!=null) {
 					<!-- Search -->
 					<div class="header-search">
 						<form action="ProductServlet" method="post">							
-							<b>Search for a product:</b>
 							<input  type="hidden" value="search" name="op">
-							<input  type="text" placeholder="Enter the keyword" name="query">
+							<input  type="text" placeholder="Search the product" name="query">
 							<button type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>

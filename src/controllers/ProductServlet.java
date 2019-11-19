@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ public class ProductServlet extends HttpServlet{
 
 		if(req.getParameter("op").equalsIgnoreCase("view")) {
 			req.setAttribute("resultType", "showAll");
-
 		}else if(req.getParameter("op").equalsIgnoreCase("search")) {
 			String nameToQuery = req.getParameter("query");
 			List<Product> products = ProductController.getProductByName(nameToQuery);
@@ -46,6 +46,13 @@ public class ProductServlet extends HttpServlet{
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
 
+		}else if(req.getParameter("op").equalsIgnoreCase("filter")) {
+			PrintWriter out = res.getWriter();
+			out.println("Im here");
+			out.println(req.getParameter("price"));	// no imprime :(
+			out.println(req.getParameter("category"));
+			out.println(req.getParameter("freeShip"));	// return on or null
+			
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher("products.jsp");

@@ -305,82 +305,66 @@ if (user!=null) {
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-				<!-- ASIDE -->
-				<div id="aside" class="col-md-3">
+			
+			
+			
+			
+				<form action="ProductServlet">
 					
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Price</h3>
-						<div id="price-slider"></div>
-					</div>
-					<!-- aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Category</h3>
-						<ul class="list-links">
-							<li><a href="#">Women clothing</a></li>
-							<li><a href="#">.....</a></li>
-							<li><a href="#">.....</a></li>
-							<li><a href="#">......</a></li>
-						</ul>
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside">
-						<h3 class="aside-title">Filter by Shipping Cost</h3>
-						<form>
-						<input type="checkbox" name="vehicle1" value="Bike">   Free Shipping<br>
-						</form>
-							
-					</div>
-					<!-- /aside widget -->
-
-					<!-- aside widget -->
-					<div class="aside hidden">
-						<h3 class="aside-title">Top Rated Product</h3>
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-								<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
-							</div>
+					
+					
+						
+						<!-- ASIDE -->
+					<div id="aside" class="col-md-3">
+						
+						<!-- aside widget -->
+						<div class="aside">
+							<h3 class="aside-title">Filter by Price</h3>
+							<div id="price-slider"></div>
 						</div>
-						<!-- /widget product -->
-
-						<!-- widget product -->
-						<div class="product product-widget">
-							<div class="product-thumb">
-								<img src="/tiw-p1/images/thumb-product01.jpg" alt="">
-							</div>
-							<div class="product-body">
-								<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
-								<h3 class="product-price">$32.50</h3>
-								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o empty"></i>
-								</div>
-							</div>
+						<!-- aside widget -->
+	
+						<!-- aside widget -->
+						<div class="aside">
+							<h3 class="aside-title">Filter by Category</h3>
+							<select class="form-control" name="category">
+								<option>Women clothing</option>
+								<option>>> Dress</option>
+								<option>Men clothing</option>
+								<option>Complements</option>
+								<option>>> Watches</option>
+								<option>>> Bags & Shoes</option>
+								<option>>> >> Shoes</option>
+								<option>All</option>
+							</select>
 						</div>
-						<!-- /widget product -->
+						<!-- /aside widget -->
+	
+						<!-- aside widget -->
+						<div class="aside">
+							<h3 class="aside-title">Filter by Shipping Cost</h3>
+							<input type="checkbox" name="freeShip">   Free Shipping<br>
+						</div>
+						<!-- /aside widget -->
+						
+						<input type="hidden" name="op" value="filter" />	
+						<input type="submit" class="primary-btn add-to-cart" value="Filter" />		
+	
 					</div>
-					<!-- /aside widget -->
-				</div>
-				<!-- /ASIDE -->
+					<!-- /ASIDE -->
+					
+					
+					
+					
+				
+			</form>
+			
+				
+				
+				
+				
+				
+				
 
 				<!-- MAIN -->
 				<div id="main" class="col-md-9" >
