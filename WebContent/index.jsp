@@ -115,7 +115,7 @@ if (user!=null) {
 
 					<!-- Search -->
 					<div class="header-search">
-						<form action="products.jsp" method="post">
+						<form action="SearchServlet" method="post">
 							<input class="input search-input" type="text" placeholder="Enter your keyword" name="query">
 							<select class="input search-categories" name="category">
 								<option value="">All Categories</option>
