@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import model.Product;
-import model.User;
 
 public class ProductManager {
 
@@ -157,6 +156,18 @@ public class ProductManager {
 		}
 		return products;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByCategories(List<Integer> idCategories) {
+		List<Product> products = null;
+		EntityManager em = getEntityManager();
+		try {
+			products = (List<Product>) em.createNamedQuery("Product.findAllByCategoriesId").setParameter("categories", idCategories).getResultList();
+		} finally {
+			em.close();
+		}
+		return products;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Product> getLastProducts() {
@@ -195,7 +206,5 @@ public class ProductManager {
 		}
 		return product;
 	}
-
-
 
 }

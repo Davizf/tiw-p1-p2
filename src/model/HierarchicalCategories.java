@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class HierarchicalCategories {
 
@@ -25,7 +26,30 @@ public class HierarchicalCategories {
 			}
 		}
 	}
-	
+
+	public static String getIdChildsStr(CategoryLevel category) {
+		List<Integer> list=getIdChilds(category);
+		String resul="";
+		for (Integer i : list) resul+=i+",";
+		return resul.substring(0, resul.length()-1);
+	}
+	public static List<Integer> getIdChilds(CategoryLevel category) {
+		List<Integer> list=new ArrayList<Integer>();
+		list.add(category.id);
+		return getIdChilds(category, list);
+	}
+	private static List<Integer> getIdChilds(CategoryLevel category, List<Integer> list) {
+		for (CategoryLevel c : category.childs) {
+			list.add(c.id);
+			getIdChilds(c, list);
+		}
+		return list;
+	}
+
+	public LinkedList<CategoryLevel> getCategories() {
+		return categories;
+	}
+
 	public ArrayList<Category> getCategoriesOrdered() {
 		ArrayList<Category> l=new ArrayList<>();
 		insert(l, categories);
@@ -109,23 +133,6 @@ public class HierarchicalCategories {
 			resul.append(lineRecursive(c));
 
 		return resul.toString();
-	}
-
-	class CategoryLevel {
-		int id, parentId, depth;
-		String name;
-		LinkedList<CategoryLevel> childs;
-		public CategoryLevel(int id, int parentId, String name, int depth) {
-			this.id = id;
-			this.parentId = parentId;
-			this.depth = depth;
-			this.name = name;
-			childs = new LinkedList<>();
-		}
-		@Override
-		public String toString() {
-			return "CategoryLevel [id=" + id + ", parentId=" + parentId + ", depth=" + depth + ", name=" + name + "]";
-		}
 	}
 
 }

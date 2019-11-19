@@ -267,7 +267,10 @@ if (user!=null) {
 	String strCategory=request.getParameter("category");
 	int category=-1;
 	if (strCategory!= null && !strCategory.equals("")) {
-		category=Integer.parseInt(strCategory);
+		if (strCategory.contains(","))
+			category=Integer.parseInt(strCategory.split(",")[0]);
+		else
+			category=Integer.parseInt(strCategory);
 	}
 	%>
 
@@ -288,7 +291,7 @@ if (user!=null) {
 	<!-- /BREADCRUMB -->
 
 	<%
-	List<Product> products = null;
+	List<Product> products = new ArrayList<Product>();
 	if(category == -1) {
 		products = ProductController.getAllProducts();
 	} else {
@@ -468,7 +471,7 @@ if (user!=null) {
 						List<Product> founds = (List<Product>)request.getAttribute("foundProducts");
 					%>
 						
-						
+						<% if(founds != null) { %>
 						<% for(Product product : founds) { %>
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
@@ -499,7 +502,7 @@ if (user!=null) {
 							</div>
 							<%} %>
 					
-					
+						<%}%>
 					<%}%>
 					
 					

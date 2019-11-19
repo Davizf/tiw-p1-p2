@@ -1,12 +1,11 @@
 package controllers;
 
-import java.util.*;
+import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import model.Product;
-import model.User;
 
 public class ProductController {
 	
@@ -35,6 +34,15 @@ public class ProductController {
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
 		List<Product> products = manager.getProductsByCategory(category);
+		factory.close();
+		return products;
+	}
+
+	public static List<Product> getProductsByCategories(List<Integer> idCategories) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List<Product> products = manager.getProductsByCategories(idCategories);
 		factory.close();
 		return products;
 	}
