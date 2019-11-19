@@ -204,7 +204,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 													<img src="<%=productsInCart.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
+													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getSalePrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
 													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
 												</div>
 											</div>
@@ -387,14 +387,16 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 								
 							<%
 							double total=0;
+							double shippingCost=0;
 							for(ProductInCart product : list ){
 								total+=product.getCost();
+								shippingCost += product.getProduct().getShipPrice().doubleValue();
 							%>
 								<tr>
 									<td class="thumb"><img src= "<%= product.getProduct().getImagePath() %>" alt=""></td>
 									<td class="details">
 										<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
-										<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
+										<td class="price text-center"><strong>$<%=product.getProduct().getSalePrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
 										<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
 										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
 										<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
@@ -419,12 +421,12 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 								<tr>
 									<th class="empty" colspan="3"></th>
 									<th>SHIPING</th>
-									<td colspan="2">Free Shipping Delivery in 24 - 48 h</td>
+									<td colspan="2">$<%=shippingCost%></td>
 								</tr>
 								<tr>
 									<th class="empty" colspan="3"></th>
 									<th>TOTAL</th>
-									<th colspan="2" class="total">$<%=total%></th>
+									<th colspan="2" class="total">$<%=total+shippingCost%></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -438,7 +440,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 				User user_info = UserController.getUserInformation(user); 
 				%>
 				<div class="pull-right">
-					<input type="hidden" name="total-price" value= <%=total%> >
+					<input type="hidden" name="total-price" value= <%=total+shippingCost%> >
 					<input type="hidden" name="products" value= <%=list%> >
 					<input type="hidden" name="card" value="<%=user_info.getCreditCard()%>">
 					<input type="hidden" name="type" value= "confirm-checkout" >

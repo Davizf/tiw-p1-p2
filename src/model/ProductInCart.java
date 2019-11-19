@@ -29,7 +29,7 @@ public class ProductInCart implements Serializable {
 	}
 
 	public double getCost() {
-		return quantity * product.getPrice().doubleValue();
+		return quantity * product.getSalePrice().doubleValue();
 	}
 	@Override
 	public String toString() {

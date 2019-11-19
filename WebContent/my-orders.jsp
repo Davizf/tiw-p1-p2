@@ -307,7 +307,8 @@ if (user!=null) {
 					
 					<br>
 					
-					<h5>Nº Order: <%= order.getConfirmation_id() %> Date:  <%= order.getDate() %> </h5>
+					<h5>Nº Order: <%= order.getConfirmation_id() %> </h5>
+					<h5>Date:<%="\t"+ order.getDate() %> </h5>
 					
 					<div class="col-md-12">
 					<div class="order-summary clearfix">
@@ -321,6 +322,7 @@ if (user!=null) {
 									<th></th>
 									<th class="text-center">Price</th>
 									<th class="text-center">Quantity</th>
+									<th class="text-center">Ship Cost</th>
 									<th class="text-center">Total</th>
 									<th class="text-right"></th>
 								</tr>
@@ -328,7 +330,7 @@ if (user!=null) {
 							<%
 							double total = 0;
 							for(Orders_has_Product orderProduct : orderProducts) {
-								total += orderProduct.getCost();
+								total += orderProduct.getCost()+orderProduct.getShipPrice().doubleValue();
 								Product product = orderProduct.getProductBean();
 							
 							%>
@@ -339,6 +341,7 @@ if (user!=null) {
 									</td>
 									<td class="price text-center"><strong>$<%=product.getPrice() %></strong>
 									<td class="qty text-center"><strong><%=orderProduct.getQuantity() %></strong></td>
+									<td class="qty text-center"><strong><%=orderProduct.getShipPrice().doubleValue() %></strong></td>
 									<td class="total text-center"><strong class="primary-color">$<%=orderProduct.getCost() %></strong></td>
 									</tr>
 							

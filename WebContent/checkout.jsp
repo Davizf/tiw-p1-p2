@@ -423,8 +423,8 @@ if (user!=null) {
 											<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
 										</td>
 										
-											<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><!-- <br><del class="font-weak"><small>$40.00</small></del> --></td>
-											<!-- <td class="qty text-center"><input class="input" type="number" value=%= product.getQuantity() %></td> -->
+											<td class="price text-center"><strong>$<%=product.getProduct().getSalePrice().doubleValue() %></strong><br>
+											<del class="font-weak"><small>$<%=product.getProduct().getPrice().doubleValue() %></small></del> </td>
 											
 											
 											<form action="ShoppingCart" method="post">

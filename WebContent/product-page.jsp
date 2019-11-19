@@ -204,7 +204,7 @@ if (user!=null) {
 													<img src="<%=productsInCart.get(i).getProduct().getImagePath() %>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
+													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getSalePrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
 													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
 												</div>
 											</div>
@@ -309,7 +309,26 @@ if (user!=null) {
 							<h2 class="product-name">
 								<%=p.getName() %>
 							</h2>
-							<h3 class="product-price">$<%=p.getPrice().doubleValue() %> <del class="product-old-price" hidden>$45.00</del></h3>
+							
+							
+							<%
+							if(session.getAttribute("user") != null){
+							%>
+									
+							<del class="font-weak">$<%=p.getPrice().doubleValue()%></del><br>
+							<h3 class="product-price">$<%=p.getSalePrice().doubleValue() %></h3>
+									
+									
+									
+							<%}else{%>
+							<h3 class="product-price">$<%=p.getPrice().doubleValue() %></h3>
+							<%}%>
+								
+								
+							
+							
+							
+							
 							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
 							<p><%=p.getShortDescription() %></p>
