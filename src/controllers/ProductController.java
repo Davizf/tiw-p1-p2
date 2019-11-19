@@ -72,8 +72,9 @@ public class ProductController {
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
 		Product p = manager.getProduct(id);
+		p.setUserBean(null);
 		try {
-			manager.deleteProduct(p);
+			manager.updateProduct(p);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
