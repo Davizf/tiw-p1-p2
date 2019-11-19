@@ -524,23 +524,38 @@ if (user!=null) {
 					<%}else if(request.getAttribute("resultType").toString().equalsIgnoreCase("foundByKey")){
 						List<Product> founds = (List<Product>)request.getAttribute("foundProducts");
 					%>
-					
-					
-					
-					
-					
-					
-					
-					
-						
-					
 						
 						
-						
-						
-						
+						<% for(Product product : founds) { %>
+							<!-- Product Single -->
+							<div class="col-md-4 col-sm-6 col-xs-6">
+								<div class="product product-single">
+									<div class="product-thumb">
+										<div class="product-label" hidden>
+											<span>New</span>
+											<span class="sale">-20%</span>
+										</div>
+										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+										<img src="<%=product.getImagePath() %>" alt="">
+									</div>
+									<div class="product-body">
+										<h3 class="product-price"><%=product.getPrice().doubleValue() %><del class="product-old-price" hidden>$45.00</del></h3>
+										<div hidden>
+											<div class="product-rating" hidden >
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star-o empty"></i>
+											</div>
+										</div>
+										<h2 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
+										
+									</div>
+								</div>
+							</div>
+							<%} %>
 					
-						
 					
 					<%}%>
 					
