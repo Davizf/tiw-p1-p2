@@ -306,7 +306,7 @@ if (user!=null) {
 					
 					<br>
 					
-					<h5>Nº Order: <%= order.getId() %> Date:  <%= order.getDate() %> </h5>
+					<h5>Nº Order: <%= order.getConfirmation_id() %> Date:  <%= order.getDate() %> </h5>
 					
 					<div class="col-md-12">
 					<div class="order-summary clearfix">
