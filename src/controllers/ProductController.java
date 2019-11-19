@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import model.Product;
+import model.User;
 
 public class ProductController {
 	
@@ -131,6 +132,14 @@ public class ProductController {
 
 	public static boolean verifyStock(int stock) {
 		return stock<MAX_STOCK && stock>MIN_STOCK;
+	}
+	
+	public static List<Product> getProductByName(String title){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List <Product> product = manager.getProductByName(title);
+		return product;
 	}
 
 }

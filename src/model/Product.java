@@ -17,6 +17,7 @@ import java.util.List;
 @NamedQuery(name="Product.findAllByCategoryId", query="SELECT p FROM Product p WHERE p.categoryBean.id LIKE :category")
 @NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
+@NamedQuery(name="Product.getProductByName", query="SELECT p FROM Product p WHERE p.name LIKE :name")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 

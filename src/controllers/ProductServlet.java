@@ -3,6 +3,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,12 +23,20 @@ public class ProductServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+		PrintWriter out = res.getWriter();
+		out.print("Im out");
 		HttpSession sesion = req.getSession();
+		
+		
+		String nameToQuery = req.getParameter("query");
 		
 		
 		
 		if(req.getParameter("category").equalsIgnoreCase("all")) {
+			List<Product> products = ProductController.getProductByName(nameToQuery);
+			for(Product product : products) {
+				out.println(product.getName());
+			}
 			
 		}
 		

@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import model.Product;
+import model.User;
 
 public class ProductManager {
 
@@ -181,6 +182,18 @@ public class ProductManager {
 		}
 
 		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductByName(String name) {
+		List<Product> product = null;
+		EntityManager em = getEntityManager();
+		try {
+			product = (List<Product>) em.createNamedQuery("Product.getProductByName").setParameter("name", name).getResultList();
+		} finally {
+			em.close();
+		}
+		return product;
 	}
 
 
