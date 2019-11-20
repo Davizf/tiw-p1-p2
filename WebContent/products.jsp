@@ -430,24 +430,18 @@ if (user!=null) {
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
 									<div class="product-thumb">
-										<div class="product-label" hidden>
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
 										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
 										<img src="<%=product.getImagePath() %>" alt="">
 									</div>
 									<div class="product-body">
-										<h3 class="product-price"><%=product.getPrice().doubleValue() %><del class="product-old-price" hidden>$45.00</del></h3>
-										<div hidden>
-											<div class="product-rating" hidden >
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o empty"></i>
-											</div>
-										</div>
+										<%if(session.getAttribute("user") != null){
+											if (!product.getPrice().equals(product.getSalePrice())) {%>
+												<del class="font-weak">$<%=product.getPrice().doubleValue()%></del><br>
+											<%} %>
+											<h3 class="product-price">$<%=product.getSalePrice().doubleValue() %></h3>
+										<%}else{%>
+											<h3 class="product-price">$<%=product.getPrice().doubleValue() %></h3>
+										<%}%>
 										<h2 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
 										
 									</div>
@@ -463,26 +457,21 @@ if (user!=null) {
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
 									<div class="product-thumb">
-										<div class="product-label" hidden>
-											<span>New</span>
-											<span class="sale">-20%</span>
-										</div>
 										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
 										<img src="<%=product.getImagePath() %>" alt="">
 									</div>
 									<div class="product-body">
-										<h3 class="product-price"><%=product.getPrice().doubleValue() %><del class="product-old-price" hidden>$45.00</del></h3>
-										<div hidden>
-											<div class="product-rating" hidden >
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o empty"></i>
-											</div>
-										</div>
-										<h2 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h2>
-										
+										<%if(session.getAttribute("user") != null){
+											if (!product.getPrice().equals(product.getSalePrice())) {%>
+												<del class="font-weak">$<%=product.getPrice().doubleValue()%></del><br>
+											<%} else {%>
+												<br>
+											<%} %>
+											<h3 class="product-price">$<%=product.getSalePrice().doubleValue() %></h3>
+										<%}else{%>
+											<h3 class="product-price">$<%=product.getPrice().doubleValue() %></h3>
+										<%}%>
+										<h3 class="product-name"><a href="product-page.jsp?id=<%=product.getId() %>"><%=product.getName() %></a></h3>
 									</div>
 								</div>
 							</div>

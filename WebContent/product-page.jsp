@@ -298,7 +298,7 @@ if (user!=null) {
 	int id=-1;
 	if (strId != null && !strId.equals("") && !strId.equals("null")) {
 		id=Integer.parseInt(strId);
-	}// TODO else redirigir a products.jsp
+	}
 	Product p=ProductController.getProduct(id);
 	%>
 	<!-- BREADCRUMB -->
@@ -334,28 +334,15 @@ if (user!=null) {
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
-							<h2 class="product-name">
-								<%=p.getName() %>
-							</h2>
-							
-							
-							<%
-							if(session.getAttribute("user") != null){
-							%>
-									
-							<del class="font-weak">$<%=p.getPrice().doubleValue()%></del><br>
-							<h3 class="product-price">$<%=p.getSalePrice().doubleValue() %></h3>
-									
-									
-									
+							<h2 class="product-name"><%=p.getName() %></h2>
+							<%if(session.getAttribute("user") != null){
+								if (!p.getPrice().equals(p.getSalePrice())) {%>
+									<del class="font-weak">$<%=p.getPrice().doubleValue()%></del><br>
+								<%} %>
+								<h3 class="product-price">$<%=p.getSalePrice().doubleValue() %></h3>
 							<%}else{%>
-							<h3 class="product-price">$<%=p.getPrice().doubleValue() %></h3>
+								<h3 class="product-price">$<%=p.getPrice().doubleValue() %></h3>
 							<%}%>
-								
-								
-							
-							
-							
 							
 							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
