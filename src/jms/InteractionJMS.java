@@ -149,6 +149,7 @@ public class InteractionJMS {
 					if (message instanceof TextMessage) {
 						TextMessage m = (TextMessage) message;
 						
+						// if same sender the msg will be stored by concatenate
 						for(Messages msg : messages ) {
 							if(msg.getSender().equalsIgnoreCase(m.getStringProperty("sender")) ){
 								msg.setMsg( msg.getMsg().concat("<br>Message: " +m.getText())  );
