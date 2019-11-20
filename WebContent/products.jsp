@@ -334,15 +334,9 @@ if (user!=null) {
 			<!-- row -->
 			<div class="row">
 			
-			
-			
-			
 				<form action="ProductServlet">
-					
-					
-					
 						
-						<!-- ASIDE -->
+					<!-- ASIDE -->
 					<div id="aside" class="col-md-3">
 						
 						<!-- aside widget -->
@@ -372,7 +366,8 @@ if (user!=null) {
 						<!-- aside widget -->
 						<div class="aside">
 							<h3 class="aside-title">Filter by Shipping Cost</h3>
-							<input type="checkbox" name="freeShip">   Free Shipping<br>
+							<input type="checkbox" name="freeShip" id="input_freeShip"><label for="input_freeShip">Free Shipping</label>
+							<br>
 						</div>
 						<!-- /aside widget -->
 						
@@ -381,20 +376,7 @@ if (user!=null) {
 	
 					</div>
 					<!-- /ASIDE -->
-					
-					
-					
-					
-				
-			</form>
-			
-				
-				
-				
-				
-				
-				
-
+				</form>
 				<!-- MAIN -->
 				<div id="main" class="col-md-9" >
 					<!-- store top filter -->
@@ -434,13 +416,8 @@ if (user!=null) {
 					</div>
 					<!-- /store top filter -->
 					
-					
-					
-					
-					
-				<%if(request.getAttribute("resultType").toString().equalsIgnoreCase("showAll")){%>	
-					
-						<% if(products != null) { %>
+				<%if(request.getAttribute("resultType").toString().equalsIgnoreCase("showAll")){
+					if(products != null) { %>
 					<!-- STORE -->
 					<div id="store">
 						<!-- row -->
@@ -473,19 +450,12 @@ if (user!=null) {
 									</div>
 								</div>
 							</div>
-							<%} %>
-						<%} %>
-					
-						
-					
-					
-					
-					<%}else if(request.getAttribute("resultType").toString().equalsIgnoreCase("foundByKey")){
+							<%}
+						}
+					}else if(request.getAttribute("resultType").toString().equalsIgnoreCase("foundByKey")){
 						List<Product> founds = (List<Product>)request.getAttribute("foundProducts");
-					%>
-						
-						<% if(founds != null) { %>
-						<% for(Product product : founds) { %>
+						if(founds != null) {
+						for(Product product : founds) { %>
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
@@ -513,23 +483,10 @@ if (user!=null) {
 									</div>
 								</div>
 							</div>
-							<%} %>
-					
-						<%}%>
-					<%}%>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-						
-						
 							<!-- /Product Single -->
+							<%}
+						}
+					}%>
 
 							<div class="clearfix visible-sm visible-xs"></div>
 						</div>

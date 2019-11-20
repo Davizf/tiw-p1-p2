@@ -25,10 +25,15 @@ public class ProductServlet extends HttpServlet{
 
 		}else if(req.getParameter("op").equalsIgnoreCase("search")) {
 			String nameToQuery = req.getParameter("query");
-			List<Product> products = ProductController.getProductByName(nameToQuery);
+			List<Product> products;
+			if (nameToQuery.equals(""))
+				products = ProductController.getAllProducts();
+			else
+				products = ProductController.getProductByName(nameToQuery);
+
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
-			
+
 		}else if(req.getParameter("op").equalsIgnoreCase("category")) {
 			String category = req.getParameter("category");
 			String[] categories = category.split(",");
@@ -54,7 +59,7 @@ public class ProductServlet extends HttpServlet{
 			out.println(req.getParameter("maximum"));	
 			out.println(req.getParameter("category"));
 			out.println(req.getParameter("freeShip"));	// return on or null
-			
+
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher("products.jsp");
