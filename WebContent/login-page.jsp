@@ -351,7 +351,7 @@ if (user!=null) {
 	<!-- /section -->
 	
 
-	<!-- FOOTER -->
+<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">
 		<!-- container -->
 		<div class="container">
@@ -368,7 +368,7 @@ if (user!=null) {
 						</div>
 						<!-- /footer logo -->
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+						<p>Our shop is a new shop which have so good quality products and prices that make it unique</p>
 
 						<!-- footer social -->
 						<ul class="footer-social">
@@ -403,7 +403,7 @@ if (user!=null) {
 				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div class="footer">
 						<h3 class="footer-header">Stay Connected</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+						<p>Subscribe to our newsletter and get amazing offers</p>
 						<form>
 							<div class="form-group">
 								<input class="input" placeholder="Enter Email Address">
@@ -445,3 +445,4 @@ if (user!=null) {
 </body>
 
 </html>
+
