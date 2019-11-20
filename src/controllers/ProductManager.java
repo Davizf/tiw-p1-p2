@@ -186,7 +186,7 @@ public class ProductManager {
 		List<Product> products = null;
 		EntityManager em = getEntityManager();
 		try {
-			products = (List<Product>) em.createNamedQuery("Product.OrderById").setMaxResults(3).getResultList();
+			products = (List<Product>) em.createNamedQuery("Product.OrderById").setMaxResults(4).getResultList();
 		} finally {
 			em.close();
 		}
