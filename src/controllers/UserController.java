@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import managers.UserManager;
 import model.Product;
 import model.User;
 import model.WishList;
@@ -22,13 +23,37 @@ public class UserController {
 		factory.close();
 		return user;
 	}
-
+	
+	public static void addUser(User user) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		UserManager manager = new UserManager();
+		manager.setEntityManagerFactory(factory);
+		try {
+			manager.createUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		factory.close();
+	}
+	
 	public static void modifyUser(User user) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
 		manager.setEntityManagerFactory(factory);
 		try {
 			manager.updateUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		factory.close();
+	}
+	
+	public static void deleteUser(User user) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		UserManager manager = new UserManager();
+		manager.setEntityManagerFactory(factory);
+		try {
+			manager.deleteUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,5 +79,24 @@ public class UserController {
 		factory.close();
 		return buyers;
 	}
+	
+	public static boolean checkUserEmail(String email) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		UserManager manager = new UserManager();
+		manager.setEntityManagerFactory(factory);
+		boolean check =  manager.checkUserEmail(email);
+		factory.close();
+		return check;
+	}
+	
+	public static boolean verifyUser(String email, String password) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		UserManager manager = new UserManager();
+		manager.setEntityManagerFactory(factory);
+		boolean check =  manager.verifyUser(email, password);
+		factory.close();
+		return check;
+	}
+
 
 }

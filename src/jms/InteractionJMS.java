@@ -1,13 +1,14 @@
-package jhc.jms;
+package jms;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.jms.Message;
 import javax.jms.TextMessage;
-import jhc.info.InformationProperties;
+
 import model.User;
 import controllers.UserController;
+import jms.info.InformationProperties;
 import model.Messages;
 
 

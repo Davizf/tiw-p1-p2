@@ -1,9 +1,11 @@
-package jhc.listener;
+package servlets;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+
+import jms.AsynchConsumer;
 
 @WebServlet(name = "AsynchReadingServlet", urlPatterns = "/AsynchReadingServlet", loadOnStartup = 1)
 public class AsynchReadingServlet extends HttpServlet {

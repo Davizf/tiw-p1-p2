@@ -1,4 +1,4 @@
-package controllers;
+package servlets;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import controllers.CategoryController;
+import controllers.ProductController;
+import controllers.UserController;
 import model.Product;
 
 @WebServlet(name = "Catalogue", urlPatterns = "/Catalogue")
@@ -104,10 +107,6 @@ public class CatalogueServlet extends HttpServlet{
 				rd.forward(req, res);
 				return;
 			} else {
-				/*System.out.println("-----------------------image_completePath\t"+image_completePath);
-				System.out.println("-----------------------image_parentPath\t"+image_parentPath);
-				System.out.println("-----------------------image_parentShortPath\t"+image_parentShortPath);
-				System.out.println("-----------------------image_completeShortPath\t"+image_completeShortPath);*/
 
 				image_file = new File(new File(image_parentPath), image_filePath);
 
@@ -174,18 +173,12 @@ public class CatalogueServlet extends HttpServlet{
 					image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER),
 					image_filePath=product_id + ".png",
 					image_parentShortPath=req.getContextPath() + IMAGE_FOLDER,
-					//image_completePath=image_parentPath + "/" + image_filePath,
 					image_completeShortPath=image_parentShortPath + "/" + image_filePath;
 			File image_file;
 
 			if (image_fileName.equals("")) {// There isnt new image
 				product_image_path=req.getParameter("product_image_path");
 			} else {
-				/*System.out.println("-----------------------image_completePath\t"+image_completePath);
-				System.out.println("-----------------------image_parentPath\t"+image_parentPath);
-				System.out.println("-----------------------image_parentShortPath\t"+image_parentShortPath);
-				System.out.println("-----------------------image_completeShortPath\t"+image_completeShortPath);*/
-
 				image_file = new File(new File(image_parentPath), image_filePath);
 				if (image_file.exists()) image_file.delete();
 				try (InputStream input = product_image.getInputStream()) {

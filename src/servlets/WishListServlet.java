@@ -1,4 +1,4 @@
-package controllers;
+package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controllers.ProductController;
+import controllers.UserController;
+import controllers.WishListController;
 import model.Product;
 import model.User;
 import model.WishList;

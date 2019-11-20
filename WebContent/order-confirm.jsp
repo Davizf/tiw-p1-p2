@@ -424,7 +424,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 									<td class="thumb"><img src= "<%= product.getProduct().getImagePath() %>" alt=""></td>
 									<td class="details">
 										<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
-										<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><br><del class="font-weak"><small>$<%=product.getProduct().getSalePrice().doubleValue() %></small></del></td>
+										<td class="price text-center"><del class="font-weak"><small>$<%=product.getProduct().getPrice().doubleValue() %></small></del><br><strong>$<%=product.getProduct().getSalePrice().doubleValue() %></strong></td>
 										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
 										<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
 				

@@ -1,12 +1,12 @@
 <%@page import="controllers.UserController"%>
-<%@page import="controllers.UserManager"%>
-<%@page import="controllers.ProductServlet"%>
+<%@page import="managers.UserManager"%>
+<%@page import="servlets.ProductServlet"%>
 <%@page import="model.User"%>
 <%@page import="model.ProductInCart"%>
 <%@page import="controllers.ProductController"%>
 <%@page import="model.Product"%>
 <%@page import="controllers.CategoryController"%>
-<%@page import="controllers.OrderServlet"%>
+<%@page import="servlets.OrderServlet"%>
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>

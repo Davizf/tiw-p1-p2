@@ -1,12 +1,10 @@
-package controllers;
+package servlets;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import jhc.jms.InteractionJMS;
+import controllers.OrderController;
+import controllers.ProductController;
+import controllers.UserController;
+import jms.InteractionJMS;
 import model.Orders;
 import model.Orders_has_Product;
 
@@ -30,14 +31,7 @@ public class OrderServlet extends HttpServlet{
 		String email = (String) session.getAttribute("user");
 		@SuppressWarnings("unchecked")
 		ArrayList<ProductInCart> productsInCart = (ArrayList<ProductInCart>)session.getAttribute("cartList");
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");
-		UserManager userManager = new UserManager();
-		userManager.setEntityManagerFactory(factory);
-		OrderManager orderManager = new OrderManager();
-		orderManager.setEntityManagerFactory(factory);
-		
-
-
+	
 		if(req.getParameter("type").equalsIgnoreCase("confirm-checkout")) {
 			
 			InteractionJMS mq=new InteractionJMS();
@@ -54,7 +48,7 @@ public class OrderServlet extends HttpServlet{
 				order.setCity(req.getParameter("city"));
 				order.setCountry(req.getParameter("country"));
 				order.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
-				order.setUserBean(userManager.getUser(email));
+				order.setUserBean(UserController.getUserInformation(email));
 				order.setDate(formatter.format(date));
 				
 				ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
@@ -71,12 +65,7 @@ public class OrderServlet extends HttpServlet{
 				
 				order.setOrdersHasProducts(products);
 				
-				try {
-					orderManager.createOrder(order);
-				} catch (Exception e) {
-					System.out.println("Descripci�n: " + e.getMessage());
-				}
-				
+				OrderController.createOrder(order);
 				productsInCart.clear();
 				session.setAttribute("cartList", null);
 				RequestDispatcher rd = req.getRequestDispatcher("confirm-page.jsp");

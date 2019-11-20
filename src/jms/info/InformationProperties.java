@@ -1,4 +1,4 @@
-package jhc.info;
+package jms.info;
 
 import java.util.*;
 

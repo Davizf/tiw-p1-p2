@@ -367,7 +367,12 @@ if (user!=null) {
 									<td class="details">
 										<a href="product-page.jsp?id=<%=product.getId() %>"><%= product.getName() %></a>
 									</td>
-									<td class="price text-center"><strong>$<%=product.getPrice() %></strong>
+									<td>
+									<%if (!product.getSalePrice().equals(product.getPrice())) {%>
+											<del class="font-weak"><small>$<%=product.getPrice().doubleValue() %></small></del><br>
+									<%} %>
+									<strong>$<%=product.getSalePrice().doubleValue() %></strong>
+									<td>
 									<td class="qty text-center"><strong><%=orderProduct.getQuantity() %></strong></td>
 									<td class="qty text-center"><strong><%=orderProduct.getShipPrice().doubleValue() %></strong></td>
 									<td class="total text-center"><strong class="primary-color">$<%=orderProduct.getCost() %></strong></td>

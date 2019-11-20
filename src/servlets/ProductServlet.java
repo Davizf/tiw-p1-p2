@@ -1,4 +1,4 @@
-package controllers;
+package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controllers.ProductController;
 import model.Product;
 
 @WebServlet(name = "ProductServlet", urlPatterns = "/ProductServlet")

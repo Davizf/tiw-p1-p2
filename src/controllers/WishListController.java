@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import managers.WishListManager;
 import model.Product;
 import model.WishList;
 

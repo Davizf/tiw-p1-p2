@@ -1,10 +1,8 @@
-package controllers;
+package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import controllers.UserController;
 import model.User;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/UserServlet")
@@ -34,14 +34,10 @@ public class UserServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		String email = req.getParameter("email");	
 
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
-		UserManager manager = new UserManager();
-		manager.setEntityManagerFactory(factory);
-
 
 		if(req.getParameter("operation").equalsIgnoreCase("Register")) {
 
-			if(manager.checkUserEmail(email)) {
+			if(UserController.checkUserEmail(email)) {
 				req.setAttribute("message", "This email has already been taken!");
 				RequestDispatcher rd = req.getRequestDispatcher("register-page.jsp");
 				rd.forward(req, res);
@@ -62,20 +58,16 @@ public class UserServlet extends HttpServlet{
 				String seller = req.getParameter("seller");
 				user.setType( (byte) ((seller != null && seller.equals("on"))?1:0) );
 
-				try {
-					manager.createUser(user);
-				} catch (Exception e) {
-					System.out.println("Descripci�n: " + e.getMessage());
-				} 
-
+				UserController.addUser(user);
+				
 				RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
 				rd.forward(req, res);
 			}
-		}else if(req.getParameter("operation").equalsIgnoreCase("Login")) {
+		} else if(req.getParameter("operation").equalsIgnoreCase("Login")) {
 			String password = req.getParameter("password");
 
-			if(manager.verifyUser(email, password)) {
-				User user = manager.getUser(email);
+			if(UserController.verifyUser(email, password)) {
+				User user = UserController.getUserInformation(email);
 				session.setAttribute("user", email);
 				session.setAttribute("username", user.getName());
 				session.setAttribute("cartList", null);
@@ -110,11 +102,8 @@ public class UserServlet extends HttpServlet{
 			user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
 			session.setAttribute("username", user.getName());
 
-			try {
-				manager.updateUser(user);
-			} catch (Exception e) {
-				System.out.println("Descripci�n: " + e.getMessage());
-			} 
+			UserController.modifyUser(user);
+			
 			req.setAttribute("message", "Changes have been made correctly!");
 			req.setAttribute("user_information", (User) user);
 			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
@@ -126,20 +115,14 @@ public class UserServlet extends HttpServlet{
 
 		} else if(req.getParameter("operation").equalsIgnoreCase("Yes")) {
 
-			User user = manager.getUser((String) session.getAttribute("user"));
+			User user = UserController.getUserInformation((String) session.getAttribute("user"));
 
-			try {
-				manager.deleteUser(user);
-			} catch (Exception e) {
-				System.out.println("Descripci�n: " + e.getMessage());
-			}
+			UserController.deleteUser(user);
+
 			session.invalidate();
 			RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 			rd.forward(req, res);
-
 		}
-		
-		factory.close();
 	}
 
 }
