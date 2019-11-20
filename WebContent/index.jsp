@@ -1,5 +1,3 @@
-<%@page import="model.CategoryLevel"%>
-<%@page import="model.HierarchicalCategories"%>
 <%@page import="controllers.UserController"%>
 <%@page import="controllers.UserManager"%>
 <%@page import="controllers.ProductServlet"%>
@@ -13,6 +11,8 @@
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="model.Category"%>
+<%@page import="model.CategoryLevel"%>
+<%@page import="model.HierarchicalCategories"%>
 
 <!DOCTYPE html>
 <html lang="en">
