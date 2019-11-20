@@ -379,7 +379,7 @@ if (user!=null) {
 								<tr>
 									<th class="empty" colspan="3"></th>
 									<th>TOTAL</th>
-									<th colspan="2" class="total"><%=total %></th>
+									<th colspan="2" class="total">$<%=total %></th>
 								</tr>
 							</tfoot>
 						</table>

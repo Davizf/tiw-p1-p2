@@ -60,7 +60,7 @@ public class OrderServlet extends HttpServlet{
 				ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
 				for(ProductInCart product : productsInCart) {
 					order_product = new Orders_has_Product();
-					order_product.setProductPrice(product.getProduct().getPrice());
+					order_product.setProductPrice(product.getProduct().getSalePrice());
 					order_product.setProductBean(product.getProduct());
 					order_product.setOrder(order);
 					order_product.setShipPrice(product.getProduct().getShipPrice());

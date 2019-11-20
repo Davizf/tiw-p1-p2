@@ -98,8 +98,8 @@ public class Orders_has_Product implements Serializable {
 	}
 	
 	public double getCost() { 
-		double cost = quantity * (productPrice.doubleValue() + shipPrice.doubleValue());
-		
+		double cost = quantity * productPrice.doubleValue() + shipPrice.doubleValue();
+
 		return  cost=Math.floor(cost * 100) / 100;
 	}
 

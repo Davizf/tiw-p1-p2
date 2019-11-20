@@ -356,7 +356,7 @@ if (user!=null) {
 											<form action="ShoppingCart" method="post">
 												<input type="hidden" name="indexToModify" value= <%= list.indexOf(product) %> >
 												<input type="hidden" name="type" value= "modifyInCart" >
-												<td class="qty text-center">    <input name="quantity" type = number value = <%=product.getQuantity() %>></td>
+												<td class="qty text-center">    <input name="quantity" type = number value = <%=product.getQuantity() %> min="1"></td>
 												<td class="qty text-left"><input type="submit" class="btn btn-warning" value="Modify"></td>
 											</form>
 											<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
