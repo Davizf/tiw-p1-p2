@@ -372,17 +372,26 @@ if (user!=null) {
 						</div>
 						
 						<br><br><hr>
-						<div class="pull-right">
-							<form action="/tiw-p1/jms-controller" method="post">	
-								<input type="hidden" name="op" value="1">
+						
+						
+							<%if(session.getAttribute("user") != null){%>
 								
-								<!--  Aqui tiene que ir el email del vendedor -->
-								<input type="hidden" name="correlationId" value=<%=p.getUserBean().getEmail()  %> >
-								<INPUT type="hidden" name="sender" value="<%=user%>"> 
-								<input type="text" name="message" value= "Im interested in this item!" size="48" >
-								<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
-							</form>
-						</div>
+								<div class="pull-right">
+								<form action="/tiw-p1/jms-controller" method="post">	
+									<input type="hidden" name="op" value="1">
+									
+									<!--  Aqui tiene que ir el email del vendedor -->
+									<input type="hidden" name="correlationId" value=<%=p.getUserBean().getEmail()  %> >
+									<INPUT type="hidden" name="sender" value="<%=user%>"> 
+									<input type="text" name="message" value= "Im interested in this item!" size="48" >
+									<input type="submit" class="btn btn-primary" value="CONTACT TO SELLER" />
+								</form>
+							</div>
+								
+							<% }%>
+						
+						
+						
 					</div>
 					
 					<div class="col-md-12">

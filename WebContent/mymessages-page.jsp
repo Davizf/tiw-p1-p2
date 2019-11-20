@@ -349,7 +349,7 @@ if (user!=null) {
 									<INPUT type="hidden" name="op" value="3"> 
 									<input type="text" name="message" >
 									<INPUT type="hidden" name="sender" value="<%=user%>"> 
-									<input type="hidden" name="correlationId" value="123@gmail.com">
+									<input type="hidden" name="correlationId" value=<%=msg.getSender() %>>
 									<input type="submit" name="button" class="btn btn-success" value="Answer" />
 								</div>
 							</div>
