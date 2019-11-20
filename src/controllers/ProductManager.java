@@ -134,6 +134,18 @@ public class ProductManager {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Product> getAllAvailableProducts() {
+		List<Product> products = null;
+		EntityManager em = getEntityManager();
+		try {
+			products = (List<Product>) em.createNamedQuery("Product.findAllAvailable").getResultList();
+		} finally {
+			em.close();
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Product> getProductsByCategory(String category) {
 		List<Product> products = null;
 		EntityManager em = getEntityManager();
@@ -212,7 +224,7 @@ public class ProductManager {
 		List<Product> product = null;
 		EntityManager em = getEntityManager();
 		try {
-			product = (List<Product>) em.createNamedQuery("Product.findAllByFreeShipment").setParameter("price", price).getResultList();
+			product = (List<Product>) em.createNamedQuery("Product.findAllByFreeShipment").getResultList();
 		} finally {
 			em.close();
 		}

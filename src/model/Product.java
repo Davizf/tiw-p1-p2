@@ -12,10 +12,11 @@ import java.util.List;
 @Entity
 @Table(name="products")
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
+@NamedQuery(name="Product.findAllAvailable", query="SELECT p FROM Product p WHERE p.userBean IS NOT NULL")
 @NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
 @NamedQuery(name="Product.findAllByCategoryId", query="SELECT p FROM Product p WHERE p.categoryBean.id LIKE :category")
 @NamedQuery(name="Product.findAllByCategoriesId", query="SELECT p FROM Product p WHERE p.categoryBean.id IN :categories")
-@NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p ORDER BY p.id DESC")
+@NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p WHERE p.userBean IS NOT NULL ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
 @NamedQuery(name="Product.getProductByName", query="SELECT p FROM Product p WHERE p.name LIKE :name")
 @NamedQuery(name="Product.findAllByFreeShipment", query="SELECT p FROM Product p WHERE p.shipPrice LIKE :price")
