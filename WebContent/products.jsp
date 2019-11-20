@@ -346,18 +346,6 @@ if (user!=null) {
 						</div>
 						<!-- aside widget -->
 	
-						<!-- aside widget -->
-						<div class="aside">
-							<h3 class="aside-title"><label for="input_chk_filter_category">Filter by Category&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_category" id="input_chk_filter_category"></h3>
-							<select class="form-control" name="filter_category">
-								<%if(categories != null) {
-									for(Category categoryOption : categories) { %>
-										<option value="<%=categoryOption.getId() %>"><%=hc.getLineOfId(categoryOption.getId()) %></option>
-									<%}
-								} %>
-							</select>
-						</div>
-						<!-- /aside widget -->
 						
 						<!-- aside widget -->
 						<div class="aside">

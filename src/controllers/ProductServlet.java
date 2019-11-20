@@ -52,42 +52,75 @@ public class ProductServlet extends HttpServlet{
 			req.setAttribute("resultType", "foundByKey");
 
 		}else if(req.getParameter("op").equalsIgnoreCase("filter")) {
-			String price = req.getParameter("chk_filter_price"), category = req.getParameter("chk_filter_category"),
+			
+			List<Product> products = null;
+			List<Product> productsToCompare = null;
+			List<Product> productsToElimine =  new ArrayList<>();
+			
+			String price = req.getParameter("chk_filter_price"), 
 					stock = req.getParameter("chk_filter_stock"), shipPrice = req.getParameter("chk_filter_ship_price");
 			boolean filterPrice = (price!=null && price.equals("on")),
-					filterCategory = (category!=null && category.equals("on")),
 					filterStock = (stock!=null && stock.equals("on")),
 					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
 
-			//TODO
-			System.out.println("-----------------------");
-			System.out.println("filterPrice "+filterPrice);
 			if (filterPrice) {
 				int filterMinimun=Integer.parseInt(req.getParameter("filter_price_minimun")),
 						filterMaximum=Integer.parseInt(req.getParameter("filter_price_maximum"));
-				System.out.println("minimun "+filterMinimun);
-				System.out.println("maximum "+filterMaximum);
+				products = ProductController.getProductsBetweenSalePrices(filterMinimun,filterMaximum);
 			}
-			System.out.println("filterCategory "+filterCategory);
-			if (filterCategory) {
-				int filterCategoryId=Integer.parseInt(req.getParameter("filter_category"));
-				System.out.println("CategoryId "+filterCategoryId);
-			}
-			System.out.println("filterStock "+filterStock);
+		
+
 			if (filterStock) {
 				int filterStockMinumun=Integer.parseInt(req.getParameter("filter_stock_minimun"));
-				System.out.println("StockMinumun "+filterStockMinumun);
+				if(products != null) {
+					productsToCompare = ProductController.getProductsByStock(filterStockMinumun);
+					for(Product product : products) {
+						if(!productsToCompare.contains(product)) {
+							productsToElimine.add(product);
+						}
+					}
+					
+					for(Product product : productsToElimine) {
+						products.remove(product);
+					}	
+					productsToCompare = null;
+					productsToElimine.clear();
+					
+				}else {
+					products = ProductController.getProductsByStock(filterStockMinumun);
+				}
+				
 			}
-			System.out.println("filterShipPrice "+filterShipPrice);
+			
+
 			if (filterShipPrice) {
 				String freeShipping = req.getParameter("filter_free_shipping");
 				boolean filterFreeShipping = (freeShipping!=null && freeShipping.equals("on"));
-				System.out.println("FreeShipping "+filterFreeShipping);
+				if(filterFreeShipping) {
+					if(products != null) {
+						productsToCompare = ProductController.getProductsFreeShipment();
+						for(Product product : products) {
+							//System.out.println("Product->"+product.getName());
+							if(!productsToCompare.contains(product)) {
+								//System.out.println("Compare not Contains->"+product.getName());
+								productsToElimine.add(product);
+							}
+						}
+						
+						for(Product product : productsToElimine) {
+							products.remove(product);
+						}	
+						productsToCompare = null;
+						productsToElimine.clear();
+						
+					}else {
+						products = ProductController.getProductsFreeShipment();
+					}
+					
+				}
 			}
-			System.out.println("----------------------");
 
-			List<Product> products;
-			products = ProductController.getAllProducts();
+			
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
 		}
