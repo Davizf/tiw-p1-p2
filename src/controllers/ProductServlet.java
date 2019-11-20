@@ -52,75 +52,84 @@ public class ProductServlet extends HttpServlet{
 			req.setAttribute("resultType", "foundByKey");
 
 		}else if(req.getParameter("op").equalsIgnoreCase("filter")) {
-			
+
 			List<Product> products = null;
 			List<Product> productsToCompare = null;
 			List<Product> productsToElimine =  new ArrayList<>();
-			
+
 			String price = req.getParameter("chk_filter_price"), 
 					stock = req.getParameter("chk_filter_stock"), shipPrice = req.getParameter("chk_filter_ship_price");
 			boolean filterPrice = (price!=null && price.equals("on")),
 					filterStock = (stock!=null && stock.equals("on")),
 					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
 
-			if (filterPrice) {
-				int filterMinimun=Integer.parseInt(req.getParameter("filter_price_minimun")),
-						filterMaximum=Integer.parseInt(req.getParameter("filter_price_maximum"));
-				products = ProductController.getProductsBetweenSalePrices(filterMinimun,filterMaximum);
-			}
-		
-
-			if (filterStock) {
-				int filterStockMinumun=Integer.parseInt(req.getParameter("filter_stock_minimun"));
-				if(products != null) {
-					productsToCompare = ProductController.getProductsByStock(filterStockMinumun);
-					for(Product product : products) {
-						if(!productsToCompare.contains(product)) {	// always return true
-							productsToElimine.add(product);
-						}
+			if (!filterPrice && !filterStock && !filterShipPrice) {
+				products = ProductController.getAllProducts();
+			} else {
+				if (filterPrice) {
+					int filterMinimun=Integer.parseInt(req.getParameter("filter_price_minimun")),
+							filterMaximum=Integer.parseInt(req.getParameter("filter_price_maximum"));
+					
+					String email = (String) ((HttpServletRequest) req).getSession().getAttribute("user");
+					if (email==null || email.equals("")) {
+						products = ProductController.getProductsBetweenPrices(filterMinimun,filterMaximum);
+					} else {
+						products = ProductController.getProductsBetweenSalePrices(filterMinimun,filterMaximum);
 					}
-					
-					for(Product product : productsToElimine) {
-						products.remove(product);
-					}	
-					productsToCompare = null;
-					productsToElimine.clear();
-					
-				}else {
-					products = ProductController.getProductsByStock(filterStockMinumun);
 				}
-				
-			}
-			
 
-			if (filterShipPrice) {
-				String freeShipping = req.getParameter("filter_free_shipping");
-				boolean filterFreeShipping = (freeShipping!=null && freeShipping.equals("on"));
-				if(filterFreeShipping) {
+
+				if (filterStock) {
+					int filterStockMinumun=Integer.parseInt(req.getParameter("filter_stock_minimun"));
 					if(products != null) {
-						productsToCompare = ProductController.getProductsFreeShipment();
+						productsToCompare = ProductController.getProductsByStock(filterStockMinumun);
 						for(Product product : products) {
-							//System.out.println("Product->"+product.getName());
-							if(!productsToCompare.contains(product)) {		// always return true
-								//System.out.println("Compare not Contains->"+product.getName());
+							int idFound=contains(product, productsToCompare);
+							if(idFound != -1) {
 								productsToElimine.add(product);
 							}
 						}
-						
+
 						for(Product product : productsToElimine) {
 							products.remove(product);
 						}	
 						productsToCompare = null;
 						productsToElimine.clear();
-						
+
 					}else {
-						products = ProductController.getProductsFreeShipment();
+						products = ProductController.getProductsByStock(filterStockMinumun);
 					}
-					
+
+				}
+
+
+				if (filterShipPrice) {
+					String freeShipping = req.getParameter("filter_free_shipping");
+					boolean filterFreeShipping = (freeShipping!=null && freeShipping.equals("on"));
+					if(filterFreeShipping) {
+						if(products != null) {
+							productsToCompare = ProductController.getProductsFreeShipment();
+							for(Product product : products) {
+								int idFound=contains(product, productsToCompare);
+								if(idFound == -1) {
+									productsToElimine.add(product);
+								}
+							}
+
+							for(Product product : productsToElimine) {
+								products.remove(product);
+							}	
+							productsToCompare = null;
+							productsToElimine.clear();
+
+						}else {
+							products = ProductController.getProductsFreeShipment();
+						}
+
+					}
 				}
 			}
 
-			
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
 		}
@@ -128,7 +137,14 @@ public class ProductServlet extends HttpServlet{
 		RequestDispatcher rd = req.getRequestDispatcher("products.jsp");
 		rd.forward(req, res);
 
-	}	
+	}
+
+	private static int contains(Product product, List<Product> productsToCompare) {
+		for (Product p : productsToCompare)
+			if (p.getId() == product.getId())
+				return p.getId();
+		return -1;
+	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
