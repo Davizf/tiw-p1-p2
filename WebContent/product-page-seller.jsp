@@ -410,9 +410,9 @@ if (user!=null) {
 								<option value="">Select a category for the new product</option>
 								<% for(Category category : categories) { %>
 									<%if ( p.getCategoryBean().getName().equals(category.getName()) ) {%>
-									<option value="<%=category.getName() %>" selected><%=category.getName() %></option>
+										<option value="<%=category.getName() %>" selected><%=hc.getLineOfId(category.getId()) %></option>
 									<%} else {%>
-									<option value="<%=category.getName() %>"><%=category.getName() %></option>
+										<option value="<%=category.getName() %>"><%=hc.getLineOfId(category.getId()) %></option>
 									<%} %>
 								<%} %>
 								</select>
