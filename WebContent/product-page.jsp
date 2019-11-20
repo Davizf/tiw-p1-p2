@@ -361,7 +361,7 @@ if (user!=null) {
 								</form>
 								<div class="pull-right">
 									<form action="WishList" method="post">	
-										<input type="hidden" name="id" value= <%= id %> ><!-- TODO rehacer el WishList.java -->
+										<input type="hidden" name="id" value= <%= id %> >
 										<input type="hidden" name="type" value= "addToWishList" >
 										<input type="submit" class="primary-btn add-to-cart" value="ADD TO WISH LIST" />
 										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>

@@ -30,7 +30,6 @@ public class UserController {
 		try {
 			manager.updateUser(user);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		factory.close();
@@ -46,8 +45,7 @@ public class UserController {
 
 		return wishListProducts;
 	}
-	
-	
+
 	public static List<User> getAllUsersByType(int type){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		UserManager manager = new UserManager();
@@ -56,4 +54,5 @@ public class UserController {
 		factory.close();
 		return buyers;
 	}
+
 }
