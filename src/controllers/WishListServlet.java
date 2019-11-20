@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,14 +31,16 @@ public class WishListServlet extends HttpServlet{
 				int id = Integer.parseInt(req.getParameter("id"));
 				Product product = ProductController.getProduct(id);
 				User user = UserController.getUserInformation(email);
-				WishList wishList = new WishList();
+				if(!WishListController.checkWishListProducts(user.getWishlists(), product)) {
+					WishList wishList = new WishList();
+					
+					wishList.setProductBean(product);
+					wishList.setUserBean(user);
+					user.addWishlist(wishList);
+					
+					UserController.modifyUser(user);
+				}
 				
-				wishList.setProductBean(product);
-				wishList.setUserBean(user);
-				user.addWishlist(wishList);
-				
-				UserController.modifyUser(user);
-
 				RequestDispatcher rd = req.getRequestDispatcher("wish-list.jsp");
 				rd.forward(req, res);
 

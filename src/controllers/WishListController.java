@@ -1,8 +1,11 @@
 package controllers;
 
+import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import model.Product;
 import model.WishList;
 
 public class WishListController {
@@ -29,5 +32,14 @@ public class WishListController {
 			factory.close();
 		}
 		return true;
+	}
+	
+	public static boolean checkWishListProducts(List<WishList> userWishList, Product product) {
+		for(WishList wishlist : userWishList) {
+			if (product.getId() == wishlist.getProductBean().getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
