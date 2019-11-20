@@ -167,14 +167,6 @@ public class ProductController {
 		return product;
 	}
 	
-	public static List<Product> getProductsBetweenSalePricesUser(int min, int max){
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
-		ProductManager manager = new ProductManager();
-		manager.setEntityManagerFactory(factory);
-		List <Product> product = manager.getProductsBetweenSalePricesUser(min, max);
-		return product;
-	}
-	
 	public static List<Product> getProductsFreeShipment(){
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
 		ProductManager manager = new ProductManager();
