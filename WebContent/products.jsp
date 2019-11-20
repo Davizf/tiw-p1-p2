@@ -334,14 +334,13 @@ if (user!=null) {
 			<!-- row -->
 			<div class="row">
 			
-				<form action="ProductServlet">
-						
+				<form action="ProductServlet" method="post">
 					<!-- ASIDE -->
 					<div id="aside" class="col-md-3">
 						
 						<!-- aside widget -->
 						<div class="aside">
-							<h3 class="aside-title">Filter by Price</h3>
+							<h3 class="aside-title"><label for="input_chk_filter_price">Filter by Price&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_price" id="input_chk_filter_price"></h3>
 							Minimum: &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="minimun" value=0>
 							Maximum: &nbsp;&nbsp;&nbsp;<input type="number" name="maximum" value=100>
 						</div>
@@ -349,24 +348,21 @@ if (user!=null) {
 	
 						<!-- aside widget -->
 						<div class="aside">
-							<h3 class="aside-title">Filter by Category</h3>
+							<h3 class="aside-title"><label for="input_chk_filter_category">Filter by Category&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_category" id="input_chk_filter_category"></h3>
 							<select class="form-control" name="category">
-								<option>Women clothing</option>
-								<option>>> Dress</option>
-								<option>Men clothing</option>
-								<option>Complements</option>
-								<option>>> Watches</option>
-								<option>>> Bags & Shoes</option>
-								<option>>> >> Shoes</option>
-								<option>All</option>
+								<%if(categories != null) {
+									for(Category categoryOption : categories) { %>
+										<option value="<%=categoryOption.getId() %>"><%=hc.getLineOfId(categoryOption.getId()) %></option>
+									<%}
+								} %>
 							</select>
 						</div>
 						<!-- /aside widget -->
 	
 						<!-- aside widget -->
 						<div class="aside">
-							<h3 class="aside-title">Filter by Shipping Cost</h3>
-							<input type="checkbox" name="freeShip" id="input_freeShip"><label for="input_freeShip">Free Shipping</label>
+							<h3 class="aside-title"><label for="input_chk_filter_ship_price">Filter by Shipping Cost&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_ship_price" id="input_chk_filter_ship_price"></h3>
+							<input type="checkbox" name="freeShip" id="input_freeShip"><label for="input_freeShip">&nbsp;&nbsp;Free Shipping</label>
 							<br>
 						</div>
 						<!-- /aside widget -->

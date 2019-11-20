@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +52,20 @@ public class ProductServlet extends HttpServlet{
 			req.setAttribute("resultType", "foundByKey");
 
 		}else if(req.getParameter("op").equalsIgnoreCase("filter")) {
-			PrintWriter out = res.getWriter();
-			out.println("Im here");
-			out.println(req.getParameter("minimun"));	
-			out.println(req.getParameter("maximum"));	
-			out.println(req.getParameter("category"));
-			out.println(req.getParameter("freeShip"));	// return on or null
+			String price = req.getParameter("chk_filter_price"), category = req.getParameter("chk_filter_category"), shipPrice = req.getParameter("chk_filter_ship_price");
+			boolean filterPrice = (price!=null && price.equals("on")),
+					filterCategory = (category!=null && category.equals("on")),
+					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
+			System.out.println("-----------------------");
+			System.out.println(filterPrice);
+			System.out.println(filterCategory);
+			System.out.println(filterShipPrice);
+			System.out.println("----------------------");
 
+			List<Product> products;
+			products = ProductController.getAllProducts();//TODO
+			req.setAttribute("foundProducts", products);
+			req.setAttribute("resultType", "foundByKey");
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher("products.jsp");
