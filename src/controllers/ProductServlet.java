@@ -56,14 +56,31 @@ public class ProductServlet extends HttpServlet{
 			boolean filterPrice = (price!=null && price.equals("on")),
 					filterCategory = (category!=null && category.equals("on")),
 					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
+
+			//TODO
 			System.out.println("-----------------------");
-			System.out.println(filterPrice);
-			System.out.println(filterCategory);
-			System.out.println(filterShipPrice);
+			System.out.println("filterPrice "+filterPrice);
+			if (filterPrice) {
+				int filterMinimun=Integer.parseInt(req.getParameter("filter_price_minimun")),
+						filterMaximum=Integer.parseInt(req.getParameter("filter_price_maximum"));
+				System.out.println("minimun "+filterMinimun);
+				System.out.println("maximum "+filterMaximum);
+			}
+			System.out.println("filterCategory "+filterCategory);
+			if (filterCategory) {
+				int filterCategoryId=Integer.parseInt(req.getParameter("filter_category"));
+				System.out.println("CategoryId "+filterCategoryId);
+			}
+			System.out.println("filterShipPrice "+filterShipPrice);
+			if (filterShipPrice) {
+				String freeShipping = req.getParameter("filter_free_shipping");
+				boolean filterFreeShipping = (freeShipping!=null && freeShipping.equals("on"));
+				System.out.println("FreeShipping "+filterFreeShipping);
+			}
 			System.out.println("----------------------");
 
 			List<Product> products;
-			products = ProductController.getAllProducts();//TODO
+			products = ProductController.getAllProducts();
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
 		}

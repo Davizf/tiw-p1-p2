@@ -341,15 +341,15 @@ if (user!=null) {
 						<!-- aside widget -->
 						<div class="aside">
 							<h3 class="aside-title"><label for="input_chk_filter_price">Filter by Price&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_price" id="input_chk_filter_price"></h3>
-							Minimum: &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="minimun" value=0>
-							Maximum: &nbsp;&nbsp;&nbsp;<input type="number" name="maximum" value=100>
+							Minimum: &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="filter_price_minimun" value="0" min="0">
+							Maximum: &nbsp;&nbsp;&nbsp;<input type="number" name="filter_price_maximum" value="100" min="0">
 						</div>
 						<!-- aside widget -->
 	
 						<!-- aside widget -->
 						<div class="aside">
 							<h3 class="aside-title"><label for="input_chk_filter_category">Filter by Category&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_category" id="input_chk_filter_category"></h3>
-							<select class="form-control" name="category">
+							<select class="form-control" name="filter_category">
 								<%if(categories != null) {
 									for(Category categoryOption : categories) { %>
 										<option value="<%=categoryOption.getId() %>"><%=hc.getLineOfId(categoryOption.getId()) %></option>
@@ -362,7 +362,7 @@ if (user!=null) {
 						<!-- aside widget -->
 						<div class="aside">
 							<h3 class="aside-title"><label for="input_chk_filter_ship_price">Filter by Shipping Cost&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_ship_price" id="input_chk_filter_ship_price"></h3>
-							<input type="checkbox" name="freeShip" id="input_freeShip"><label for="input_freeShip">&nbsp;&nbsp;Free Shipping</label>
+							<input type="checkbox" name="filter_free_shipping" id="input_freeShip"><label for="input_freeShip">&nbsp;&nbsp;Free Shipping</label>
 							<br>
 						</div>
 						<!-- /aside widget -->
