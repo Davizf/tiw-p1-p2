@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +24,15 @@ public class ProductServlet extends HttpServlet{
 
 		}else if(req.getParameter("op").equalsIgnoreCase("search")) {
 			String nameToQuery = req.getParameter("query");
-			List<Product> products = ProductController.getProductByName(nameToQuery);
+			List<Product> products;
+			if (nameToQuery.equals(""))
+				products = ProductController.getAllProducts();
+			else
+				products = ProductController.getProductByName(nameToQuery);
+
 			req.setAttribute("foundProducts", products);
 			req.setAttribute("resultType", "foundByKey");
-			
+
 		}else if(req.getParameter("op").equalsIgnoreCase("category")) {
 			String category = req.getParameter("category");
 			String[] categories = category.split(",");
@@ -48,13 +52,37 @@ public class ProductServlet extends HttpServlet{
 			req.setAttribute("resultType", "foundByKey");
 
 		}else if(req.getParameter("op").equalsIgnoreCase("filter")) {
-			PrintWriter out = res.getWriter();
-			out.println("Im here");
-			out.println(req.getParameter("minimun"));	
-			out.println(req.getParameter("maximum"));	
-			out.println(req.getParameter("category"));
-			out.println(req.getParameter("freeShip"));	// return on or null
-			
+			String price = req.getParameter("chk_filter_price"), category = req.getParameter("chk_filter_category"), shipPrice = req.getParameter("chk_filter_ship_price");
+			boolean filterPrice = (price!=null && price.equals("on")),
+					filterCategory = (category!=null && category.equals("on")),
+					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
+
+			//TODO
+			System.out.println("-----------------------");
+			System.out.println("filterPrice "+filterPrice);
+			if (filterPrice) {
+				int filterMinimun=Integer.parseInt(req.getParameter("filter_price_minimun")),
+						filterMaximum=Integer.parseInt(req.getParameter("filter_price_maximum"));
+				System.out.println("minimun "+filterMinimun);
+				System.out.println("maximum "+filterMaximum);
+			}
+			System.out.println("filterCategory "+filterCategory);
+			if (filterCategory) {
+				int filterCategoryId=Integer.parseInt(req.getParameter("filter_category"));
+				System.out.println("CategoryId "+filterCategoryId);
+			}
+			System.out.println("filterShipPrice "+filterShipPrice);
+			if (filterShipPrice) {
+				String freeShipping = req.getParameter("filter_free_shipping");
+				boolean filterFreeShipping = (freeShipping!=null && freeShipping.equals("on"));
+				System.out.println("FreeShipping "+filterFreeShipping);
+			}
+			System.out.println("----------------------");
+
+			List<Product> products;
+			products = ProductController.getAllProducts();
+			req.setAttribute("foundProducts", products);
+			req.setAttribute("resultType", "foundByKey");
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher("products.jsp");

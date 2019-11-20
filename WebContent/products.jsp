@@ -334,45 +334,36 @@ if (user!=null) {
 			<!-- row -->
 			<div class="row">
 			
-			
-			
-			
-				<form action="ProductServlet">
-					
-					
-					
-						
-						<!-- ASIDE -->
+				<form action="ProductServlet" method="post">
+					<!-- ASIDE -->
 					<div id="aside" class="col-md-3">
 						
 						<!-- aside widget -->
 						<div class="aside">
-							<h3 class="aside-title">Filter by Price</h3>
-							Minimum: &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="minimun" value=0>
-							Maximum: &nbsp;&nbsp;&nbsp;<input type="number" name="maximum" value=100>
+							<h3 class="aside-title"><label for="input_chk_filter_price">Filter by Price&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_price" id="input_chk_filter_price"></h3>
+							Minimum: &nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="filter_price_minimun" value="0" min="0">
+							Maximum: &nbsp;&nbsp;&nbsp;<input type="number" name="filter_price_maximum" value="100" min="0">
 						</div>
 						<!-- aside widget -->
 	
 						<!-- aside widget -->
 						<div class="aside">
-							<h3 class="aside-title">Filter by Category</h3>
-							<select class="form-control" name="category">
-								<option>Women clothing</option>
-								<option>>> Dress</option>
-								<option>Men clothing</option>
-								<option>Complements</option>
-								<option>>> Watches</option>
-								<option>>> Bags & Shoes</option>
-								<option>>> >> Shoes</option>
-								<option>All</option>
+							<h3 class="aside-title"><label for="input_chk_filter_category">Filter by Category&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_category" id="input_chk_filter_category"></h3>
+							<select class="form-control" name="filter_category">
+								<%if(categories != null) {
+									for(Category categoryOption : categories) { %>
+										<option value="<%=categoryOption.getId() %>"><%=hc.getLineOfId(categoryOption.getId()) %></option>
+									<%}
+								} %>
 							</select>
 						</div>
 						<!-- /aside widget -->
 	
 						<!-- aside widget -->
 						<div class="aside">
-							<h3 class="aside-title">Filter by Shipping Cost</h3>
-							<input type="checkbox" name="freeShip">   Free Shipping<br>
+							<h3 class="aside-title"><label for="input_chk_filter_ship_price">Filter by Shipping Cost&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_ship_price" id="input_chk_filter_ship_price"></h3>
+							<input type="checkbox" name="filter_free_shipping" id="input_freeShip"><label for="input_freeShip">&nbsp;&nbsp;Free Shipping</label>
+							<br>
 						</div>
 						<!-- /aside widget -->
 						
@@ -381,20 +372,7 @@ if (user!=null) {
 	
 					</div>
 					<!-- /ASIDE -->
-					
-					
-					
-					
-				
-			</form>
-			
-				
-				
-				
-				
-				
-				
-
+				</form>
 				<!-- MAIN -->
 				<div id="main" class="col-md-9" >
 					<!-- store top filter -->
@@ -434,13 +412,8 @@ if (user!=null) {
 					</div>
 					<!-- /store top filter -->
 					
-					
-					
-					
-					
-				<%if(request.getAttribute("resultType").toString().equalsIgnoreCase("showAll")){%>	
-					
-						<% if(products != null) { %>
+				<%if(request.getAttribute("resultType").toString().equalsIgnoreCase("showAll")){
+					if(products != null) { %>
 					<!-- STORE -->
 					<div id="store">
 						<!-- row -->
@@ -473,19 +446,12 @@ if (user!=null) {
 									</div>
 								</div>
 							</div>
-							<%} %>
-						<%} %>
-					
-						
-					
-					
-					
-					<%}else if(request.getAttribute("resultType").toString().equalsIgnoreCase("foundByKey")){
+							<%}
+						}
+					}else if(request.getAttribute("resultType").toString().equalsIgnoreCase("foundByKey")){
 						List<Product> founds = (List<Product>)request.getAttribute("foundProducts");
-					%>
-						
-						<% if(founds != null) { %>
-						<% for(Product product : founds) { %>
+						if(founds != null) {
+						for(Product product : founds) { %>
 							<!-- Product Single -->
 							<div class="col-md-4 col-sm-6 col-xs-6">
 								<div class="product product-single">
@@ -513,23 +479,10 @@ if (user!=null) {
 									</div>
 								</div>
 							</div>
-							<%} %>
-					
-						<%}%>
-					<%}%>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-						
-						
 							<!-- /Product Single -->
+							<%}
+						}
+					}%>
 
 							<div class="clearfix visible-sm visible-xs"></div>
 						</div>
