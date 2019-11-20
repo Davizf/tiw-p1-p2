@@ -343,7 +343,7 @@ if (user!=null) {
 							<%}else{%>
 								<h3 class="product-price">$<%=p.getPrice().doubleValue() %></h3>
 							<%}%>
-							
+							<p><strong>Ship price:</strong> $<%=p.getShipPrice().doubleValue() %></p>
 							<p><strong>In Stock:</strong> <%=p.getStock() %></p>
 							<p hidden><strong>Brand:</strong> E-SHOP</p>
 							<p><%=p.getShortDescription() %></p>
