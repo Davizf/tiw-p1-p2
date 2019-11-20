@@ -425,6 +425,8 @@ if (user!=null) {
 										<%if(session.getAttribute("user") != null){
 											if (!product.getPrice().equals(product.getSalePrice())) {%>
 												<del class="font-weak">$<%=product.getPrice().doubleValue()%></del><br>
+											<%} else {%>
+												<br>
 											<%} %>
 											<h3 class="product-price">$<%=product.getSalePrice().doubleValue() %></h3>
 										<%}else{%>
