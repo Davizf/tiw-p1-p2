@@ -12,12 +12,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import jdbc.info.InformationProperties;
+import managers.CategoryManager;
 import model.Category;
 
 
 public class CategoryController {
 
-	public static ArrayList<Category> getCategories(){
+	public static ArrayList<Category> getCategories() {
 		ArrayList<Category> categories = new ArrayList<Category>();
 		Category category = null;
 		String query = "SELECT * FROM Categories";

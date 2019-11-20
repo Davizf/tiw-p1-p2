@@ -1,4 +1,4 @@
-package controllers;
+package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controllers.ProductController;
 import model.Product;
 
 @WebServlet(name = "ProductServlet", urlPatterns = "/ProductServlet")
@@ -25,6 +26,7 @@ public class ProductServlet extends HttpServlet{
 		}else if(req.getParameter("op").equalsIgnoreCase("search")) {
 			String nameToQuery = req.getParameter("query");
 			List<Product> products;
+			// If only click on search, show all products
 			if (nameToQuery.equals(""))
 				products = ProductController.getAllProducts();
 			else
@@ -38,10 +40,12 @@ public class ProductServlet extends HttpServlet{
 			String[] categories = category.split(",");
 
 			List<Product> products;
+			// Get products in a category
 			if (categories.length == 1) {
 				System.out.println(category);
 				products = ProductController.getProductsByCategory(Integer.parseInt(category));
 			} else {
+				// Get products in categories
 				List<Integer> idCategories=new ArrayList<Integer>(); 
 				for (int i = 0; i < categories.length; i++)
 					idCategories.add(Integer.parseInt(categories[i]));
@@ -57,19 +61,25 @@ public class ProductServlet extends HttpServlet{
 			List<Product> productsToCompare = null;
 			List<Product> productsToElimine =  new ArrayList<>();
 
+			// Get parametres
 			String price = req.getParameter("chk_filter_price"), 
 					stock = req.getParameter("chk_filter_stock"), shipPrice = req.getParameter("chk_filter_ship_price");
+			// Convert to boolean
 			boolean filterPrice = (price!=null && price.equals("on")),
 					filterStock = (stock!=null && stock.equals("on")),
 					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
 
+			// If no filters, just get all products
 			if (!filterPrice && !filterStock && !filterShipPrice) {
 				products = ProductController.getAllProducts();
 			} else {
+				// If multiple filters: remove products in products list
+
+				// Filter by price
 				if (filterPrice) {
 					int filterMinimun=Integer.parseInt(req.getParameter("filter_price_minimun")),
 							filterMaximum=Integer.parseInt(req.getParameter("filter_price_maximum"));
-					
+
 					String email = (String) ((HttpServletRequest) req).getSession().getAttribute("user");
 					if (email==null || email.equals("")) {
 						products = ProductController.getProductsBetweenPrices(filterMinimun,filterMaximum);
@@ -78,7 +88,7 @@ public class ProductServlet extends HttpServlet{
 					}
 				}
 
-
+				// Filter by stock
 				if (filterStock) {
 					int filterStockMinumun=Integer.parseInt(req.getParameter("filter_stock_minimun"));
 					if(products != null) {
@@ -102,7 +112,7 @@ public class ProductServlet extends HttpServlet{
 
 				}
 
-
+				// Filter by ship price
 				if (filterShipPrice) {
 					String freeShipping = req.getParameter("filter_free_shipping");
 					boolean filterFreeShipping = (freeShipping!=null && freeShipping.equals("on"));

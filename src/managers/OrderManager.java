@@ -1,21 +1,21 @@
-package controllers;
+package managers;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import model.WishList;
+import model.Orders;
 
-public class WishListManager {
+public class OrderManager {
 
 	private EntityManagerFactory emf;
 
-	public WishListManager() {
+	public OrderManager() {
 
 	}
 
-	public WishListManager(EntityManagerFactory emf) {
+	public OrderManager(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
@@ -31,11 +31,11 @@ public class WishListManager {
 		return emf.createEntityManager();
 	}
 
-	public String createWishList(WishList wishList) throws Exception {
+	public String createOrder(Orders order) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			em.persist(wishList);
+			em.persist(order);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -53,12 +53,12 @@ public class WishListManager {
 		return "";
 	}
 
-	public String deleteWishList(WishList wishList) throws Exception {
+	public String deleteOrder(Orders order) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			wishList = em.merge(wishList);
-			em.remove(wishList);
+			order = em.merge(order);
+			em.remove(order);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -76,11 +76,11 @@ public class WishListManager {
 		return "";
 	}
 
-	public String updateWishList(WishList wishList) throws Exception {
+	public String updateOrder(Orders order) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			wishList = em.merge(wishList);
+			order = em.merge(order);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -96,19 +96,54 @@ public class WishListManager {
 			em.close();
 		}
 		return "";
+	}
+
+	public Orders getOrder(int id) {
+		Orders order = null;
+		EntityManager em = getEntityManager();
+		try {
+			order = (Orders) em.find(Orders.class, id);
+		} finally {
+			em.close();
+		}
+		return order;
+	}
+
+	public Boolean verifyOrder(String email, String password) {
+		Orders order = null;
+		EntityManager em = getEntityManager();
+		try {
+			order = (Orders) em.find(Orders.class, email);
+		} finally {
+			em.close();
+		}
+
+		return order != null ? false : false;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<WishList> getWishListByUserAndProduct(String email, int product) {
-		List<WishList> WishList = null;
+	public List<Orders> getAllOrders() {
+		List<Orders> orders = null;
 		EntityManager em = getEntityManager();
 		try {
-			WishList = (List<WishList>) em.createNamedQuery("WishList.findByUserAndProduct").setParameter("email", email)
-					.setParameter("product", product).setMaxResults(1).getResultList();
+			orders = (List<Orders>) em.createNamedQuery("Orders.findAll").getResultList();
 		} finally {
 			em.close();
 		}
-		return WishList;
+		return orders;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Orders> getOrdersByUser(String email) {
+		List<Orders> orders = null;
+		EntityManager em = getEntityManager();
+		try {
+			orders = (List<Orders>) em.createNamedQuery("Orders.findAllByUser").setParameter("email", email).getResultList();
+		} finally {
+			em.close();
+		}
+
+		return orders;
 	}
 
 }

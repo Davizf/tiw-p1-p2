@@ -1,21 +1,21 @@
-package controllers;
+package managers;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import model.Orders;
+import model.Category;
 
-public class OrderManager {
+public class CategoryManager {
 
 	private EntityManagerFactory emf;
 
-	public OrderManager() {
+	public CategoryManager() {
 
 	}
 
-	public OrderManager(EntityManagerFactory emf) {
+	public CategoryManager(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
@@ -31,11 +31,11 @@ public class OrderManager {
 		return emf.createEntityManager();
 	}
 
-	public String createOrder(Orders order) throws Exception {
+	public String createCategory(Category category) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			em.persist(order);
+			em.persist(category);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -53,12 +53,12 @@ public class OrderManager {
 		return "";
 	}
 
-	public String deleteOrder(Orders order) throws Exception {
+	public String deleteCategory(Category category) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			order = em.merge(order);
-			em.remove(order);
+			category = em.merge(category);
+			em.remove(category);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -76,11 +76,11 @@ public class OrderManager {
 		return "";
 	}
 
-	public String updateOrder(Orders order) throws Exception {
+	public String updateCategory(Category category) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			order = em.merge(order);
+			category = em.merge(category);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -96,54 +96,29 @@ public class OrderManager {
 			em.close();
 		}
 		return "";
-	}
-
-	public Orders getOrder(int id) {
-		Orders order = null;
-		EntityManager em = getEntityManager();
-		try {
-			order = (Orders) em.find(Orders.class, id);
-		} finally {
-			em.close();
-		}
-		return order;
-	}
-
-	public Boolean verifyOrder(String email, String password) {
-		Orders order = null;
-		EntityManager em = getEntityManager();
-		try {
-			order = (Orders) em.find(Orders.class, email);
-		} finally {
-			em.close();
-		}
-
-		return order != null ? false : false;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Orders> getAllOrders() {
-		List<Orders> orders = null;
+	public List<Category> getCategoryByName(String name) {
+		List<Category> category = null;
 		EntityManager em = getEntityManager();
 		try {
-			orders = (List<Orders>) em.createNamedQuery("Orders.findAll").getResultList();
+			category = (List<Category>) em.createNamedQuery("Category.findByName").setParameter("name", name).setMaxResults(1).getResultList();
 		} finally {
 			em.close();
 		}
-		return orders;
+		return category;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Orders> getOrdersByUser(String email) {
-		List<Orders> orders = null;
+
+	public Category getCategoryById(int id) {
+		Category category = null;
 		EntityManager em = getEntityManager();
 		try {
-			orders = (List<Orders>) em.createNamedQuery("Orders.findAllByUser").setParameter("email", email).getResultList();
+			category = (Category) em.find(Category.class, id);
 		} finally {
 			em.close();
 		}
-
-		return orders;
+		return category;
 	}
 
 }

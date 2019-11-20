@@ -1,4 +1,4 @@
-package jhc.jms;
+package servlets;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jms.InteractionJMS;
 
 @WebServlet(name = "MessageServlet", urlPatterns = "/jms-controller")
 public class MessageServlet extends HttpServlet {
@@ -22,16 +24,13 @@ public class MessageServlet extends HttpServlet {
 		String sender = req.getParameter("sender") ;	
 		InteractionJMS mq=new InteractionJMS();
 		String msg = req.getParameter("message");
-		
-		
-		
-		
+
 		if(op == 4) {	// send a offer to buyers
 			mq.writeJMSToAllBuyers(msg,sender);
 			RequestDispatcher miR=req.getRequestDispatcher("index.jsp");
 			miR.forward(req, resp);
 		}
-		
+
 		String correlationId = req.getParameter("correlationId");
 
 		if (op==1){	// send a message to a seller
@@ -49,7 +48,6 @@ public class MessageServlet extends HttpServlet {
 			RequestDispatcher miR=req.getRequestDispatcher("mymessages-page.jsp");
 			miR.forward(req, resp);
 		}
-
 
 	}
 

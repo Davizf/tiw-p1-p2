@@ -1,4 +1,4 @@
-package jhc.listener;
+package jms;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;

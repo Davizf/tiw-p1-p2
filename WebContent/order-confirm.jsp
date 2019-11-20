@@ -424,7 +424,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 									<td class="thumb"><img src= "<%= product.getProduct().getImagePath() %>" alt=""></td>
 									<td class="details">
 										<a href="product-page.jsp?id=<%=product.getProduct().getId() %>"><%= product.getProduct().getName() %></a>
-										<td class="price text-center"><strong>$<%=product.getProduct().getPrice().doubleValue() %></strong><br><del class="font-weak"><small>$<%=product.getProduct().getSalePrice().doubleValue() %></small></del></td>
+										<td class="price text-center"><del class="font-weak"><small>$<%=product.getProduct().getPrice().doubleValue() %></small></del><br><strong>$<%=product.getProduct().getSalePrice().doubleValue() %></strong></td>
 										<td class="qty text-center"><strong><%=product.getQuantity() %></strong></td>
 										<td class="total text-center"><strong class="primary-color">$<%=product.getCost() %></strong></td>
 				
@@ -476,14 +476,14 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 	</div>
 	<!-- /section -->
 
-	<!-- FOOTER -->
+<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
 			<div class="row">
 				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
@@ -493,7 +493,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 						</div>
 						<!-- /footer logo -->
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+						<p>Our shop is a new shop which have so good quality products and prices that make it unique</p>
 
 						<!-- footer social -->
 						<ul class="footer-social">
@@ -504,21 +504,6 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
 						</ul>
 						<!-- /footer social -->
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">My Account</h3>
-						<ul class="list-links">
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">My Wishlist</a></li>
-							<li><a href="#">Compare</a></li>
-							<li><a href="#">Checkout</a></li>
-							<li><a href="#">Login</a></li>
-						</ul>
 					</div>
 				</div>
 				<!-- /footer widget -->
@@ -543,7 +528,7 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div class="footer">
 						<h3 class="footer-header">Stay Connected</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+						<p>Subscribe to our newsletter and get amazing offers</p>
 						<form>
 							<div class="form-group">
 								<input class="input" placeholder="Enter Email Address">
@@ -585,3 +570,4 @@ ArrayList<ProductInCart> list = (ArrayList<ProductInCart>)request.getAttribute("
 </body>
 
 </html>
+

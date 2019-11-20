@@ -176,45 +176,7 @@ if (user!=null) {
 									cartTotal+=productsInCart.get(i).getCost();
 							}
 							%>
-							<li class="header-cart dropdown default-dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-									<div class="header-btns-icon">
-										<i class="fa fa-shopping-cart"></i>
-										<span class="qty"><%=cartNumber %></span>
-									</div>
-									<strong class="text-uppercase">My Cart:</strong>
-									<br>
-									<span>$<%=cartTotal %></span>
-								</a>
-								<div class="custom-menu">
-									<div id="shopping-cart">
-										<div class="shopping-cart-list">
-											<%
-											if (productsInCart!=null) {
-												for (int i=0; i<productsInCart.size(); i++) {
-											%>
-											<div class="product product-widget">
-												<div class="product-thumb">
-													<img src="<%=productsInCart.get(i).getProduct().getImagePath() %>" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-price">$<%=productsInCart.get(i).getProduct().getPrice().doubleValue() %> <span class="qty">x<%=productsInCart.get(i).getQuantity() %></span></h3>
-													<h2 class="product-name"><a href="/tiw-p1/product-page.jsp?id=<%=productsInCart.get(i).getProduct().getId() %>"><%=productsInCart.get(i).getProduct().getName() %></a></h2>
-												</div>
-											</div>
-											<%} 
-												} %>
-										</div>
-										
-										<form action="ShoppingCart" method="get">
-											<div class="shopping-cart-btns">
-												<input type="submit" class="primary-btn add-to-cart" value="View Cart" />
-											</div>
-										</form>
-										
-									</div>
-								</div>
-							</li>
+							
 						<%} %>
 						<!-- /Cart -->
 						<!-- Mobile nav toggle-->
@@ -343,14 +305,14 @@ if (user!=null) {
 	</div>
 	<!-- /section -->
 
-	<!-- FOOTER -->
+<!-- FOOTER -->
 	<footer id="footer" class="section section-grey">
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
 			<div class="row">
 				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<div class="footer">
 						<!-- footer logo -->
 						<div class="footer-logo">
@@ -360,7 +322,7 @@ if (user!=null) {
 						</div>
 						<!-- /footer logo -->
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+						<p>Our shop is a new shop which have so good quality products and prices that make it unique</p>
 
 						<!-- footer social -->
 						<ul class="footer-social">
@@ -371,21 +333,6 @@ if (user!=null) {
 							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
 						</ul>
 						<!-- /footer social -->
-					</div>
-				</div>
-				<!-- /footer widget -->
-
-				<!-- footer widget -->
-				<div class="col-md-3 col-sm-6 col-xs-6">
-					<div class="footer">
-						<h3 class="footer-header">My Account</h3>
-						<ul class="list-links">
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">My Wishlist</a></li>
-							<li><a href="#">Compare</a></li>
-							<li><a href="#">Checkout</a></li>
-							<li><a href="#">Login</a></li>
-						</ul>
 					</div>
 				</div>
 				<!-- /footer widget -->
@@ -410,7 +357,7 @@ if (user!=null) {
 				<div class="col-md-3 col-sm-6 col-xs-6">
 					<div class="footer">
 						<h3 class="footer-header">Stay Connected</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+						<p>Subscribe to our newsletter and get amazing offers</p>
 						<form>
 							<div class="form-group">
 								<input class="input" placeholder="Enter Email Address">
@@ -452,3 +399,4 @@ if (user!=null) {
 </body>
 
 </html>
+

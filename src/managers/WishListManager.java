@@ -1,21 +1,21 @@
-package controllers;
+package managers;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import model.Category;
+import model.WishList;
 
-public class CategoryManager {
+public class WishListManager {
 
 	private EntityManagerFactory emf;
 
-	public CategoryManager() {
+	public WishListManager() {
 
 	}
 
-	public CategoryManager(EntityManagerFactory emf) {
+	public WishListManager(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
@@ -31,11 +31,11 @@ public class CategoryManager {
 		return emf.createEntityManager();
 	}
 
-	public String createCategory(Category category) throws Exception {
+	public String createWishList(WishList wishList) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			em.persist(category);
+			em.persist(wishList);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -53,12 +53,12 @@ public class CategoryManager {
 		return "";
 	}
 
-	public String deleteCategory(Category category) throws Exception {
+	public String deleteWishList(WishList wishList) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			category = em.merge(category);
-			em.remove(category);
+			wishList = em.merge(wishList);
+			em.remove(wishList);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -76,11 +76,11 @@ public class CategoryManager {
 		return "";
 	}
 
-	public String updateCategory(Category category) throws Exception {
+	public String updateWishList(WishList wishList) throws Exception {
 		EntityManager em = getEntityManager();
 		try {
 			em.getTransaction().begin();
-			category = em.merge(category);
+			wishList = em.merge(wishList);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
 			try {
@@ -99,26 +99,16 @@ public class CategoryManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Category> getCategoryByName(String name) {
-		List<Category> category = null;
+	public List<WishList> getWishListByUserAndProduct(String email, int product) {
+		List<WishList> WishList = null;
 		EntityManager em = getEntityManager();
 		try {
-			category = (List<Category>) em.createNamedQuery("Category.findByName").setParameter("name", name).setMaxResults(1).getResultList();
+			WishList = (List<WishList>) em.createNamedQuery("WishList.findByUserAndProduct").setParameter("email", email)
+					.setParameter("product", product).setMaxResults(1).getResultList();
 		} finally {
 			em.close();
 		}
-		return category;
-	}
-
-	public Category getCategoryById(int id) {
-		Category category = null;
-		EntityManager em = getEntityManager();
-		try {
-			category = (Category) em.find(Category.class, id);
-		} finally {
-			em.close();
-		}
-		return category;
+		return WishList;
 	}
 
 }

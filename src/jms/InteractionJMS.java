@@ -1,13 +1,14 @@
-package jhc.jms;
+package jms;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.jms.Message;
 import javax.jms.TextMessage;
-import jhc.info.InformationProperties;
+
 import model.User;
 import controllers.UserController;
+import jms.info.InformationProperties;
 import model.Messages;
 
 
@@ -148,6 +149,7 @@ public class InteractionJMS {
 					if (message instanceof TextMessage) {
 						TextMessage m = (TextMessage) message;
 						
+						// if same sender the msg will be stored by concatenate
 						for(Messages msg : messages ) {
 							if(msg.getSender().equalsIgnoreCase(m.getStringProperty("sender")) ){
 								msg.setMsg( msg.getMsg().concat("<br>Message: " +m.getText())  );

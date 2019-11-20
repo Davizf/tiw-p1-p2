@@ -1,4 +1,4 @@
-package controllers;
+package servlets;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import controllers.CategoryController;
+import controllers.ProductController;
+import controllers.UserController;
 import model.Product;
 
 @WebServlet(name = "Catalogue", urlPatterns = "/Catalogue")
@@ -34,6 +37,8 @@ public class CatalogueServlet extends HttpServlet{
 			int id = Integer.parseInt(req.getParameter("id"));
 			Product p = ProductController.getProduct(id);
 			int newStock = Integer.parseInt(req.getParameter("newStock"));
+
+			// Modify stock (if user is correct for security)
 			if (ProductController.verifyStock(newStock)) {
 				p.setStock(newStock);
 				if (p.getUserBean().getEmail().equals(user))
@@ -55,6 +60,8 @@ public class CatalogueServlet extends HttpServlet{
 			int id = Integer.parseInt(req.getParameter("id"));
 			req.setAttribute("productId", id);
 			req.setAttribute("seller_user", req.getParameter("seller_user"));
+
+			// Redirect to page for modify
 			Product p = ProductController.getProduct(id);
 			req.setAttribute("product", p);
 			req.setAttribute("operation", "modify");
@@ -64,12 +71,15 @@ public class CatalogueServlet extends HttpServlet{
 		}else if(req.getParameter("type").equalsIgnoreCase("delete")) {
 			int id = Integer.parseInt(req.getParameter("id"));
 			Product p = ProductController.getProduct(id);
+
+			// Delete product (if user is correct for security)
 			if (p.getUserBean().getEmail().equals(user))
 				ProductController.deleteProduct(id);
 
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("add_product")) {
+			// Take data
 			String product_name=req.getParameter("product_name");
 			double product_price=Double.parseDouble(req.getParameter("product_price"));
 			double product_sale_price=Double.parseDouble(req.getParameter("product_sale_price"));
@@ -80,6 +90,7 @@ public class CatalogueServlet extends HttpServlet{
 			String product_category=req.getParameter("product_category");
 			String product_user=req.getParameter("product_user");
 
+			// Verify if all attributes are correct
 			String verify=verifyNewData(product_name, product_price, product_sale_price, product_ship_price, product_stock, product_short_description, product_description, product_category);
 			if (!verify.equals("")) {
 				req.setAttribute("msg_error", verify);
@@ -88,6 +99,7 @@ public class CatalogueServlet extends HttpServlet{
 				return;
 			}
 
+			// Auxiliar vars for image paths
 			String product_image_path;
 			Part product_image=req.getPart("product_image_file");
 			String image_fileName=extractFileName(product_image);
@@ -104,11 +116,7 @@ public class CatalogueServlet extends HttpServlet{
 				rd.forward(req, res);
 				return;
 			} else {
-				/*System.out.println("-----------------------image_completePath\t"+image_completePath);
-				System.out.println("-----------------------image_parentPath\t"+image_parentPath);
-				System.out.println("-----------------------image_parentShortPath\t"+image_parentShortPath);
-				System.out.println("-----------------------image_completeShortPath\t"+image_completeShortPath);*/
-
+				// Copy image to folder
 				image_file = new File(new File(image_parentPath), image_filePath);
 
 				if (image_file.exists()) image_file.delete();
@@ -118,6 +126,7 @@ public class CatalogueServlet extends HttpServlet{
 				product_image_path=image_completeShortPath;
 			}
 
+			// Sets attributes to the new product
 			Product p=new Product();
 			p.setName(product_name);
 			p.setPrice(new BigDecimal(product_price));
@@ -130,6 +139,7 @@ public class CatalogueServlet extends HttpServlet{
 			p.setImagePath(product_image_path);
 			p.setUserBean(UserController.getUserInformation(product_user));
 
+			// Add
 			int newId=ProductController.addProduct(p);
 			if (newId==-1) {
 				req.setAttribute("msg_error", "Error adding a product.");
@@ -142,6 +152,7 @@ public class CatalogueServlet extends HttpServlet{
 			image_completePath=image_parentPath + "/" + image_filePath;
 			image_completeShortPath=image_parentShortPath + "/" + image_filePath;
 
+			// Change image path auxiliar for the definitive
 			File image_file2=new File(image_completePath);
 			image_file.renameTo(image_file2);
 			p.setImagePath(image_completeShortPath);
@@ -150,6 +161,7 @@ public class CatalogueServlet extends HttpServlet{
 			RequestDispatcher rd = req.getRequestDispatcher("catalogue.jsp");
 			rd.forward(req, res);
 		}else if(req.getParameter("type").equalsIgnoreCase("modify_product")) {
+			// Take data
 			int product_id=Integer.parseInt(req.getParameter("product_id"));
 			String product_name=req.getParameter("product_name");
 			double product_price=Double.parseDouble(req.getParameter("product_price"));
@@ -160,6 +172,7 @@ public class CatalogueServlet extends HttpServlet{
 			String product_description=req.getParameter("product_description");
 			String product_category=req.getParameter("product_category");
 
+			// Verify if all attributes are correct
 			String verify=verifyNewData(product_name, product_price, product_sale_price, product_ship_price, product_stock, product_short_description, product_description, product_category);
 			if (!verify.equals("")) {
 				req.setAttribute("msg_error", verify);
@@ -168,24 +181,20 @@ public class CatalogueServlet extends HttpServlet{
 				return;
 			}
 
+			// Auxiliar vars for image paths
 			String product_image_path;
 			Part product_image=req.getPart("product_image_file");
 			String image_fileName=extractFileName(product_image),
 					image_parentPath=getServletContext().getRealPath(IMAGE_FOLDER),
 					image_filePath=product_id + ".png",
 					image_parentShortPath=req.getContextPath() + IMAGE_FOLDER,
-					//image_completePath=image_parentPath + "/" + image_filePath,
 					image_completeShortPath=image_parentShortPath + "/" + image_filePath;
 			File image_file;
 
 			if (image_fileName.equals("")) {// There isnt new image
 				product_image_path=req.getParameter("product_image_path");
 			} else {
-				/*System.out.println("-----------------------image_completePath\t"+image_completePath);
-				System.out.println("-----------------------image_parentPath\t"+image_parentPath);
-				System.out.println("-----------------------image_parentShortPath\t"+image_parentShortPath);
-				System.out.println("-----------------------image_completeShortPath\t"+image_completeShortPath);*/
-
+				// Copy image to folder
 				image_file = new File(new File(image_parentPath), image_filePath);
 				if (image_file.exists()) image_file.delete();
 				try (InputStream input = product_image.getInputStream()) {
@@ -194,6 +203,7 @@ public class CatalogueServlet extends HttpServlet{
 				product_image_path=image_completeShortPath;
 			}
 
+			// Sets attributes to the new product
 			Product p=ProductController.getProduct(product_id);
 			p.setId(product_id);
 			p.setName(product_name);

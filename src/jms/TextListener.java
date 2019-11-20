@@ -1,10 +1,9 @@
-package jhc.listener;
+package jms;
 
 import javax.jms.MessageListener;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import jhc.jms.InteractionJMS;
 import java.util.Random;
 
 import javax.jms.JMSException;
