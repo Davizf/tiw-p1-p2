@@ -6,6 +6,7 @@
 <%@page import="java.util.*" %>
 <%@page import="model.Category"%>
 <%@page import="model.ProductInCart"%>
+<%@page import="model.CategoryLevel"%>
 <%@page import="model.HierarchicalCategories"%>
 <%@page import="model.User"%>
 
@@ -18,7 +19,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>E-SHOP HTML Template</title>
+	<title>Register</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
@@ -235,16 +236,49 @@ if (user!=null) {
 				<!-- category nav -->
 				<div class="category-nav show-on-click">
 					<span class="category-header">Categories <i class="fa fa-list"></i></span>
-					<form action="products.jsp" method="post" id="form_category" style="display:hidden;">
+					<form action="ProductServlet" method="post" id="form_category" hidden>
+						<input type="hidden" name="op" value="category">
 						<input type="hidden" name="category" value="" id="form_category_input">
 					</form>
 					<ul class="category-list">
-						<%if(categories != null) { %>
-							<% for(Category category : categories) { %>
-								<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=category.getName() %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
-							<%} %>
+						<%if(categories != null) {%>
+							<%for(CategoryLevel category : hc.getCategories()) {
+								if (category.getDepth()==0) {
+									if (category.getChilds().size() == 0) {%>
+										<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(category) %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></li>
+									<%} else {%>
+										<li class="dropdown side-dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=category.getName() %><i class="fa fa-angle-right"></i></a>
+											<div class="custom-menu">
+												<div class="row">
+													<div class="col-md-6">
+														<ul class="list-links">
+															<li>
+																<h3 class="list-links"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+																onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(category) %>';document.getElementById('form_category').submit();"><%=category.getName() %></a></h3>
+															</li><br>
+															<%for (CategoryLevel categorySon : category.getChilds()) {%>
+																<li><h3 class="list-links-title">
+																	<a href="#" onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(categorySon) %>';document.getElementById('form_category').submit();"
+																	class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=categorySon.getName() %></a></h3>
+																</li>
+																	<%for (CategoryLevel categoryGrandChild : categorySon.getChilds()) {%>
+																		<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=HierarchicalCategories.getIdChildsStr(categoryGrandChild) %>';document.getElementById('form_category').submit();"
+																			class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><%=categoryGrandChild.getName() %></a>
+																		</li>
+																	<%} %>
+																<hr>
+															<%} %>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</li>
+									<%}
+								}
+							}%>
 						<%} %>
-						<li><a href="products.jsp">View all</a></li>
+						<li><a href="ProductServlet?op=view">View all</a></li>
 					</ul>
 				</div>
 				<!-- /category nav -->
