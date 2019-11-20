@@ -671,7 +671,8 @@ if (user!=null) {
 				
 				<%
 				List<Product> lastProducts=ProductController.getLastProducts();
-				for (int i=0; i<lastProducts.size(); i++) { %>
+				if(lastProducts != null) {
+					for (int i=0; i<lastProducts.size(); i++) { %>
 					<!-- Product Single -->
 					<div class="col-md-3 col-sm-6 col-xs-6">
 						<div class="product product-single">
@@ -708,6 +709,7 @@ if (user!=null) {
 						</div>
 					</div>
 					<!-- /Product Single -->
+					<%} %>
 				<%} %>
 			</div>
 			<!-- /row -->

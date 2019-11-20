@@ -13,15 +13,16 @@ import java.util.List;
 @Table(name="products")
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
 @NamedQuery(name="Product.findAllAvailable", query="SELECT p FROM Product p WHERE p.userBean IS NOT NULL")
-@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category")
-@NamedQuery(name="Product.findAllByCategoryId", query="SELECT p FROM Product p WHERE p.categoryBean.id LIKE :category")
-@NamedQuery(name="Product.findAllByCategoriesId", query="SELECT p FROM Product p WHERE p.categoryBean.id IN :categories")
+@NamedQuery(name="Product.findAllByCategory", query="SELECT p FROM Product p WHERE p.categoryBean.name LIKE :category AND p.userBean IS NOT NULL")
+@NamedQuery(name="Product.findAllByCategoryId", query="SELECT p FROM Product p WHERE p.categoryBean.id LIKE :category AND p.userBean IS NOT NULL")
+@NamedQuery(name="Product.findAllByCategoriesId", query="SELECT p FROM Product p WHERE p.categoryBean.id IN :categories AND p.userBean IS NOT NULL")
 @NamedQuery(name="Product.OrderById", query="SELECT p FROM Product p WHERE p.userBean IS NOT NULL ORDER BY p.id DESC")
 @NamedQuery(name="Product.findAllBySeller", query="SELECT p FROM Product p WHERE p.userBean.email LIKE :email")
-@NamedQuery(name="Product.getProductByName", query="SELECT p FROM Product p WHERE p.name LIKE :name")
-@NamedQuery(name="Product.findAllByFreeShipment", query="SELECT p FROM Product p WHERE p.shipPrice LIKE :price")
-@NamedQuery(name="Product.findAllBetweenSalePrices", query="SELECT p FROM Product p WHERE p.salePrice BETWEEN ?1 AND ?2")
-@NamedQuery(name="Product.findAllBetweenPrices", query="SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2")
+@NamedQuery(name="Product.getProductByName", query="SELECT p FROM Product p WHERE p.name LIKE :name AND p.userBean IS NOT NULL")
+@NamedQuery(name="Product.findAllByFreeShipment", query="SELECT p FROM Product p WHERE p.shipPrice <= ?1 AND p.userBean IS NOT NULL")
+@NamedQuery(name="Product.findAllBetweenSalePrices", query="SELECT p FROM Product p WHERE p.salePrice BETWEEN ?1 AND ?2 AND p.userBean IS NOT NULL")
+@NamedQuery(name="Product.findAllBetweenPrices", query="SELECT p FROM Product p WHERE p.price BETWEEN ?1 AND ?2 AND p.userBean IS NOT NULL")
+@NamedQuery(name="Product.findAllByStock", query="SELECT p FROM Product p WHERE p.stock > ?1 AND p.userBean IS NOT NULL")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 

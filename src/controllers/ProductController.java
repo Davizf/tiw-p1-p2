@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -148,6 +149,38 @@ public class ProductController {
 		ProductManager manager = new ProductManager();
 		manager.setEntityManagerFactory(factory);
 		List <Product> product = manager.getProductByName(title);
+		return product;
+	}
+	
+	public static List<Product> getProductsBetweenPrices(int min, int max){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List <Product> product = manager.getProductsBetweenPrices(min, max);
+		return product;
+	}
+	
+	public static List<Product> getProductsBetweenSalePrices(int min, int max){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List <Product> product = manager.getProductsBetweenSalePrices(min, max);
+		return product;
+	}
+	
+	public static List<Product> getProductsFreeShipment(){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List <Product> product = manager.getProductsByShipPrice(0);
+		return product;
+	}
+	
+	public static List<Product> getProductsByStock(int min){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tiw-p1-buyer-seller");		
+		ProductManager manager = new ProductManager();
+		manager.setEntityManagerFactory(factory);
+		List <Product> product = manager.getProductsByStock(min);
 		return product;
 	}
 

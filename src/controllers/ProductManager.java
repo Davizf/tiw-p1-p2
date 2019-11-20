@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -224,7 +225,7 @@ public class ProductManager {
 		List<Product> product = null;
 		EntityManager em = getEntityManager();
 		try {
-			product = (List<Product>) em.createNamedQuery("Product.findAllByFreeShipment").getResultList();
+			product = (List<Product>) em.createNamedQuery("Product.findAllByFreeShipment").setParameter("1", price).getResultList();
 		} finally {
 			em.close();
 		}
@@ -251,6 +252,18 @@ public class ProductManager {
 		try {
 			product = (List<Product>) em.createNamedQuery("Product.findAllBetweenPrices").setParameter("1", min)
 					.setParameter("2", max).getResultList();
+		} finally {
+			em.close();
+		}
+		return product;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> getProductsByStock(int min) {
+		List<Product> product = null;
+		EntityManager em = getEntityManager();
+		try {
+			product = (List<Product>) em.createNamedQuery("Product.findAllByStock").setParameter("1", min).getResultList();
 		} finally {
 			em.close();
 		}
