@@ -42,6 +42,7 @@ public class UserServlet extends HttpServlet{
 				RequestDispatcher rd = req.getRequestDispatcher("register-page.jsp");
 				rd.forward(req, res);
 			} else {
+				// Create the user
 				User user = new User();
 				user.setPhone(Integer.parseInt(req.getParameter("tel")));
 				user.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
@@ -58,21 +59,24 @@ public class UserServlet extends HttpServlet{
 				String seller = req.getParameter("seller");
 				user.setType( (byte) ((seller != null && seller.equals("on"))?1:0) );
 
+				// Insert the user
 				UserController.addUser(user);
-				
+
 				RequestDispatcher rd = req.getRequestDispatcher("login-page.jsp");
 				rd.forward(req, res);
 			}
 		} else if(req.getParameter("operation").equalsIgnoreCase("Login")) {
 			String password = req.getParameter("password");
 
+			// Check pass
 			if(UserController.verifyUser(email, password)) {
 				User user = UserController.getUserInformation(email);
 				session.setAttribute("user", email);
 				session.setAttribute("username", user.getName());
 				session.setAttribute("cartList", null);
-				
+
 				RequestDispatcher rd;
+				// If user is seller go to catalogue
 				if (user.getType() == UserController.USER_TYPE_SELLER) {
 					rd = req.getRequestDispatcher("catalogue.jsp");
 				} else {
@@ -86,7 +90,7 @@ public class UserServlet extends HttpServlet{
 			}
 
 		}  else if(req.getParameter("operation").equalsIgnoreCase("Save my profile")) {
-
+			// Create the user
 			User user = new User();
 			user.setPhone(Integer.parseInt(req.getParameter("tel")));
 			user.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
@@ -102,8 +106,9 @@ public class UserServlet extends HttpServlet{
 			user.setCredit_card_CVV(Integer.parseInt(req.getParameter("cvv")));
 			session.setAttribute("username", user.getName());
 
+			// Modify the user
 			UserController.modifyUser(user);
-			
+
 			req.setAttribute("message", "Changes have been made correctly!");
 			req.setAttribute("user_information", (User) user);
 			RequestDispatcher rd = req.getRequestDispatcher("profile.jsp");
@@ -114,7 +119,7 @@ public class UserServlet extends HttpServlet{
 			rd.forward(req, res);
 
 		} else if(req.getParameter("operation").equalsIgnoreCase("Yes")) {
-
+			// Delete the user
 			User user = UserController.getUserInformation((String) session.getAttribute("user"));
 
 			UserController.deleteUser(user);

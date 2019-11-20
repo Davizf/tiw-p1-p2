@@ -24,13 +24,16 @@ public class ShoppingCart extends HttpServlet{
 
 		HttpSession session = req.getSession();
 
+		// Only if there is a user logged
 		if(session.getAttribute("user") != null) {
 			req.getSession().setAttribute("cartList", products);
+
 			if(req.getParameter("type").equalsIgnoreCase("addToCart")) {
 
 				int id = Integer.parseInt(req.getParameter("id"));
 				int num = Integer.parseInt(req.getParameter("numOrder"));
 
+				// Increase quantity if exists on cart
 				for(ProductInCart product : products) {
 					if(product.getProduct().getId() == id) {
 						product.setQuantity(product.getQuantity() + num );
@@ -40,6 +43,7 @@ public class ShoppingCart extends HttpServlet{
 					}
 				}
 
+				// Add new product to the cart
 				ProductInCart newP = new ProductInCart(ProductController.getProduct(id));
 				newP.setQuantity(num);
 				products.add(newP);
@@ -48,7 +52,7 @@ public class ShoppingCart extends HttpServlet{
 				rd.forward(req, res);
 
 			} else if(req.getParameter("type").equalsIgnoreCase("deleteInCart")) {
-
+				// Remove 1 product
 				int index = Integer.parseInt(req.getParameter("indexToRemove"));
 
 				products.remove(index);
@@ -56,9 +60,9 @@ public class ShoppingCart extends HttpServlet{
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
 			} else if(req.getParameter("type").equalsIgnoreCase("modifyInCart")) {
-
+				// Modify quantity
 				int index = Integer.parseInt(req.getParameter("indexToModify"));
-				
+
 				int newQuantity = Integer.parseInt(req.getParameter("quantity"));
 
 				products.get(index).setQuantity(newQuantity);;
@@ -66,9 +70,11 @@ public class ShoppingCart extends HttpServlet{
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
 			} else if(req.getParameter("type").equalsIgnoreCase("placeOrder")) {
+				// Go to checkout
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
 			}else if(req.getParameter("type").equalsIgnoreCase("checkout")){
+				// Confirm order
 				req.setAttribute("cartList", products);
 				RequestDispatcher rd = req.getRequestDispatcher("order-confirm.jsp");
 				rd.forward(req, res);
@@ -80,6 +86,7 @@ public class ShoppingCart extends HttpServlet{
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		// Get products list
 		req.getSession().setAttribute("cartList", products);
 		RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 		rd.forward(req, res);

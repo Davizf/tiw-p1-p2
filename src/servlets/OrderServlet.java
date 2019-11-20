@@ -31,14 +31,15 @@ public class OrderServlet extends HttpServlet{
 		String email = (String) session.getAttribute("user");
 		@SuppressWarnings("unchecked")
 		ArrayList<ProductInCart> productsInCart = (ArrayList<ProductInCart>)session.getAttribute("cartList");
-	
+
 		if(req.getParameter("type").equalsIgnoreCase("confirm-checkout")) {
-			
+
 			InteractionJMS mq=new InteractionJMS();
 			mq.confirmPurchase(req.getParameter("card"), req.getParameter("total-price"));
 			String associatedCode = mq.readConfirm("confirm");
-			
+
 			if(OrderController.checkProductsStock(productsInCart)) {
+				// Create the order
 				Date date = new Date();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 				Orders order = new Orders();
@@ -50,7 +51,8 @@ public class OrderServlet extends HttpServlet{
 				order.setPostalCode(Integer.parseInt(req.getParameter("zipCode")));
 				order.setUserBean(UserController.getUserInformation(email));
 				order.setDate(formatter.format(date));
-				
+
+				// Fill the order with products
 				ArrayList<Orders_has_Product> products = new ArrayList<Orders_has_Product>();
 				for(ProductInCart product : productsInCart) {
 					order_product = new Orders_has_Product();
@@ -62,9 +64,9 @@ public class OrderServlet extends HttpServlet{
 					products.add(order_product);
 					ProductController.updateStock(product.getProduct(), product.getQuantity());
 				}
-				
 				order.setOrdersHasProducts(products);
-				
+
+				// Insert the order
 				OrderController.createOrder(order);
 				productsInCart.clear();
 				session.setAttribute("cartList", null);
@@ -75,7 +77,7 @@ public class OrderServlet extends HttpServlet{
 				RequestDispatcher rd = req.getRequestDispatcher("checkout.jsp");
 				rd.forward(req, res);
 			}
-			
+
 		}else if(req.getParameter("type").equalsIgnoreCase("my-orders")) {
 			RequestDispatcher rd = req.getRequestDispatcher("my-orders.jsp");
 			rd.forward(req, res);

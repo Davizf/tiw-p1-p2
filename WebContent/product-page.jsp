@@ -304,12 +304,20 @@ if (user!=null) {
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">
-			<form action="products.jsp" method="post" id="form_category" hidden>
+			<form action="ProductServlet" method="post" id="form_category" hidden>
+						<input type="hidden" name="op" value="category">
 				<input type="hidden" name="category" value="" id="form_category_input">
 			</form>
 			<ul class="breadcrumb">
 				<li><a href="index.jsp">Home</a></li>
-				<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=p.getCategoryBean().getName() %>';document.getElementById('form_category').submit();"><%=p.getCategoryBean().getName() %></a></li>
+				<%String categoriesIDs=""+p.getCategoryBean().getId();
+				for(CategoryLevel category : hc.getCategories()) {
+					if (category.getId() == p.getCategoryBean().getId()) {
+						categoriesIDs=HierarchicalCategories.getIdChildsStr(category);
+						break;
+					}
+				}%>
+				<li><a href="#" onclick="document.getElementById('form_category_input').value='<%=categoriesIDs %>';document.getElementById('form_category').submit();"><%=p.getCategoryBean().getName() %></a></li>
 				<li class="active"><%=p.getName() %></li>
 			</ul>
 		</div>
