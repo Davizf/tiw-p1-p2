@@ -79,7 +79,13 @@ public class UserServlet extends HttpServlet{
 				session.setAttribute("user", email);
 				session.setAttribute("username", user.getName());
 				session.setAttribute("cartList", null);
-				RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+				
+				RequestDispatcher rd;
+				if (user.getType() == UserController.USER_TYPE_SELLER) {
+					rd = req.getRequestDispatcher("catalogue.jsp");
+				} else {
+					rd = req.getRequestDispatcher("index.jsp");
+				}
 				rd.forward(req, res);
 			} else {
 				req.setAttribute("message", "The email or password is wrong!");
