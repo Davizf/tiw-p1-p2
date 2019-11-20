@@ -75,7 +75,7 @@ public class ProductServlet extends HttpServlet{
 				if(products != null) {
 					productsToCompare = ProductController.getProductsByStock(filterStockMinumun);
 					for(Product product : products) {
-						if(!productsToCompare.contains(product)) {
+						if(!productsToCompare.contains(product)) {	// always return true
 							productsToElimine.add(product);
 						}
 					}
@@ -101,7 +101,7 @@ public class ProductServlet extends HttpServlet{
 						productsToCompare = ProductController.getProductsFreeShipment();
 						for(Product product : products) {
 							//System.out.println("Product->"+product.getName());
-							if(!productsToCompare.contains(product)) {
+							if(!productsToCompare.contains(product)) {		// always return true
 								//System.out.println("Compare not Contains->"+product.getName());
 								productsToElimine.add(product);
 							}
