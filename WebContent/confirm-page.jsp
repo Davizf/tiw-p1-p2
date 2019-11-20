@@ -145,20 +145,21 @@ if (user!=null) {
 							
 							<ul class="custom-menu">
 								<%if(user != null) { %>
-									<li><a href="Order?type=my-orders"><i class="fa fa-comment-o"></i> My orders</a></li>
-									<li><a href="wish-list.jsp"><i class="fa fa-user-o"></i> My wish list</a></li>
-									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
-									<%if (userBean!=null && userBean.getType()==1){ %>
-									<li><a href="catalogue.jsp"><i class="fa fa-user-times"></i> My Catalogue</a></li>
-									<li><a href="seller-send-message.jsp"><i class="fa fa-user-times"></i> Send a Offer</a></li>
+									<%if (userBean != null && userBean.getType() != UserController.USER_TYPE_SELLER){ %>
+										<li><a href="Order?type=my-orders"><i class="fa fa-check"></i> My orders</a></li>
+										<li><a href="wish-list.jsp"><i class="fa fa-heart-o"></i> My wish list</a></li>
 									<%} %>
-									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user-o"></i> Log out</a></li>
+									<li><a href="/tiw-p1/jms-controller?op=2&correlationId=<%=user%>"><i class="fa fa-comment-o"></i> My messages</a></li>
+									<%if (userBean != null && userBean.getType() == UserController.USER_TYPE_SELLER){ %>
+										<li><a href="catalogue.jsp"><i class="fa fa-user-o"></i> My Catalogue</a></li>
+										<li><a href="seller-send-message.jsp"><i class="fa fa-comment-o"></i> Send a Offer</a></li>
+									<%} %>
+									<li><a href="UserServlet?operation=log_out"><i class="fa fa-user"></i> Log out</a></li>
 									<li><a href="delete-account.jsp"><i class="fa fa-user-times"></i> Delete my account</a></li>
 								<%}else{ %>
-									<li><a href="register-page.jsp"><i class="fa fa-unlock-alt"></i> Create an account</a></li>
+									<li><a href="register-page.jsp"><i class="fa fa-user-plus"></i> Create an account</a></li>
 									<li><a href="login-page.jsp"><i class="fa fa-unlock-alt"></i> Login</a></li>
 								<%}%>
-								
 								
 							</ul>
 						</li>
