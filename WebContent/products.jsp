@@ -358,6 +358,13 @@ if (user!=null) {
 							</select>
 						</div>
 						<!-- /aside widget -->
+						
+						<!-- aside widget -->
+						<div class="aside">
+							<h3 class="aside-title"><label for="input_chk_filter_stock">Filter by stock&nbsp;&nbsp;</label><input type="checkbox" name="chk_filter_stock" id="input_chk_filter_stock"></h3>
+							Minimun stock: &nbsp;&nbsp;&nbsp;<input type="number" name="filter_stock_minimun" value="1" min="0">
+						</div>
+						<!-- /aside widget -->
 	
 						<!-- aside widget -->
 						<div class="aside">

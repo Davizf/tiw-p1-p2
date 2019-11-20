@@ -52,9 +52,11 @@ public class ProductServlet extends HttpServlet{
 			req.setAttribute("resultType", "foundByKey");
 
 		}else if(req.getParameter("op").equalsIgnoreCase("filter")) {
-			String price = req.getParameter("chk_filter_price"), category = req.getParameter("chk_filter_category"), shipPrice = req.getParameter("chk_filter_ship_price");
+			String price = req.getParameter("chk_filter_price"), category = req.getParameter("chk_filter_category"),
+					stock = req.getParameter("chk_filter_stock"), shipPrice = req.getParameter("chk_filter_ship_price");
 			boolean filterPrice = (price!=null && price.equals("on")),
 					filterCategory = (category!=null && category.equals("on")),
+					filterStock = (stock!=null && stock.equals("on")),
 					filterShipPrice = (shipPrice!=null && shipPrice.equals("on"));
 
 			//TODO
@@ -70,6 +72,11 @@ public class ProductServlet extends HttpServlet{
 			if (filterCategory) {
 				int filterCategoryId=Integer.parseInt(req.getParameter("filter_category"));
 				System.out.println("CategoryId "+filterCategoryId);
+			}
+			System.out.println("filterStock "+filterStock);
+			if (filterStock) {
+				int filterStockMinumun=Integer.parseInt(req.getParameter("filter_stock_minimun"));
+				System.out.println("StockMinumun "+filterStockMinumun);
 			}
 			System.out.println("filterShipPrice "+filterShipPrice);
 			if (filterShipPrice) {
